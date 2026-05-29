@@ -129,6 +129,24 @@ Expected classification:
 - Dexscreener exposes first-party links: `https://agentbounty.dev`, founder site/newsletter, `https://x.com/agentbountydev`, Telegram, Discord, and Farcaster. These should populate sources, not blanks.
 - Expected failure if output says `custom launch`, `standard Uniswap v4 pool`, or `Launch source: unknown` without acknowledging Clanker evidence.
 
+## QUILL / Custom Verified Contract, Not Clanker
+
+Input:
+
+```text
+0x60a646e3fd75cde4c5b604b22d4fcd04639913c8
+```
+
+Expected classification:
+
+- Not Bankr if Bankr exact lookup returns no match.
+- Not Virtuals if exact `tokenAddress` and `preToken` lookups return no match.
+- Do not classify as Clanker just because `https://www.clanker.world/clanker/<contract>` returns a 200, redirects to checksummed casing, or serves a generic Next.js app/loading shell.
+- Address does not end in `b07`, and explorer verified source/name is `QuillToken`, not `ClankerToken`.
+- Contract source is a project-specific fixed-supply burnable ERC-20 with constructor treasury mint and no owner/minting after deploy. Classify launch as `custom verified ERC-20 / Uniswap v4`, not Clanker.
+- Dexscreener exposes first-party links: `https://quill.computer/` and `https://x.com/quillcomputer`; docs expose `QuillToken 0x60A646e3fD75CdE4c5b604b22d4Fcd04639913C8`.
+- Expected failure if output says `Launch source: Clanker` without validated Clanker evidence such as `b07`, `ClankerToken`, factory labels, or token-specific Clanker API/route data.
+
 ## RUNNER / Legacy Clanker + Heavy Site
 
 Input:

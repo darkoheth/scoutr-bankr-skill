@@ -37,7 +37,8 @@ Address suffix routing:
 - Newer Clanker launches commonly end in `b07`.
 - Some older Bankr launches also end in `b07` from before the Bankr Doppler migration. Bankr-native exact metadata/page evidence wins over suffix heuristics.
 - If Bankr exact lookup returns no match and the CA ends in `b07`, treat Clanker as the primary launch-source candidate.
-- If explorer verified source/name is `ClankerToken`, a Clanker page/route canonicalizes the address, or Clanker tooling resolves the token, classify as `Clanker / <underlying pool>`, not `custom`, even if Dexscreener labels the market as Uniswap v4.
+- If explorer verified source/name is `ClankerToken`, Clanker tooling resolves the token, or a Clanker page returns token-specific data matching the address, classify as `Clanker / <underlying pool>`, not `custom`, even if Dexscreener labels the market as Uniswap v4.
+- Do not count a bare Clanker page 200/redirect/loading shell as provenance. The route must expose token-specific data, or be backed by `b07`, `ClankerToken`, factory labels, or Clanker API/tool evidence.
 
 For Clanker launches, capture:
 
