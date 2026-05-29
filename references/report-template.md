@@ -15,7 +15,7 @@ Sources:
 - Website/docs: <URL, not found after checking X/token/Bankr/docs links, or unavailable with blocker>
 - X/social: <URL/handle, not found after checking token/Bankr/site links, or unavailable with blocker>
 - GitHub/code: <URL plus age/history note, not found after checked sources, or unavailable with blocker>
-- Source trace: <Dexscreener exact CA checked; Bankr exact lookup checked; Dex links followed or empty; fee-recipient social fallback checked when needed; first-party website/docs/X/GitHub links followed or blocker>
+- Source trace: <Dexscreener exact CA checked; Bankr exact lookup checked; Virtuals exact lookup checked when Bankr/Dex are empty or AI-agent context suggests it; Dex links followed or empty; social/platform fallback checked when needed; first-party website/docs/X/GitHub links followed or blocker>
 
 Scores:
 - Token: <0-10> - <one-line reason>
@@ -25,14 +25,15 @@ Scores:
 - Product: <0-10 or N/A> - <one-line reason>
 - Overall: <0-10>
 
-Bankr / Provenance:
-- Launch source: <Bankr / Clanker / Doppler / Whetstone / Uniswap v4 / custom / unknown>
+Launch / Provenance:
+- Launch source: <Bankr / Clanker / Virtuals / Doppler / Whetstone / Uniswap v4 / custom / unknown>
 - Launcher/deployer: <handle/address if known>
 - Fee recipient: <handle/address if known>
 - Alignment: <self-launched | aligned | community-launched + endorsed | pre-endorsement speculation | please bro | unclear>
 - Endorsement evidence: <CA post / token-page link / fee claim / clear acknowledgement / none found>
 - Fee-claim status: <claimed / unclaimed / unknown / not applicable>
 - Bankr relationship evidence: <Agent Hour / Bankr-team post / social engagement / none found / unknown>
+- Platform status: <Virtuals UNDERGRAD/AVAILABLE/etc. when applicable, otherwise omit or N/A>
 
 Market:
 - FDV/MC: <value or unknown>
@@ -93,6 +94,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
 - For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.
 - If Bankr exact lookup returns `exactMatch`, the Bankr/Provenance section must use those exact fields. Do not replace them with `N/A`, `unknown`, `custom`, or `standard ERC-20` because a later explorer/search result uses generic wording.
+- If Bankr and Dexscreener are empty for a Base AI-agent-style token, check Virtuals exact `tokenAddress` and `preToken` routes before reporting launch source unknown. A Virtuals `UNDERGRAD` record is launch provenance and should be reported as Virtuals pre-token/pre-bonding, even if Dexscreener has no pair.
 - For fresh pairs with empty Dexscreener metadata, inspect Bankr `websiteUrl`/`tweetUrl`/`metadataUri` and the fee recipient X bio/profile links before writing `not found` for website/docs/X/GitHub.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.

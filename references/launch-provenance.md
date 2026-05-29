@@ -31,6 +31,25 @@ If a token appears to be launched through a known platform, use platform docs or
 
 Bankr launch pages are a provenance source even when the underlying token path uses Airlock, Doppler, Whetstone, Rehype hooks, or Uniswap v4 pool-manager contracts. Bankr launches from roughly spring 2026 onward should be expected to show Doppler/Airlock-style deployment plumbing. Do not classify a token as "not Bankr" just because explorer ownership or pool activity points at those contracts. Check `https://bankr.bot/launches/<contract>` and/or the Bankr token page first when the CA suffix, user context, or social links suggest Bankr.
 
+## Virtuals
+
+Virtuals launches can look invisible to Dexscreener before graduation. For Base AI-agent tokens, especially when the symbol/name resolves on explorer but Dexscreener has no pair, check Virtuals directly before concluding there is no launch provenance.
+
+Use exact Virtuals lookup:
+
+- Graduated token: `https://api.virtuals.io/api/virtuals?populate=*&filters[tokenAddress][$eq]=<contract>`
+- Undergrad/pre-token: `https://api.virtuals.io/api/virtuals?populate=*&filters[preToken][$eq]=<contract>`
+- If explorer reveals a symbol/name, also query exact `symbol` and `name`.
+
+Important fields:
+
+- `id`, `uid`, `createdAt`, `name`, `symbol`, `status`.
+- `tokenAddress`, `preToken`, `lpAddress`, `preTokenPair`, `virtualId`.
+- `walletAddress`, `sentientWalletAddress`, `daoAddress`.
+- `website`, `socials`, image/profile URL.
+
+Classify `status: UNDERGRAD` as a Virtuals pre-bonding/pre-token, not as a nonexistent token. Missing Dexscreener market data can be normal for this stage. Report Virtuals provenance separately from Bankr/Clanker, and do not force Bankr fields when Bankr exact lookup is empty.
+
 For known platform launches, prioritize:
 
 - Deployer/beneficiary identity.

@@ -93,6 +93,24 @@ Expected classification:
 - Evaluate as non-Bankr/ambiguous launch.
 - Official account posting CA and docs improves Social/Product, but unresolved explorer/source-label or holder-data issues should remain in Unknowns/Risks.
 
+## LAGANN / Virtuals Undergrad
+
+Input:
+
+```text
+0x4265a0210dd20465b6f669fc45e5ca0534319a5d
+```
+
+Expected classification:
+
+- Not Bankr. Bankr exact lookup returns no match; do not force the Bankr provenance template as if Bankr is the only possible launch source.
+- Blockscout/explorer may show token symbol/name `LAGANN` even when Dexscreener has no pair.
+- Virtuals exact `preToken` lookup should find a matching record with name/symbol `LAGANN`, `status: UNDERGRAD`, `preToken` equal to the input CA, `preTokenPair` `0x3b4b16e3014B798F775391c9FB101563EDab3e73`, and created date `2026-05-29`.
+- Classify launch source as `Virtuals`, platform status `UNDERGRAD` / pre-token. Missing Dexscreener data should be reported as undergrad/no public DEX pair found, not as proof the token does not exist.
+- If Virtuals record has no socials/website, source fields should say not found after checking Virtuals metadata plus search/social fallback, not only token metadata.
+- Expected failure if output says no launchpad record, no active token, or launch source unknown while Virtuals exact `preToken` lookup is available.
+- Expected failure if output includes Bankr launcher/fee-recipient/alignment fields as primary evidence for a non-Bankr Virtuals token.
+
 ## Pass Criteria
 
 - Verdict appears first.
