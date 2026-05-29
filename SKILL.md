@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 20
+version: 21
 visibility: public
 metadata:
   clawdbot:
@@ -35,6 +35,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not use slash-combined alignment labels like `self-launched/aligned`. Choose one label: `self-launched`, `aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, `please bro`, or `unclear`.
 - Use `Alignment: self-launched` only when the official project/person directly launched/deployed the token.
 - Use `Alignment: aligned` when launcher/deployer and fee recipient appear controlled by the same official project/person, but the evidence does not support calling it a direct self-launch.
+- A Bankr `tweetUrl` from the fee recipient or official project/person is endorsement/acknowledgement evidence, not self-launch evidence by itself. If the Bankr deployer wallet differs from the fee recipient and no source proves the deployer is controlled by that recipient, do not write `self-launched`.
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Do not use bare `Alignment: endorsed`; endorsement is evidence/status, not a launch alignment bucket. For a third-party launch with explicit acknowledgement, use `Alignment: community-launched + endorsed`.
 - Do not write `Endorsement: Official (Bankr deployment)` or treat Bankr deployment itself as project endorsement. Bankr proves launch source only; endorsement requires project/dev/fee-recipient acknowledgement of the token.
@@ -211,6 +212,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `No market data/no liquidity means no token exists` after Virtuals exact lookup matched an `UNDERGRAD`/pre-token record.
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.
 - `Fee recipient: N/A`, `Fee recipient: unknown`, or `Bankr relationship evidence: None found` after Bankr exact lookup returned a fee recipient, tweet URL, or website URL.
+- `Alignment: self-launched` while Bankr exact lookup shows deployer/launcher and fee recipient are different wallets and no source proves the deployer is controlled by the fee recipient/project. A fee-recipient `tweetUrl`, website URL, or CA acknowledgement should make this `community-launched + endorsed`, not `self-launched`.
 - `Fee-claim status: claimed` without direct fee-claim evidence from Bankr-native metadata, a claim transaction/event, or explicit recipient claim. A launch tweet, website link, or token acknowledgement is endorsement evidence, not fee-claim evidence.
 - `Product: low because no website/docs` while a first-party website/docs link is present but uninspected.
 - GitHub-only input returns `send a contract address`, `cannot analyze token without CA`, or a code-only report without an `Attached Token` section.
@@ -258,7 +260,7 @@ See `references/safety-rules.md` for the full safety checklist.
    - Liquidity, volume, FDV/market cap, pair age, holder count, top-holder concentration, verified source, proxy/admin/mint controls, tax/honeypot warnings when relevant.
    - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown` and list the missing check under `Unknowns`.
    - Do not use phrases like `smart money accumulation`, `verified source`, `healthy holder distribution`, or `low slippage` unless the supporting source/tool result was actually inspected.
-   - For Bankr tokens, compare launcher/deployer vs fee recipient/project. If the launcher is a community or third-party account and the fee recipient/project has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If the launcher is a community or third-party account and the fee recipient/project has clearly acknowledged the token, tag it as `community-launched + endorsed`, not self-launched. If the official project/person directly launched it, tag `self-launched`. If launcher/deployer and fee recipient appear to be the same controlled official party but direct self-launch evidence is unclear, tag `aligned`. Do not require fee claiming as endorsement for self-launched or aligned cases.
+   - For Bankr tokens, compare launcher/deployer vs fee recipient/project. If the launcher is a community or third-party account and the fee recipient/project has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If the launcher is a community or third-party account and the fee recipient/project has clearly acknowledged the token, tag it as `community-launched + endorsed`, not self-launched. If Bankr only shows a raw deployer wallet and a different fee-recipient wallet/X account, do not infer they are the same party. If the official project/person directly launched it, tag `self-launched`. If launcher/deployer and fee recipient appear to be the same controlled official party but direct self-launch evidence is unclear, tag `aligned`. Do not require fee claiming as endorsement for self-launched or aligned cases.
 
 3. Inspect social context.
    - When running inside Bankr, use Bankr-native X/search/social tools as the default path. See `references/bankr-tooling.md`.

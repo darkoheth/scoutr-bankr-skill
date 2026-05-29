@@ -147,6 +147,22 @@ Expected classification:
 - Dexscreener exposes first-party links: `https://quill.computer/` and `https://x.com/quillcomputer`; docs expose `QuillToken 0x60A646e3fD75CdE4c5b604b22d4Fcd04639913C8`.
 - Expected failure if output says `Launch source: Clanker` without validated Clanker evidence such as `b07`, `ClankerToken`, factory labels, or token-specific Clanker API/route data.
 
+## RomanStorm / Fee Recipient Endorsed, Not Self-Launched
+
+Input:
+
+```text
+0x2986b9f1ad2aac1b39ce406ae0af6088032dbba3
+```
+
+Expected classification:
+
+- Bankr / Doppler launch. Bankr exact lookup returns token name `FreeRomanStorm.com`, symbol `RomanStorm`, `tweetUrl`, `websiteUrl`, deployer wallet `0xf2239050c1c53c68dd8a439e63be6f3ba9190dc0`, and fee recipient wallet/X `0x0b8aa08b5dc9b295c97d5d5290a3a6f72249941f` / `@rstormsf`.
+- Deployer wallet and fee-recipient wallet differ, and the Bankr deployer has no `xUsername` in the exact metadata. Do not infer the deployer is Roman Storm or a Roman-controlled wallet without external proof.
+- The `tweetUrl` from `@rstormsf` is strong official acknowledgement/endorsement evidence. It should make the alignment `community-launched + endorsed`, not `self-launched`.
+- Fee-claim status remains separate. Do not call fees claimed unless Bankr-native claim metadata, a claim transaction/event, or an explicit recipient statement proves it.
+- Expected failure if output says `Alignment: self-launched`, `direct self-launch`, or `launched via Roman Storm's verified X account` solely because the fee recipient is `@rstormsf` or the Bankr `tweetUrl` is Roman's post.
+
 ## RUNNER / Legacy Clanker + Heavy Site
 
 Input:
