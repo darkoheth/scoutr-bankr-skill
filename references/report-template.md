@@ -143,6 +143,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
 - For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.
 - If Bankr exact lookup returns `exactMatch`, the Bankr/Provenance section must use those exact fields. Do not replace them with `N/A`, `unknown`, `custom`, or `standard ERC-20` because a later explorer/search result uses generic wording.
+- Do not ship a market-only Bankr report. If Bankr exact lookup returns a website URL, X handle/tweet URL, or metadata URI, the report must include source discovery and GitHub/product findings or explicit blockers. `bankr_deployed` is not enough.
 - If the CA ends in `ba3`, treat Bankr/Doppler as a strong candidate and check Bankr exact/page metadata before any custom classification.
 - If the CA ends in `b07`, treat Clanker as a strong candidate after Bankr exact/page no-match. Some older Bankr launches also end in `b07`, so Bankr exact metadata wins. If verified source/name is `ClankerToken`, Clanker route/tooling resolves, or other Clanker evidence exists, write `Launch source: Clanker / Uniswap v4` instead of `Uniswap v4 (Custom)`.
 - If Bankr and Dexscreener are empty for a Base AI-agent-style token, check Virtuals exact `tokenAddress` and `preToken` routes before reporting launch source unknown. A Virtuals `UNDERGRAD` record is launch provenance and should be reported as Virtuals pre-token/pre-bonding, even if Dexscreener has no pair.
@@ -153,4 +154,5 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
 - If using separate `Website:` and `Docs:` lines instead of the combined template field, the same no-blank rule applies to each line.
 - Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.
+- Before sending, reject the draft if it has only Stats/Security/Summary and no Launch/Provenance, Sources, GitHub/code, Unknowns, or Source trace for a Bankr exact match.
 - The `Source trace` line is a compact audit trail, not a long research log. Its job is to make missing-source failures obvious before the report ships.

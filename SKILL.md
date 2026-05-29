@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 21
+version: 22
 visibility: public
 metadata:
   clawdbot:
@@ -50,6 +50,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - For CA-only scans, build a `source_map` before writing prose. It must contain any structured Dexscreener websites/socials and any exact Bankr launch fields. The final report must copy from this `source_map`; do not rely on memory, generic search summaries, or social-sentiment output for these fields.
 - If Bankr exact lookup returns `exactMatch`, the report must say `Launch source: Bankr / <launchType>` and must populate launcher/deployer, fee recipient, tweet URL if relevant, website URL if present, pool ID/tx hash if useful, and launch timestamp if useful. Do not later override this with `custom`, `unknown`, or `standard ERC-20` based on explorer or pool labels.
+- A report that only returns market stats plus `security: safe (bankr_deployed)` is incomplete for Scoutr. Bankr launch provenance, first-party source discovery, and GitHub/product checks are required whenever Bankr exact metadata exposes a website, X handle, tweet URL, metadata URI, deployer, or fee recipient.
 - Use CA suffixes as launch-router hints for newer platform launches: `...ba3` strongly suggests newer Bankr/Doppler, while `...b07` strongly suggests newer Clanker. Some older Bankr launches also end in `b07`, so Bankr exact metadata/page wins over the suffix. If Bankr has no match and the CA ends `b07`, inspect Clanker and explorer `ClankerToken` evidence before calling the launch custom or unknown.
 - If Bankr exact lookup returns no match, do not force a Bankr frame. Check other launch ecosystems before concluding `unknown`, especially Virtuals for Base AI-agent tokens.
 - If validated Clanker evidence is present via `b07` suffix plus supporting context, verified `ClankerToken` source, factory/deployer labels, or a Clanker API/tool response that returns the exact contract as a token record, the report must say `Launch source: Clanker / <underlying pool>` such as Uniswap v4. Do not downgrade it to `custom` just because Dexscreener labels the pool as Uniswap v4.
@@ -213,6 +214,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.
 - `Fee recipient: N/A`, `Fee recipient: unknown`, or `Bankr relationship evidence: None found` after Bankr exact lookup returned a fee recipient, tweet URL, or website URL.
 - `Alignment: self-launched` while Bankr exact lookup shows deployer/launcher and fee recipient are different wallets and no source proves the deployer is controlled by the fee recipient/project. A fee-recipient `tweetUrl`, website URL, or CA acknowledgement should make this `community-launched + endorsed`, not `self-launched`.
+- A market-only report that omits `Launch / Provenance`, `Sources`, `GitHub/code`, or `Source trace` after Bankr exact lookup returns website/X/metadata fields.
+- `Security: safe (bankr_deployed)` as the only security/provenance evidence. Bankr deployment proves launch source, not holder distribution, code quality, role/admin state, fee alignment, GitHub quality, or product legitimacy.
 - `Fee-claim status: claimed` without direct fee-claim evidence from Bankr-native metadata, a claim transaction/event, or explicit recipient claim. A launch tweet, website link, or token acknowledgement is endorsement evidence, not fee-claim evidence.
 - `Product: low because no website/docs` while a first-party website/docs link is present but uninspected.
 - GitHub-only input returns `send a contract address`, `cannot analyze token without CA`, or a code-only report without an `Attached Token` section.

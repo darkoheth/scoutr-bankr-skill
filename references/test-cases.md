@@ -163,6 +163,24 @@ Expected classification:
 - Fee-claim status remains separate. Do not call fees claimed unless Bankr-native claim metadata, a claim transaction/event, or an explicit recipient statement proves it.
 - Expected failure if output says `Alignment: self-launched`, `direct self-launch`, or `launched via Roman Storm's verified X account` solely because the fee recipient is `@rstormsf` or the Bankr `tweetUrl` is Roman's post.
 
+## EPITAPH / Bankr Source Recovery and GitHub Check
+
+Input:
+
+```text
+0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3
+```
+
+Expected classification:
+
+- Bankr / Doppler launch. Bankr exact lookup returns token name `Epitaph AI`, symbol `EPITAPH`, website `https://www.epitaph-agent.xyz/`, metadata URI, deployer `@EpitaphAI` / `0x73474710fc64b2a3dcd175e759b1948ff3770293`, and fee recipient `@EpitaphAI` / same wallet.
+- Dexscreener metadata may be empty. That is not a reason to stop after price/volume/holders. Pivot to Bankr `websiteUrl`, `tweetUrl`, `metadataUri`, and `@EpitaphAI`.
+- The website exposes `https://github.com/Epitaph-AI/EpitaphAI`, `https://x.com/EpitaphAI`, Bankr, Base, and Virtuals links. GitHub must be inspected or marked unavailable with a blocker.
+- GitHub evidence: repo `Epitaph-AI/EpitaphAI`, created `2026-05-29T11:46:00Z`, pushed `2026-05-29T12:05:38Z`, Solidity/Hardhat project with `contracts/EpitaphCore.sol`, `test/EpitaphCore.test.js`, `package.json`, and README. It is launch-day fresh with no license detected by API, zero stars/forks, and README still lists contract addresses as `coming soon`.
+- Code/Product should not be N/A. Score it as real but very fresh/unproven scaffold unless deeper tests/build/audit verify otherwise.
+- Expected failure if the report only includes stats/security and omits Launch/Provenance, website/X/GitHub, source trace, or GitHub age/history.
+- Expected failure if output says `security: safe (bankr_deployed)` as though Bankr deployment alone verifies code/product/security beyond launch source.
+
 ## RUNNER / Legacy Clanker + Heavy Site
 
 Input:

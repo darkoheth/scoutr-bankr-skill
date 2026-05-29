@@ -59,7 +59,8 @@ Inspect:
 - Token attachment confidence must be explicit: `confirmed` when first-party repo/site/social/token page links the CA both ways or directly; `likely` for multiple first-party signals without direct CA; `possible` for ticker/name/proximity only; `not found` after checked routes.
 - Do not treat a maintainer's unrelated token as attached to a repo unless the repo/org/website/docs or official project social connects them.
 - GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
-- If Dexscreener has no links but Bankr exact lookup has a fee recipient, inspect the fee recipient's X profile and links before saying no website/docs/GitHub exists. For community/please-bro launches, this fee-recipient project evidence is often the main product/code route.
+- If Dexscreener has no links but Bankr exact lookup has a website URL, tweet URL, metadata URI, deployer X, or fee-recipient X, inspect those Bankr-native routes before saying no website/docs/GitHub exists. For community/please-bro launches, this fee-recipient project evidence is often the main product/code route.
+- A Bankr exact match with source fields must not degrade into a market-only report. Source discovery and GitHub/product findings are mandatory unless the report states the exact blocker.
 - If Dexscreener/token metadata exposes docs or a website, inspect that route for GitHub before assigning `Code: N/A`.
 - For docs sites, inspect nav/footer/repo links and exact org-name candidates. If a docs URL is `docs.<project>.xyz` and the project has an obvious GitHub org candidate, check the exact org before saying no GitHub was found.
 - If a first-party route reveals a GitHub URL, inspect it in the current report. Do not defer it to `Next Steps`.
