@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 6
+version: 7
 visibility: public
 metadata:
   clawdbot:
@@ -28,7 +28,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not leave first-party source fields blank. If website, docs, X, or GitHub is not found, write `not found after checking <specific sources>` or `unknown: <tool/blocker>`. A blank `Website:` or `GitHub:` line is a failed report.
 - Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
 - Do not treat technical docs as a substitute for GitHub/code analysis when a repo/org link is discoverable from those docs.
-- Known regression guard: for 1clawAI / `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, first-party surfaces are known to include `https://docs.1claw.xyz` / `https://1claw.xyz` and `https://github.com/1clawAI`. Refresh live data, but never report this case as self-launched, blank-website, or no-GitHub unless those URLs are explicitly unreachable and the blocker is stated.
+- When any first-party route exposes docs, a website, or GitHub, treat that as available source material for the current report. Do not downgrade to `no website`, `no GitHub`, or `lacks product proof` unless those exact first-party routes were checked and failed or the runtime blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - If the output would rely on an assumption, move it to `Unknowns` instead.

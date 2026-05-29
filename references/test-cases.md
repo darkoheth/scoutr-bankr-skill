@@ -69,7 +69,7 @@ Expected classification:
 - If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
 - Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
 - Expected failure if `Website:` is blank. If live discovery fails, the report must still say `Website/docs: unavailable` with the checked sources/blocker, not leave an empty field.
-- Known first-party anchors for regression testing: `https://docs.1claw.xyz`, `https://1claw.xyz`, `https://github.com/1clawAI`, and the Bankr launch page for the CA. Refresh live data during real scans, but use these anchors to catch Bankr-runtime false negatives.
+- Generalized lesson: when a Dexscreener, Bankr, official X bio, website, or docs route exposes a first-party site/docs/GitHub link, Scoutr must inspect it in the same report or state the exact blocker. Do not add token-specific fallbacks to production instructions; regression examples are only examples.
 
 ## DOT
 
