@@ -1,0 +1,63 @@
+# Launch Provenance
+
+The launch path often explains why factory info looks missing, strange, or different from expected launchpads.
+
+## Classify First
+
+Try to classify the launch as one of:
+
+- Known launch platform: Bankr, Clanker, Doppler, Whetstone/Airlock, Zora, Virtuals, Pump-style launchpad, or another named factory.
+- DEX-native pool launch: Uniswap v2/v3/v4, Aerodrome, Velodrome, PancakeSwap, Raydium, Meteora.
+- Custom deployer: bespoke ERC-20 deployment, own factory, or verified custom source.
+- Migration/relaunch: old token to new token, snapshot/claim, or manual rebuy narrative.
+- Unknown: not enough evidence to classify.
+
+## Common Signals
+
+- Dexscreener `labels` such as `v4`, pair address shape, pool manager labels, and quote token.
+- Explorer contract creator, creation transaction, verified source, proxy status, and internal calls.
+- Factory/router/pool manager labels from Blockscout/Basescan/Etherscan.
+- Token metadata links: website, X account, Telegram, Discord, docs.
+- Known platform-specific read methods or metadata fields.
+- Initial liquidity transaction and first holder distribution.
+
+## Uniswap v4 Note
+
+Uniswap v4 pools can appear as pool IDs or pool-manager activity rather than a traditional pair contract/factory path. If Dexscreener labels the market `v4` and explorer activity routes through `Uniswap V4: Pool Manager`, say that clearly. Do not force it into a Clanker/Bankr-style factory narrative.
+
+## Bankr / Clanker / Similar Launches
+
+If a token appears to be launched through a known platform, use platform docs or platform tools when available before judging tokenomics. Platform-generated tokens may share bytecode; configuration can live in deploy payloads, extension contracts, reward recipients, or launch metadata.
+
+Bankr launch pages are a provenance source even when the underlying token path uses Airlock, Doppler, Whetstone, Rehype hooks, or Uniswap v4 pool-manager contracts. Bankr launches from roughly spring 2026 onward should be expected to show Doppler/Airlock-style deployment plumbing. Do not classify a token as "not Bankr" just because explorer ownership or pool activity points at those contracts. Check `https://bankr.bot/launches/<contract>` and/or the Bankr token page first when the CA suffix, user context, or social links suggest Bankr.
+
+For known platform launches, prioritize:
+
+- Deployer/beneficiary identity.
+- Fee/reward recipients.
+- LP state and liquidity quality.
+- Holder concentration excluding pool/DEX addresses.
+- Metadata/social links and whether they match official project claims.
+
+## Custom ERC-20 Launches
+
+For custom verified contracts, inspect:
+
+- Mint authority and cap.
+- Owner/admin roles and whether they are renounced, multisig, timelocked, or active.
+- Pause, blacklist, fee, max wallet, and upgrade controls.
+- Whether source comments match live role state.
+- Whether total supply is fixed or emissions continue.
+
+## Migration / Relaunch
+
+For migration narratives, require specifics:
+
+- Old and new token addresses.
+- Snapshot or claim contract.
+- 1:1 conversion mechanics or public allocation math.
+- Old liquidity handling.
+- Team/admin continuity.
+- Communication trail from official accounts.
+
+If users are simply told to rebuy, mark that as a major red flag.

@@ -1,0 +1,88 @@
+# Regression Test Cases
+
+Run these cases before publishing Scoutr, after changing provenance logic, or before submitting the skill to a public catalog. Use current live data, but preserve the expected classification logic below.
+
+## machineODDS
+
+Input:
+
+```text
+0xF7B36e3CEf28D77dD6193531C54E6fB34990ABA3
+```
+
+Expected classification:
+
+- Bankr launch.
+- Deployer/launcher and fee recipient align with the project account.
+- Treat as self-launched/aligned; do not require fee claiming as endorsement.
+- Verdict should not exceed the code/product evidence. If GitHub remains undiscovered, cap at `Small Spec` or high-risk `Watch`.
+
+## IMPECCABLE
+
+Input:
+
+```text
+0x8bbb0050a39aabff299043db31f4947bc6b7fba3
+```
+
+Expected classification:
+
+- Bankr launch with deployer and fee recipient differing.
+- Strong fee-recipient/project quality signal from the real Impeccable repo/product.
+- No official CA post, token-page link, fee claim, or clear acknowledgement means unresolved `please bro` / pre-endorsement speculation.
+- Target/founder liking a Bankr-community prompt is social proximity, not endorsement.
+- Cap at `Watch+` or cautious `Small Spec` unless explicit endorsement appears.
+
+## HERALD
+
+Input:
+
+```text
+0x7ac13be3939f75e28135097a1b6398fe024ecba3
+```
+
+Expected classification:
+
+- Bankr-style launch.
+- Target/dev posted the CA and engaged directly with Bankr/Igor context.
+- Treat target/dev-initiated engagement and CA posting as much stronger than Bankr team following the target.
+- Should score higher on provenance than pure `please bro` examples.
+
+## 1clawAI
+
+Input:
+
+```text
+0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3
+https://bankr.bot/launches/0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3
+```
+
+Expected classification:
+
+- Bankr launch. Bankr-native launch metadata wins.
+- Doppler/Airlock/Whetstone/Rehype/Uniswap v4 deployment plumbing is expected for newer Bankr launches and must not be used to rule out Bankr.
+- Launcher and fee recipient differ, so classify as pre-endorsement speculation / `please bro` unless fee recipient or official project posts the CA, links the token page, claims fees, or clearly acknowledges the token.
+- Real product/GitHub evidence improves Code/Product but does not complete endorsement.
+
+## DOT
+
+Input:
+
+```text
+0x23A2847d772803f9EFC64B4277b782b06296FE51
+```
+
+Expected classification:
+
+- Do not force Bankr provenance if no Bankr-native launch record or page is present.
+- Evaluate as non-Bankr/ambiguous launch.
+- Official account posting CA and docs improves Social/Product, but unresolved explorer/source-label or holder-data issues should remain in Unknowns/Risks.
+
+## Pass Criteria
+
+- Verdict appears first.
+- Bankr cases include launcher, fee recipient, alignment, and endorsement evidence.
+- Social proximity never becomes endorsement by itself.
+- Good GitHub/product proof is scored separately from token endorsement.
+- Unknowns are explicit when Bankr-native tools, X search, holder data, or GitHub checks are unavailable.
+- No output tells the user to buy, sell, hold, or trade.
