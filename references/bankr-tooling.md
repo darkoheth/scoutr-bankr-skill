@@ -8,6 +8,8 @@ Inside Bankr, Bankr-native launch/token metadata is the primary provenance sourc
 
 Use these tools when available in the Bankr runtime:
 
+- `get_token_launch_info`: exact launch metadata for Bankr/Doppler/Clanker-style tokens. Try this first for any EVM contract before inferring launch provenance from explorer labels.
+- `token_search`: baseline token/market lookup by contract address. Use it for chain, ticker, market data, and token metadata links; do not rely on sentiment-only tools for source discovery.
 - `search_tool`: broad web/search pass for project name, ticker, contract address, founder handles, scam/rug terms, investigator mentions, docs, and launch announcements.
 - `get_social_sentiment_for_ticker`: ticker-level social sentiment and surfaced allegations when the token has a clear symbol.
 - `browse_url`: targeted reads of official project websites, docs, GitHub pages, and official X/Twitter pages when direct page extraction is useful.

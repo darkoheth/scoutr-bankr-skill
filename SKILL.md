@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 8
+version: 9
 visibility: public
 metadata:
   clawdbot:
@@ -60,7 +60,7 @@ When the input is only a contract address, run this sequence before finalizing:
 3. Select the main/canonical pair by highest reliable liquidity and volume. Ignore obvious broken/stale pairs with impossible prices or tiny liquidity except as secondary markets.
 4. Copy first-party `info.websites` and `info.socials` from the selected pair into the `Sources` section. If these fields exist, they are official source candidates and must be followed before saying website, docs, X, or GitHub is missing.
 5. Check Bankr provenance directly:
-   - Use Bankr-native launch/token metadata when available.
+   - Use Bankr-native launch/token metadata when available, especially `get_token_launch_info`.
    - Query Bankr exact launch search when public HTTP is available: `https://api.bankr.bot/token-launches/search?q=<contract>`.
    - If the result has `exactMatch`, use its `launchType`, `deployer`, `feeRecipient`, `tweetUrl`, `websiteUrl`, `poolId`, `txHash`, and `timestamp` as primary Bankr provenance fields.
    - Also construct/check `https://bankr.bot/launches/<contract>` or Bankr search for the exact CA. If a browser sees only the Bankr app shell, do not conclude no Bankr record exists; state `Bankr launch metadata unavailable via browser/app shell` unless another Bankr-native source resolves it.
