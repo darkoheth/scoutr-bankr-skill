@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 1
+version: 2
 visibility: public
 metadata:
   clawdbot:
@@ -12,6 +12,18 @@ metadata:
 # Scoutr
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
+
+## Critical Output Contract
+
+These rules are part of Scoutr's core behavior, not optional style guidance:
+
+- Return exactly one report. Never duplicate the report, even partially.
+- Never write `alignment: endorsed (self-launched)` or similar mixed labels. Choose one classification.
+- Use `Alignment: self-launched/aligned` when deployer and fee recipient are the same party but there is no separate explicit token acknowledgement.
+- Use `Alignment: endorsed` only when there is explicit token evidence: CA post, ticker mention, Bankr launch-page link, fee claim, or clear public acknowledgement of the token.
+- Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
+- Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
+- If the output would rely on an assumption, move it to `Unknowns` instead.
 
 ## Default Behavior
 
