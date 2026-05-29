@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 15
+version: 16
 visibility: public
 metadata:
   clawdbot:
@@ -41,6 +41,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Clanker evidence is present via `b07` suffix, Clanker page/route, verified `ClankerToken` source, or Clanker API/tooling, the report must say `Launch source: Clanker / <underlying pool>` such as Uniswap v4. Do not downgrade it to `custom` just because Dexscreener labels the pool as Uniswap v4.
 - If Virtuals exact lookup resolves the CA as `tokenAddress` or `preToken`, the report must say `Launch source: Virtuals` with the Virtuals status (`UNDERGRAD`, `AVAILABLE`, etc.), token/pre-token address, Virtuals pair/LP when present, agent/project id when present, and Virtuals page/API evidence. Do not report it as Bankr, Clanker, or unknown just because Dexscreener has no pair.
 - New pairs often have empty Dexscreener metadata. If Dexscreener has no useful website/social links, pivot to Bankr exact metadata and the fee recipient/launcher social profiles: inspect fee-recipient X bio/profile links, launch tweet links, pinned/recent project posts, Bankr `websiteUrl`/`metadataUri`, and obvious exact project/org searches before saying sources or GitHub are missing.
+- Use a latency guard. Do not spend the whole run crawling large websites, X pages, Framer bundles, Discord/Telegram, or every possible platform branch. Prefer structured APIs and page metadata first; if a source is slow, login-walled, huge, or JS-heavy, record the blocker and continue.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
 - Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.
 
@@ -94,6 +95,14 @@ When the input is only a contract address, run this sequence before finalizing:
    - Search exact names from Virtuals metadata (`name`, `symbol`, wallet/project identifiers when useful) plus `GitHub`, `docs`, `website`, and the contract address.
 8. Follow discovered website/docs/X links. Inspect docs nav/footer and official X bio/profile links for GitHub. If GitHub is found, inspect the org/repo now.
 9. Only after these routes fail may `Sources` say `not found`, and it must name the checked routes, including whether Bankr, Virtuals, and social fallback were checked.
+
+Latency guard for CA-only scans:
+
+- Use structured lookups first: Dexscreener exact CA, Bankr exact lookup, suffix/platform routing, explorer token/contract metadata, then platform-specific exact lookup.
+- For official websites, read metadata, visible links, and a small text sample first. Do not fetch Framer/Next/Vite asset bundles, large images, video, font files, analytics scripts, or every discovered asset.
+- For X, Farcaster, Telegram, and Discord, use available social/search tooling or record the link. Do not block the whole report on login walls or slow social pages.
+- If a source exceeds the runtime/tool budget, write `unavailable: timeout/large JS page/login wall` and continue with lower confidence.
+- Prefer a useful partial report over timing out. A missing GitHub or social deep-dive belongs in `Unknowns`, not as a reason to hang.
 
 Minimum `source_map` fields for CA-only scans:
 

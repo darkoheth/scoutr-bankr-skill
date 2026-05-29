@@ -100,6 +100,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For fresh pairs with empty Dexscreener metadata, inspect Bankr `websiteUrl`/`tweetUrl`/`metadataUri` and the fee recipient X bio/profile links before writing `not found` for website/docs/X/GitHub.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
+- Use a latency guard on CA-only scans. Do not hang the report on large Framer/Next/Vite bundles, social login walls, Discord/Telegram pages, large media assets, or exhaustive website crawls. Record the blocker in `Sources`, `Source trace`, or `Unknowns`, then return the best evidence-backed report.
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
 - If using separate `Website:` and `Docs:` lines instead of the combined template field, the same no-blank rule applies to each line.
 - Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.

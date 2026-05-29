@@ -129,6 +129,24 @@ Expected classification:
 - Dexscreener exposes first-party links: `https://agentbounty.dev`, founder site/newsletter, `https://x.com/agentbountydev`, Telegram, Discord, and Farcaster. These should populate sources, not blanks.
 - Expected failure if output says `custom launch`, `standard Uniswap v4 pool`, or `Launch source: unknown` without acknowledging Clanker evidence.
 
+## RUNNER / Legacy Clanker + Heavy Site
+
+Input:
+
+```text
+0x18b6f6049A0af4Ed2BBe0090319174EeeF89f53a
+```
+
+Expected classification:
+
+- Do not hang. Public checks should complete from structured routes: Dexscreener exact CA/token-pairs, Bankr exact lookup, explorer token/contract metadata, and website metadata/visible links.
+- Bankr exact lookup currently returns no match. Do not force a current Bankr/Doppler classification without Bankr-native evidence.
+- Dexscreener exposes first-party sources: `https://runneronbase.io/`, `https://x.com/runnerbased`, and `https://farcaster.xyz/runonbase.eth`.
+- Website metadata/visible text exposes additional first-party routes such as `https://docs.runneronbase.io`, the Farcaster mini app, Dune dashboard, and Basescan link. These should populate source fields or source trace.
+- The website is a large/JS-heavy first-party site. Read metadata, visible links, and a small text sample first; do not crawl Framer/asset bundles or block on full rendering before returning a report.
+- Official website copy says RUNNER is "the first clanker". Treat this as project/site provenance evidence for legacy Clanker context, with confidence/unknowns if Clanker creator metadata is unavailable.
+- Expected failure if the report leaves `Website/docs` blank, says no sources were found, or times out because it tries exhaustive website/social crawling.
+
 ## Pass Criteria
 
 - Verdict appears first.

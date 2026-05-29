@@ -15,6 +15,8 @@
 - CA-only source recovery: query structured token metadata before generic search. Use Dexscreener exact CA endpoints (`/latest/dex/search?q=<contract>` and `/token-pairs/v1/<chain>/<contract>` when chain is known), select the main pair by real liquidity/volume, then extract `info.websites` and `info.socials`.
 - Preserve structured results in a short source map before writing analysis. Required keys are token contract, chain, ticker, canonical pair, Dexscreener websites/socials, Bankr exact launch fields, Clanker evidence when present, Virtuals exact fields when present, fee-recipient/social/profile links, and GitHub candidates. The final report should be copied from this source map for source/provenance fields.
 - Do not let a later generic search summary erase structured facts. If Dexscreener exposed a website/docs/X link or Bankr exact lookup exposed a deployer/fee recipient/tweet, those fields stay present in the report unless a mismatch is explicitly found and explained.
+- Use a latency guard. Structured API lookups, explorer metadata, HTML metadata, visible links, and small text samples are enough to keep the report moving. Do not crawl Framer/Next/Vite bundles, large media assets, analytics scripts, or every social/platform branch before producing a verdict.
+- If a source is slow, huge, JS-heavy, or login-walled, write `unavailable: timeout/large JS page/login wall` for the blocked detail and continue. A partial report with explicit Unknowns is better than no report.
 - Empty Dexscreener metadata is common on fresh pairs. Treat empty `info.websites`/`info.socials` as a reason to pivot, not as proof no sources exist. Next check Bankr exact metadata, the launch tweet, fee recipient X bio/profile links, launcher X profile when useful, pinned/recent project posts, and exact project/GitHub/org searches.
 - Empty Dexscreener pairs are also common for Virtuals undergrad/pre-token records. If Virtuals returns `status: UNDERGRAD`, report market data as unavailable/undergrad rather than saying no live token or no launchpad record exists.
 - Never confuse token contract with launcher/deployer. If a source does not expose launcher/deployer, report it as `unknown`; do not copy the CA into the launcher/deployer field.
@@ -74,6 +76,7 @@ Inspect:
 ## Website / App
 
 - Does the product load and match claims?
+- For heavy JS sites, first inspect title/meta tags, canonical links, obvious route links, and visible text. Avoid blocking on bundled assets or full browser rendering unless wallet/product behavior is the main risk being evaluated.
 - Wallet connect behavior: no unexpected signatures, approvals, private-key requests, or blind transactions.
 - Docs quality, broken links, team/company identity, legal/contact information.
 - Copy/paste feel, fake partner logos, vague AI-generated claims, impossible roadmap.
