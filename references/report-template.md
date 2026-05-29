@@ -140,6 +140,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
 - Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
+- Website/source checks must include raw link extraction, not only page text summarization. If the site has `github.com` anywhere in `href` links, footer links, page HTML, or extracted link lists, report that GitHub URL and inspect it or name the blocker.
 - For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
 - For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.
 - If Bankr exact lookup returns `exactMatch`, the Bankr/Provenance section must use those exact fields. Do not replace them with `N/A`, `unknown`, `custom`, or `standard ERC-20` because a later explorer/search result uses generic wording.
@@ -150,6 +151,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For fresh pairs with empty Dexscreener metadata, inspect Bankr `websiteUrl`/`tweetUrl`/`metadataUri` and the fee recipient X bio/profile links before writing `not found` for website/docs/X/GitHub.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
+- Do not write `GitHub not discoverable via first-party surfaces` unless raw website link extraction, docs/footer extraction, X bio/profile links, and exact org/repo search were all checked or explicitly blocked.
 - Use a latency guard on CA-only scans. Do not hang the report on large Framer/Next/Vite bundles, social login walls, Discord/Telegram pages, large media assets, or exhaustive website crawls. Record the blocker in `Sources`, `Source trace`, or `Unknowns`, then return the best evidence-backed report.
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
 - If using separate `Website:` and `Docs:` lines instead of the combined template field, the same no-blank rule applies to each line.

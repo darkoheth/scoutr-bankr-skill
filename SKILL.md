@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 22
+version: 23
 visibility: public
 metadata:
   clawdbot:
@@ -41,6 +41,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not write `Endorsement: Official (Bankr deployment)` or treat Bankr deployment itself as project endorsement. Bankr proves launch source only; endorsement requires project/dev/fee-recipient acknowledgement of the token.
 - Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
 - GitHub discovery is mandatory when first-party surfaces expose docs, a website, or an official X profile. Before finalizing, follow Dexscreener/token links, Bankr links, official X bio, website, docs nav/footer, and exact org/repo search. If a GitHub URL is visible, inspect it in the current report.
+- Website checks must extract outbound links, not just summarize above-the-fold page text. Scan page HTML/markdown/link lists for `href=` URLs and raw `github.com/...` strings, including footer links, before writing `GitHub/code: not found`.
 - Do not leave first-party source fields blank. If website, docs, X, or GitHub is not found, write `not found after checking <specific sources>` or `unknown: <tool/blocker>`. A blank `Website:`, `Docs:`, `Website/docs:`, or `GitHub:` line is a failed report.
 - Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
 - Do not treat technical docs as a substitute for GitHub/code analysis when a repo/org link is discoverable from those docs.
@@ -57,6 +58,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not treat a bare HTTP 200, client-side redirect, loading shell, or generic app page from `clanker.world/clanker/<contract>` as Clanker evidence. The route must return token-specific data such as name/symbol/creator/reward recipient/pool matching the input CA, or it must be paired with `b07`, `ClankerToken`, factory labels, or authenticated Clanker API/tool evidence.
 - If Virtuals exact lookup resolves the CA as `tokenAddress` or `preToken`, the report must say `Launch source: Virtuals` with the Virtuals status (`UNDERGRAD`, `AVAILABLE`, etc.), token/pre-token address, Virtuals pair/LP when present, agent/project id when present, and Virtuals page/API evidence. Do not report it as Bankr, Clanker, or unknown just because Dexscreener has no pair.
 - New pairs often have empty Dexscreener metadata. If Dexscreener has no useful website/social links, pivot to Bankr exact metadata and the fee recipient/launcher social profiles: inspect fee-recipient X bio/profile links, launch tweet links, pinned/recent project posts, Bankr `websiteUrl`/`metadataUri`, and obvious exact project/org searches before saying sources or GitHub are missing.
+- If a website is too large or visually noisy, use a link-extraction pass (`href`, `github.com`, `docs.`, `x.com`, `twitter.com`) before reading prose. Do not conclude `GitHub not discoverable via first-party surfaces` unless the raw/link extraction pass and exact org/repo search both failed or were explicitly blocked.
 - GitHub links are first-class inputs. If the user sends only a GitHub org/repo URL, inspect and score the GitHub first, then try to discover any token attached to the repo, project, package, docs, website, maintainer, or owner. Do not stop at a code-only report unless token discovery routes were checked or blocked.
 - Use a latency guard. Do not spend the whole run crawling large websites, X pages, Framer bundles, Discord/Telegram, or every possible platform branch. Prefer structured APIs and page metadata first; if a source is slow, login-walled, huge, or JS-heavy, record the blocker and continue.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
@@ -202,6 +204,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Website/docs: not found after checking token metadata` while Dexscreener/token metadata, Bankr `websiteUrl`, official X bio, or docs links were not explicitly queried.
 - `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
 - `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
+- `GitHub/code: not found`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` after a first-party website's raw HTML/link list contains `github.com`.
 - `GitHub/code: not found`, `Website/docs: not found`, or `X/social: not found` on a new/empty Dexscreener pair while Bankr exact lookup returned fee recipient or launcher X handles and those profiles were not checked.
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.

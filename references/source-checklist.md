@@ -61,11 +61,13 @@ Inspect:
 - GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
 - If Dexscreener has no links but Bankr exact lookup has a website URL, tweet URL, metadata URI, deployer X, or fee-recipient X, inspect those Bankr-native routes before saying no website/docs/GitHub exists. For community/please-bro launches, this fee-recipient project evidence is often the main product/code route.
 - A Bankr exact match with source fields must not degrade into a market-only report. Source discovery and GitHub/product findings are mandatory unless the report states the exact blocker.
+- Website checks must include link extraction. Before saying no GitHub was found from a first-party site, scan raw HTML or extracted link lists for `href` URLs, `github.com`, `docs.`, `x.com`, `twitter.com`, and footer/resource links. Do this even when the visible hero/summary text does not mention GitHub.
 - If Dexscreener/token metadata exposes docs or a website, inspect that route for GitHub before assigning `Code: N/A`.
 - For docs sites, inspect nav/footer/repo links and exact org-name candidates. If a docs URL is `docs.<project>.xyz` and the project has an obvious GitHub org candidate, check the exact org before saying no GitHub was found.
 - If a first-party route reveals a GitHub URL, inspect it in the current report. Do not defer it to `Next Steps`.
 - If the repo/org cannot be inspected because the runtime lacks browser/search access or GitHub blocks the request, write `GitHub inspection unavailable`, include the discovered URL, and name the blocker. Do not write `GitHub not found`.
 - A blank website/docs/GitHub field is never acceptable. If the field cannot be populated, state exactly which first-party sources were checked or what tool blocker prevented checking. This applies to combined fields like `Website/docs:` and separate fields like `Website:` or `Docs:`.
+- If a first-party site contains `github.com` in raw HTML/link extraction, `GitHub/code: not found`, `GitHub not discoverable`, and `Code: N/A` are failed conclusions. Inspect the discovered repo/org or state why inspection was blocked.
 - Reject self-contradictory source conclusions. If token metadata, Bankr exact lookup, official X, website, or docs were not checked, do not write `not found after checking token metadata/social links`.
 - Technical docs are product evidence, not code evidence. If docs link to GitHub, the code score should reflect the repo/org inspection, not just the docs language.
 - Repo/org age, stars/forks/watchers, license, topics, default branch, recent pushes.
