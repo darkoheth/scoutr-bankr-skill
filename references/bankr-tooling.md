@@ -14,6 +14,20 @@ Use these tools when available in the Bankr runtime:
 
 If a Bankr tool is unavailable, blocked, rate-limited, or the user is not eligible for it, fall back to public web/search/explorer checks and lower confidence. Do not ask the user for API keys unless they explicitly want to connect their own account.
 
+## CA-Only Metadata Recovery
+
+When the user supplies only a contract address, do not rely on social sentiment or generic search alone. Recover structured token links first:
+
+1. Query Dexscreener by exact CA:
+   - `https://api.dexscreener.com/latest/dex/search?q=<contract>`
+   - `https://api.dexscreener.com/token-pairs/v1/<chain>/<contract>` when chain is known.
+2. Choose the canonical pair by real liquidity/volume. If one pair has meaningful liquidity and others have tiny liquidity or impossible prices, use the meaningful pair for source links and market fields.
+3. Extract `info.websites` and `info.socials`. Treat these as first-party source candidates unless they are clearly malicious/mismatched.
+4. Browse or search those exact URLs before claiming no website, docs, X, or GitHub exists.
+5. If the token data source has a docs URL, inspect docs nav/footer and page links for GitHub; docs often link the repo when Dexscreener does not.
+
+If Dexscreener or the token data source returns official links, the report must not say `not found after checking token metadata` for those same link types. It should either include the URLs or say the exact tool/runtime blocker that prevented inspection.
+
 ## Default Rule For Dexscreener Social Links
 
 When Dexscreener or another token data source provides an official X/Twitter link:
@@ -62,6 +76,13 @@ If social tooling is unavailable, say so in `Unknowns` and lower confidence inst
 Many scanned tokens will be Bankr launches. When the token appears to be from Bankr, inspect the Bankr token page before the verdict.
 
 When running as a Bankr skill, do not force Scoutr to infer Bankr provenance from bytecode or explorer labels if Bankr already exposes the launch record. The Bankr record wins for launch-source classification; the follow-up question is whether the launch is aligned/self-launched, endorsed, pre-endorsement speculation, or a `please bro`.
+
+Use exact Bankr launch lookup when available:
+
+- `https://api.bankr.bot/token-launches/search?q=<contract>`
+- If the response includes `exactMatch`, use it before explorer inference.
+- Important fields: `launchType`, `tokenName`, `tokenSymbol`, `chain`, `tokenAddress`, `poolId`, `txHash`, `deployer.walletAddress`, `deployer.xUsername`, `feeRecipient.walletAddress`, `feeRecipient.xUsername`, `tweetUrl`, `websiteUrl`, `metadataUri`, and `timestamp`.
+- If the API is unavailable but `https://bankr.bot/launches/<contract>` opens only the app shell, do not treat the app shell as a negative result. Mark Bankr metadata unavailable by browser/app-shell blocker and continue with Dexscreener/explorer evidence.
 
 Bankr can launch through Airlock/Doppler/Whetstone/Rehype/Uniswap v4 infrastructure. For Bankr launches from roughly spring 2026 onward, Doppler/Airlock-style deployment plumbing should be treated as normal rather than contradictory. Explorer evidence like an Airlock owner, Doppler hook initializer, Rehype hook, or Uniswap v4 Pool Manager is compatible with Bankr launch provenance. Treat the Bankr `/launches/<contract>` or token page as the Bankr-specific metadata layer, then evaluate deployer/launcher, fee recipient, tweet, and endorsement status from that page.
 

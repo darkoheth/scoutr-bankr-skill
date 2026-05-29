@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 7
+version: 8
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - When any first-party route exposes docs, a website, or GitHub, treat that as available source material for the current report. Do not downgrade to `no website`, `no GitHub`, or `lacks product proof` unless those exact first-party routes were checked and failed or the runtime blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
+- Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
 
 ## Default Behavior
@@ -47,6 +48,24 @@ For every token scan, apply these defaults automatically:
 - Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> Bankr links -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo. If a repo/org is found, inspect it before writing the final verdict.
 - Populate website/docs/GitHub fields with discovered URLs or explicit blockers. Never output an empty source line.
 - Return one compact report only.
+
+## Required CA-Only Retrieval Sequence
+
+When the input is only a contract address, run this sequence before finalizing:
+
+1. Normalize the CA and infer chain from user context or token search results.
+2. Query token market metadata by CA, preferring structured sources over generic search:
+   - Dexscreener search: `https://api.dexscreener.com/latest/dex/search?q=<contract>`
+   - Dexscreener token pairs when chain is known: `https://api.dexscreener.com/token-pairs/v1/<chain>/<contract>`
+3. Select the main/canonical pair by highest reliable liquidity and volume. Ignore obvious broken/stale pairs with impossible prices or tiny liquidity except as secondary markets.
+4. Copy first-party `info.websites` and `info.socials` from the selected pair into the `Sources` section. If these fields exist, they are official source candidates and must be followed before saying website, docs, X, or GitHub is missing.
+5. Check Bankr provenance directly:
+   - Use Bankr-native launch/token metadata when available.
+   - Query Bankr exact launch search when public HTTP is available: `https://api.bankr.bot/token-launches/search?q=<contract>`.
+   - If the result has `exactMatch`, use its `launchType`, `deployer`, `feeRecipient`, `tweetUrl`, `websiteUrl`, `poolId`, `txHash`, and `timestamp` as primary Bankr provenance fields.
+   - Also construct/check `https://bankr.bot/launches/<contract>` or Bankr search for the exact CA. If a browser sees only the Bankr app shell, do not conclude no Bankr record exists; state `Bankr launch metadata unavailable via browser/app shell` unless another Bankr-native source resolves it.
+6. Follow discovered website/docs/X links. Inspect docs nav/footer and official X bio/profile links for GitHub. If GitHub is found, inspect the org/repo now.
+7. Only after these routes fail may `Sources` say `not found`, and it must name the checked routes.
 
 ## Inputs
 

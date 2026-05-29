@@ -9,6 +9,9 @@
 - Deployer history, related contracts, launch factory/platform, pool manager, router, and migration path.
 - Launch mechanics: fair launch, presale, stealth, airdrop, points, claim, mining, emissions, migration.
 - Bankr provenance when applicable: Bankr token page URL, launcher/deployer, fee recipient, project/person the token points at, fee claim status if visible, and whether project/social links match the actual recipient.
+- Bankr exact lookup: use `https://api.bankr.bot/token-launches/search?q=<contract>` when possible. An `exactMatch` result is stronger than explorer inference and should populate launch source, deployer, fee recipient, tweet URL, website URL, pool ID, tx hash, and timestamp.
+- CA-only source recovery: query structured token metadata before generic search. Use Dexscreener exact CA endpoints (`/latest/dex/search?q=<contract>` and `/token-pairs/v1/<chain>/<contract>` when chain is known), select the main pair by real liquidity/volume, then extract `info.websites` and `info.socials`.
+- Never confuse token contract with launcher/deployer. If a source does not expose launcher/deployer, report it as `unknown`; do not copy the CA into the launcher/deployer field.
 - `Please bro` risk: launcher/deployer and fee recipient differ, and the fee recipient/project has not clearly claimed fees or posted/linked the token contract. Treat this as provenance risk, not proof of scam.
 - Endorsement evidence: fee recipient claims Bankr fees, posts the CA, links the Bankr/token page, or clearly acknowledges the token from an official social/channel. Good GitHub/product quality alone is not endorsement.
 - Bankr deployment is not endorsement. It proves the token launched through Bankr, not that the project/dev/fee recipient officially backs the token.
@@ -40,6 +43,7 @@ Inspect:
 ## GitHub / Code
 
 - GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
+- If Dexscreener/token metadata exposes docs or a website, inspect that route for GitHub before assigning `Code: N/A`.
 - If a first-party route reveals a GitHub URL, inspect it in the current report. Do not defer it to `Next Steps`.
 - If the repo/org cannot be inspected because the runtime lacks browser/search access or GitHub blocks the request, write `GitHub inspection unavailable`, include the discovered URL, and name the blocker. Do not write `GitHub not found`.
 - A blank website/docs/GitHub field is never acceptable. If the field cannot be populated, state exactly which first-party sources were checked or what tool blocker prevented checking.

@@ -80,12 +80,15 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
+- Do not put the token CA in the launcher/deployer field unless a source explicitly says the token contract is also the deployer. Use `unknown` for missing launcher/deployer.
 - For Bankr launches, `self-launched`, `community-launched`, and `endorsed` are not interchangeable. Use `self-launched` only when the official project/person appears to be the launcher/deployer or same controlled party as the fee recipient. If a community/third-party account launched it and the official project later acknowledged the token, call it `community-launched + endorsed`, not self-launched.
 - Endorsement evidence and fee-claim status are separate fields. If the project/dev publicly posts or acknowledges the CA but has not claimed fees, write `Alignment: community-launched + endorsed`, `Endorsement evidence: <specific post/link/acknowledgement>`, and `Fee-claim status: unclaimed/unknown`.
 - `Official (Bankr deployment)` is not valid endorsement evidence. Bankr deployment only establishes launch source; project endorsement requires project/dev/fee-recipient token acknowledgement.
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
+- For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
+- For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
