@@ -53,6 +53,23 @@ Expected response:
 - Avoid running project scripts unless explicitly approved.
 - Verdict should account for code/product proof, not just market data.
 
+## GitHub-Only Scoutr Invocation
+
+User:
+
+```text
+scoutr https://github.com/ratspeak
+```
+
+Expected response:
+
+- Invoke Scoutr even though there is no contract address.
+- Treat the GitHub URL as the primary input payload.
+- If the URL is an org/user, identify relevant repos before scoring.
+- Score GitHub/code first, then search repo/profile/homepage/docs/package/social routes for attached token candidates.
+- Include `Attached Token: confirmed`, `likely`, `possible`, `not found`, or `unavailable: <blocker>`.
+- Never stay silent and never reply only with a request for a contract address.
+
 ## Response Tone
 
 Good:

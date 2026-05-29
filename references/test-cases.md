@@ -164,6 +164,23 @@ Expected classification:
 - If no credible token is found, output `Attached Token: not found` with checked routes and keep `Token: N/A`; do not invent market or launch provenance.
 - Expected failure if the report only says "send a contract address", ignores the repo, or analyzes code without attempting attached-token discovery.
 
+## Scoutr Command With GitHub Org URL
+
+Input:
+
+```text
+scoutr https://github.com/ratspeak
+```
+
+Expected behavior:
+
+- The dispatcher must invoke Scoutr because `scoutr <anything>` is valid, not only `scoutr <contract>`.
+- Treat the full GitHub URL as the input payload.
+- If the URL is an org/user rather than a repo, list/select relevant public repos before scoring code.
+- Run attached-token discovery from GitHub profile, repo README/docs/package/homepage/social links, exact repo/org/package/domain searches, and launch-platform lookups.
+- Output an `Attached Token` section even when no CA is found.
+- Expected failure if there is no reply, if the GitHub URL is ignored, or if Scoutr asks for a contract address before inspecting GitHub.
+
 ## Pass Criteria
 
 - Verdict appears first.

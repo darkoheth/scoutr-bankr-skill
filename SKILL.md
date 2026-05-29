@@ -1,8 +1,17 @@
 ---
 name: scoutr
-description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
+description: >
+  Use when the user invokes scoutr or asks to evaluate crypto token launches,
+  project websites, X/social context, GitHub repositories, or launch provenance
+  from any input: contract address, Dexscreener link, GitHub org/repo/user URL,
+  website, X account/post, docs, ticker, project name, or mixed links. If the
+  message starts with or contains "scoutr" plus a non-contract URL, still invoke
+  this skill and infer the correct GitHub-first, website-first, social-first, or
+  token-first workflow. Produces read-only diligence with verdicts, scores, red
+  flags, attached-token discovery, and next checks. Never trades, posts, connects
+  wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 17
+version: 18
 visibility: public
 metadata:
   clawdbot:
@@ -17,6 +26,8 @@ Scoutr is a read-only crypto launch diligence workflow. It turns messy launch in
 
 These rules are part of Scoutr's core behavior, not optional style guidance:
 
+- Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
+- If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
 - Return exactly one report. Never duplicate the report, even partially.
 - Never write `alignment: endorsed (self-launched)`, `aligned (self-launched)`, or similar mixed labels. Choose one classification.
 - Do not use slash-combined alignment labels like `self-launched/aligned`. Choose one label: `self-launched`, `aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, `please bro`, or `unclear`.
@@ -49,6 +60,16 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 ## Default Behavior
 
 Scoutr must work from short user prompts. A user should be able to send only `scoutr <contract>`, `check this token <contract>`, a Dexscreener link, an X post, a website, or a repo link. Do not require the user to provide detailed diligence instructions.
+
+The command parser/dispatcher must treat the full text after `scoutr` as the input payload, not only contract-address substrings. Examples that must invoke Scoutr:
+
+- `scoutr https://github.com/ratspeak`
+- `scoutr https://github.com/<org>`
+- `scoutr https://github.com/<org>/<repo>`
+- `scoutr https://x.com/<project>`
+- `scoutr https://<project-site>`
+- `scoutr <ticker-or-project-name>`
+- `scoutr <contract-address>`
 
 For every token scan, apply these defaults automatically:
 
@@ -258,6 +279,11 @@ See `references/safety-rules.md` for the full safety checklist.
 ## Example Prompts
 
 - `scoutr <contract>`
+- `scoutr https://github.com/ratspeak`
+- `scoutr https://github.com/<org>`
+- `scoutr https://github.com/<org>/<repo>`
+- `scoutr https://x.com/<account-or-post>`
+- `scoutr https://<project-site-or-docs>`
 - `check this token with scoutr <contract>`
 - `Use scoutr on this Base token: <contract or Dexscreener URL>`
 - `What is this coin and where did it launch from? <contract>`
