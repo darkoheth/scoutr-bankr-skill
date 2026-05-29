@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 23
+version: 24
 visibility: public
 metadata:
   clawdbot:
@@ -26,6 +26,11 @@ Scoutr is a read-only crypto launch diligence workflow. It turns messy launch in
 
 These rules are part of Scoutr's core behavior, not optional style guidance:
 
+- Source copy-through is mandatory. When Bankr exact lookup returns `websiteUrl`, `tweetUrl`, `metadataUri`, `deployer.xUsername`, or `feeRecipient.xUsername`, copy those exact values into the report's `Sources`, `Launch / Provenance`, or `Source trace` before doing any prose synthesis. Later browsing/search failures must not erase those exact Bankr fields.
+- If Bankr exact lookup returns a `websiteUrl`, `Website/docs:` must contain that URL or an explicit mismatch/blocker. It must never be blank.
+- If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
+- If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
+- Known regression: for EPITAPH `0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3`, Bankr exact metadata has `websiteUrl: https://www.epitaph-agent.xyz/`, X `@EpitaphAI`, and the website footer contains `https://github.com/Epitaph-AI/EpitaphAI`. Any report saying website/X blank, GitHub not found, or Code N/A is wrong.
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
 - If the prompt repeats the command, such as `scoutr scoutr https://github.com/ratspeak`, strip duplicate leading `scoutr` tokens and use the remaining URL/text as the input payload.
@@ -202,6 +207,7 @@ If the report contradicts the `source_map`, the report is wrong. Fix the report,
 Before finalizing a token report, scan the draft for these failure patterns:
 
 - `Website/docs: not found after checking token metadata` while Dexscreener/token metadata, Bankr `websiteUrl`, official X bio, or docs links were not explicitly queried.
+- Blank `Website/docs:`, `Website:`, `X/social:`, or `Launch tweet:` after Bankr exact lookup returned `websiteUrl`, `tweetUrl`, deployer X, or fee-recipient X.
 - `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
 - `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
 - `GitHub/code: not found`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` after a first-party website's raw HTML/link list contains `github.com`.

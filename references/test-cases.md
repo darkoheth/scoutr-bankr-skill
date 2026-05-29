@@ -181,6 +181,8 @@ Expected classification:
 - Code/Product should not be N/A. Score it as real but very fresh/unproven scaffold unless deeper tests/build/audit verify otherwise.
 - Expected failure if the report only includes stats/security and omits Launch/Provenance, website/X/GitHub, source trace, or GitHub age/history.
 - Expected failure if output says `GitHub/code: not found after checking website`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` while `https://www.epitaph-agent.xyz/` contains `https://github.com/Epitaph-AI/EpitaphAI`.
+- Expected failure if `Website/docs:` is blank even though Bankr exact returned `https://www.epitaph-agent.xyz/`.
+- Expected failure if `X/social:` or `Launch tweet:` is blank even though Bankr exact returned `https://x.com/epitaphai` and `@EpitaphAI`.
 - Expected failure if output says `security: safe (bankr_deployed)` as though Bankr deployment alone verifies code/product/security beyond launch source.
 
 ## RUNNER / Legacy Clanker + Heavy Site
