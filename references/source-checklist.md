@@ -39,6 +39,9 @@ Inspect:
 ## GitHub / Code
 
 - GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
+- If a first-party route reveals a GitHub URL, inspect it in the current report. Do not defer it to `Next Steps`.
+- If the repo/org cannot be inspected because the runtime lacks browser/search access or GitHub blocks the request, write `GitHub inspection unavailable`, include the discovered URL, and name the blocker. Do not write `GitHub not found`.
+- Technical docs are product evidence, not code evidence. If docs link to GitHub, the code score should reflect the repo/org inspection, not just the docs language.
 - Repo/org age, stars/forks/watchers, license, topics, default branch, recent pushes.
 - Age quality: creation date, first meaningful commit date, commit span, contributor span, stale vs actively maintained, and whether history predates the token launch by weeks/months/years.
 - Required report note when GitHub is cited: include age/history checked with at least one concrete date/span/source, or write `age/history not checked`.

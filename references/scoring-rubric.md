@@ -46,6 +46,8 @@ Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sus
 
 Discovery weighting: before assigning `Code: N/A` or saying no GitHub was found, follow first-party links from token metadata/Dexscreener, Bankr, X bio, website, docs nav/footer, and package/docs references. Missing an obvious official GitHub from those surfaces should be treated as a failed code check, not evidence that no repo exists.
 
+Do not let the report end with GitHub as an unchecked next step when a first-party GitHub URL is visible. If found, inspect it and score Code from repo/org evidence. If inspection is blocked by tool/runtime limits, cap confidence at Medium and state the exact blocker plus discovered URL.
+
 ## Product / Website
 
 - 8-10: app works, docs align, no suspicious wallet behavior, real utility visible.

@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 4
+version: 5
 visibility: public
 metadata:
   clawdbot:
@@ -23,6 +23,9 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Use `Alignment: endorsed` only when there is explicit token evidence: CA post, ticker mention, Bankr launch-page link, fee claim, or clear public acknowledgement of the token.
 - Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
+- GitHub discovery is mandatory when first-party surfaces expose docs, a website, or an official X profile. Before finalizing, follow Dexscreener/token links, Bankr links, official X bio, website, docs nav/footer, and exact org/repo search. If a GitHub URL is visible, inspect it in the current report.
+- Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
+- Do not treat technical docs as a substitute for GitHub/code analysis when a repo/org link is discoverable from those docs.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
@@ -38,7 +41,7 @@ For every token scan, apply these defaults automatically:
 - Separate `self-launched/aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, and `please bro`; do not collapse them together.
 - Use `unknown` instead of estimated liquidity, holder concentration, role state, tax status, or unverified source status.
 - Check official social links and fee-recipient/project context when available.
-- Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo.
+- Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> Bankr links -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo. If a repo/org is found, inspect it before writing the final verdict.
 - Return one compact report only.
 
 ## Inputs
@@ -90,6 +93,8 @@ See `references/safety-rules.md` for the full safety checklist.
 
 4. Inspect GitHub/code when available.
    - First search first-party surfaces for GitHub: Dexscreener/token socials, Bankr page links, official X bio, project website, docs site navigation/footer, docs repository links, package links, and organization links.
+   - If the user provides a docs/site/X/Dexscreener link and that route exposes GitHub, GitHub is `available`; inspect it before finalizing. Do not leave it as a next step.
+   - If browser/tool access prevents repo inspection, report `GitHub inspection unavailable` plus the discovered URL and blocker. Do not say `no GitHub found`.
    - Repo/org age, real code vs placeholder, README/docs, commit pattern, tests, CI, build feasibility, contracts, secrets, and mismatch between claims and code.
    - Weight age and history heavily: an older repo/org with organic commits is a stronger signal than a fresh launch-day repo, even if both look polished.
    - If the report mentions GitHub/code, include an explicit age/history note such as repo/org creation date, first meaningful commit, commit span, active contributors, or `age/history not checked`. Do not let generic technical claims substitute for repo evidence.

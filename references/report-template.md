@@ -80,3 +80,5 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
+- If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
+- If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
