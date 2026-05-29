@@ -71,7 +71,7 @@ Capture:
 - Contract address, chain, ticker, and linked socials/site.
 - Deployer address/account.
 - Fee recipient address/account.
-- Whether deployer and fee recipient match.
+- Whether launcher/deployer and fee recipient match, and whether that launcher is the official project/person or a community/third-party account.
 - Whether the fee recipient/project has claimed fees, posted the CA, linked the token page, or otherwise clearly acknowledged the token.
 - Whether the fee recipient/project recently posted about the underlying product/project, even if the post does not mention the token.
 - Whether the fee recipient/project is scheduled for, appeared on, or was promoted by a Bankr show/event such as Bankr Agent Hour.
@@ -81,31 +81,33 @@ Capture:
 
 Classify:
 
-- `Official / aligned`: deployer and fee recipient are the same party, or the recipient/project clearly launched or endorsed it by claiming fees, posting the CA, linking the token page, or acknowledging it from an official account.
+- `Self-launched / aligned`: the official project/person appears to be the launcher/deployer or the same controlled party as the fee recipient.
+- `Community-launched + endorsed`: a community or third-party account launched the token, and the fee recipient/project later clearly acknowledged it by claiming fees, posting the CA, linking the token page, or acknowledging it from an official account.
 - `Pre-endorsement speculation`: fee recipient/project has meaningful product or GitHub signal, but has not claimed fees or posted/linked the token. This can explain bids, but is not endorsement.
-- `Please bro`: deployer and fee recipient differ, and someone appears to have launched a token for a project/person hoping the recipient claims fees or endorses it later.
+- `Please bro`: launcher/deployer and fee recipient differ, and someone appears to have launched a token for a project/person hoping the recipient claims fees or endorses it later.
 - `Unclear`: Bankr page or social evidence is unavailable or contradictory.
 
 Fee-claim weighting:
 
-- If deployer and fee recipient match, do not require claimed fees as endorsement. The self-launch is already alignment; fee claiming is an operations/monetization signal only.
-- If deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
-- If deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
+- If the official project/person is the launcher/deployer or same controlled party as the fee recipient, do not require claimed fees as endorsement. The self-launch is already alignment; fee claiming is an operations/monetization signal only.
+- If a community or third-party launcher deployed the token, do not call it self-launched even if the official project later acknowledges it. Use `community-launched + endorsed`.
+- If launcher/deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
+- If launcher/deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
 
 Project/event evidence weighting:
 
 - A recent official fee-recipient/project post about the underlying product is product/social evidence. It can raise Product/Social confidence because it confirms the project is active.
 - A Bankr Agent Hour booking, Bankr-hosted event, or Bankr-team public promotion is stronger than generic social proximity because it shows Bankr ecosystem attention. Report it as `Bankr ecosystem relationship/event evidence`.
 - Do not automatically treat a product tweet or Agent Hour booking as token endorsement unless it explicitly mentions the token, CA, ticker, Bankr launch page, fee claim, or clearly acknowledges the Bankr-launched token.
-- If deployer and fee recipient match, the launch may be classified as `self-launched/aligned`; project tweets and Bankr Agent Hour evidence strengthen the read but should be described separately from formal token endorsement.
-- If deployer and fee recipient differ, project tweets and Agent Hour evidence can move the posture from weak `please bro` toward `pre-endorsement signal present`, but the endorsement call remains unresolved until the recipient acknowledges the token or claims fees.
+- If the official project/person is the launcher/deployer or same controlled party as the fee recipient, the launch may be classified as `self-launched/aligned`; project tweets and Bankr Agent Hour evidence strengthen the read but should be described separately from formal token endorsement.
+- If launcher/deployer and fee recipient differ, project tweets and Agent Hour evidence can move the posture from weak `please bro` toward `pre-endorsement signal present`, but the endorsement call remains unresolved until the recipient acknowledges the token or claims fees.
 
 Social-proximity weighting:
 
 - Post-launch follows, replies, likes, quotes, or visible interaction from the fee recipient/dev toward `@igoryuzo` or `@0xDeployer` can support a "watch for endorsement" thesis.
 - A target/dev like or reply on a third-party "Bankr community would support you" style post is a meaningful awareness signal. Report it as `target acknowledged Bankr/community prompt`, not as endorsement.
 - Direction matters. Fee recipient/dev -> Bankr team is stronger because it can show the claimed project/person is paying attention to the launch path. Bankr team -> fee recipient/dev is weaker unless the Bankr team clearly acknowledges the specific token.
-- This is not the same as endorsement. Do not classify as `Official / aligned` from social proximity alone.
+- This is not the same as endorsement. Do not classify as `self-launched/aligned` or `community-launched + endorsed` from social proximity alone.
 - Timestamp matters. Engagement after launch is more meaningful than old follows, generic Bankr ecosystem chatter, or trader replies mentioning the project.
 - If social proximity exists but no fee claim/CA post exists, report it as `pre-endorsement signal present` and keep the unresolved endorsement cap.
 

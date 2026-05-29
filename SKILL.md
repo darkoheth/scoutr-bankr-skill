@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 2
+version: 3
 visibility: public
 metadata:
   clawdbot:
@@ -18,8 +18,9 @@ Scoutr is a read-only crypto launch diligence workflow. It turns messy launch in
 These rules are part of Scoutr's core behavior, not optional style guidance:
 
 - Return exactly one report. Never duplicate the report, even partially.
-- Never write `alignment: endorsed (self-launched)` or similar mixed labels. Choose one classification.
-- Use `Alignment: self-launched/aligned` when deployer and fee recipient are the same party but there is no separate explicit token acknowledgement.
+- Never write `alignment: endorsed (self-launched)`, `aligned (self-launched)`, or similar mixed labels. Choose one classification.
+- Use `Alignment: self-launched/aligned` only when the launcher/deployer is the official project/person or the same controlled party as the fee recipient/project.
+- If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Use `Alignment: endorsed` only when there is explicit token evidence: CA post, ticker mention, Bankr launch-page link, fee claim, or clear public acknowledgement of the token.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
@@ -33,7 +34,7 @@ For every token scan, apply these defaults automatically:
 
 - Check Bankr launch provenance first when running in Bankr or when a Bankr launch page may exist.
 - For Bankr launches, capture launch source, deployer/launcher, fee recipient, deployer/recipient alignment, endorsement evidence, and Bankr relationship/event evidence.
-- Separate `self-launched/aligned`, `endorsed`, `pre-endorsement speculation`, and `please bro`; do not collapse them together.
+- Separate `self-launched/aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, and `please bro`; do not collapse them together.
 - Use `unknown` instead of estimated liquidity, holder concentration, role state, tax status, or unverified source status.
 - Check official social links and fee-recipient/project context when available.
 - Return one compact report only.
@@ -76,7 +77,7 @@ See `references/safety-rules.md` for the full safety checklist.
    - Liquidity, volume, FDV/market cap, pair age, holder count, top-holder concentration, verified source, proxy/admin/mint controls, tax/honeypot warnings when relevant.
    - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown` and list the missing check under `Unknowns`.
    - Do not use phrases like `smart money accumulation`, `verified source`, `healthy holder distribution`, or `low slippage` unless the supporting source/tool result was actually inspected.
-   - For Bankr tokens, compare deployer vs fee recipient. If they differ and the fee recipient has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If they match, treat it as an aligned self-launch; do not require fee claiming as endorsement.
+   - For Bankr tokens, compare launcher/deployer vs fee recipient/project. If the launcher is a community or third-party account and the fee recipient/project has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If the launcher is a community or third-party account and the fee recipient/project has clearly acknowledged the token, tag it as `community-launched + endorsed`, not self-launched. If the launcher/deployer and fee recipient are the same official party, treat it as an aligned self-launch; do not require fee claiming as endorsement.
 
 3. Inspect social context.
    - When running inside Bankr, use Bankr-native X/search/social tools as the default path. See `references/bankr-tooling.md`.
@@ -87,6 +88,7 @@ See `references/safety-rules.md` for the full safety checklist.
 4. Inspect GitHub/code when available.
    - Repo/org age, real code vs placeholder, README/docs, commit pattern, tests, CI, build feasibility, contracts, secrets, and mismatch between claims and code.
    - Weight age and history heavily: an older repo/org with organic commits is a stronger signal than a fresh launch-day repo, even if both look polished.
+   - If the report mentions GitHub/code, include an explicit age/history note such as repo/org creation date, first meaningful commit, commit span, active contributors, or `age/history not checked`. Do not let generic technical claims substitute for repo evidence.
    - For Bankr `please bro` launches, inspect the fee recipient/project GitHub as product quality evidence, but do not treat good code as endorsement unless the fee recipient has claimed fees or posted/linked the token contract.
 
 5. Inspect website/app.
@@ -105,7 +107,7 @@ See `references/safety-rules.md` for the full safety checklist.
 - Use concrete source-grounded facts: addresses, pair age, liquidity, holder concentration, repo status, specific social/account observations.
 - Mark unsupported claims as `unverified` instead of repeating project language as fact.
 - Put `unknown` for unavailable fields instead of estimating from ratios or typical launchpad behavior.
-- Do not classify a launch as `endorsed` from deployer/owner equality alone. `Self-launched` means the launch appears aligned; `endorsed` requires explicit evidence such as a CA post, token-page link from the claimed account/site, fee claim, or clear acknowledgement.
+- Do not classify a launch as `endorsed` from deployer/owner equality alone. `Self-launched` means the official project/person appears to be the launcher/deployer or same controlled party as the fee recipient. `Endorsed` requires explicit evidence such as a CA post, token-page link from the claimed account/site, fee claim, or clear acknowledgement. A community/third-party launch can become endorsed, but it remains community-launched rather than self-launched.
 - Keep trading posture practical: `Pass`, `Watch`, `Small Spec`, or `Trade Candidate`.
 - Say when a deeper check is needed, especially top holders, live roles/admin state, or GitHub build/test verification.
 - Avoid financial advice language. This is diligence, not an instruction to trade.

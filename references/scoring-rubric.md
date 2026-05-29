@@ -11,14 +11,14 @@ Use 0-10 scores. Prefer integer or half-point scores. Scores are directional, no
 
 ## Launch Provenance
 
-- 8-10: official launch source, deployer/fee recipient alignment, or clear endorsement from project/team/person via fee claim, CA post, token-page link, and matching site/social links.
+- 8-10: official launch source, official deployer/fee recipient alignment, community-launched token with clear official endorsement, or clear endorsement from project/team/person via fee claim, CA post, token-page link, and matching site/social links.
 - 5-7: known launch platform and plausible links, but endorsement or fee routing is incomplete; fee recipient/project has strong code/product evidence but no explicit token claim.
 - 2-4: `please bro` pattern, unclear deployer, mismatched links, unclaimed fee recipient, or launch appears to target a third party without confirmation.
 - 0-1: impersonation, fake official claims, hostile fee routing, or explicit denial by the claimed project/person.
 
-For Bankr tokens, do not penalize unclaimed fees much when deployer and fee recipient match. Penalize unclaimed fees mainly when deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
+For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
 
-Deployer/fee-recipient equality can support `self-launched` alignment, but it is not enough by itself to call the launch `endorsed`. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement.
+Launcher/deployer and fee-recipient equality can support `self-launched` alignment only when they appear to be the official project/person or the same controlled party. If the token was deployed by a community or third-party launcher for a project, do not call it self-launched. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement. A community-launched token with later official acknowledgement should be scored as `community-launched + endorsed`.
 
 Bankr social proximity can slightly improve confidence or Watch priority, but should not by itself lift Provenance into official/aligned territory. Direction matters. A post-launch follow/reply/quote/like from the fee recipient/dev toward `@igoryuzo`, `@0xDeployer`, or an explicit third-party Bankr/community support prompt is stronger than `@igoryuzo` or `@0xDeployer` following the dev. Both are weaker than fee claiming, CA posting, or linking the token page.
 
@@ -42,7 +42,7 @@ For Bankr `please bro` launches, include a social-proximity note when the fee re
 
 For Bankr `please bro` launches, a strong fee-recipient GitHub can raise Code/Product scores, but should not raise Provenance above incomplete/unendorsed unless there is explicit token endorsement.
 
-Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development.
+Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development. If a report cites GitHub/code, it should state what was checked about age/history or explicitly say age/history was not checked.
 
 ## Product / Website
 

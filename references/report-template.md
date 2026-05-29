@@ -23,7 +23,7 @@ Bankr / Provenance:
 - Launch source: <Bankr / Clanker / Doppler / Whetstone / Uniswap v4 / custom / unknown>
 - Launcher/deployer: <handle/address if known>
 - Fee recipient: <handle/address if known>
-- Alignment: <self-launched | endorsed | pre-endorsement speculation | please bro | unclear>
+- Alignment: <self-launched/aligned | community-launched + endorsed | pre-endorsement speculation | please bro | unclear>
 - Endorsement evidence: <CA post / token-page link / fee claim / clear acknowledgement / none found>
 - Bankr relationship evidence: <Agent Hour / Bankr-team post / social engagement / none found / unknown>
 
@@ -74,5 +74,6 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
-- For Bankr launches, `self-launched` and `endorsed` are not interchangeable. Use `self-launched` when deployer and fee recipient match. Use `endorsed` only when there is explicit public acknowledgement, fee claim, CA post, or a matching official link.
+- For Bankr launches, `self-launched`, `community-launched`, and `endorsed` are not interchangeable. Use `self-launched` only when the official project/person appears to be the launcher/deployer or same controlled party as the fee recipient. If a community/third-party account launched it and the official project later acknowledged the token, call it `community-launched + endorsed`, not self-launched.
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
+- If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.

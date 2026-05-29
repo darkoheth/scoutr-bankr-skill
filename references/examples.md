@@ -34,7 +34,7 @@ Expected response:
 - Score token, social, code, product, and overall.
 - Make the trade posture practical.
 - Include what would change the verdict.
-- For Bankr launches, always include launcher, fee recipient, deployer/recipient alignment, fee-claim or CA-post status, and whether the launch is self-launched, endorsed, pre-endorsement speculation, or `please bro`.
+- For Bankr launches, always include launcher, fee recipient, launcher/recipient alignment, fee-claim or CA-post status, and whether the launch is self-launched/aligned, community-launched + endorsed, pre-endorsement speculation, or `please bro`.
 
 ## GitHub/Product Check
 
