@@ -15,6 +15,7 @@ Sources:
 - Website/docs: <URL, not found after checking X/token/Bankr/docs links, or unavailable with blocker>
 - X/social: <URL/handle, not found after checking token/Bankr/site links, or unavailable with blocker>
 - GitHub/code: <URL plus age/history note, not found after checked sources, or unavailable with blocker>
+- Source trace: <Dexscreener exact CA checked; Bankr exact lookup checked; first-party website/docs/X/GitHub links followed or blocker>
 
 Scores:
 - Token: <0-10> - <one-line reason>
@@ -89,7 +90,9 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
 - For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
 - For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.
+- If Bankr exact lookup returns `exactMatch`, the Bankr/Provenance section must use those exact fields. Do not replace them with `N/A`, `unknown`, `custom`, or `standard ERC-20` because a later explorer/search result uses generic wording.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
 - Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.
+- The `Source trace` line is a compact audit trail, not a long research log. Its job is to make missing-source failures obvious before the report ships.
