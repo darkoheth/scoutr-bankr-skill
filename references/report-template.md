@@ -62,7 +62,51 @@ Unknowns:
 - <what could not be verified>
 ```
 
-For non-token or GitHub-only requests, omit irrelevant sections but keep `Verdict`, `Confidence`, `Scores`, `My read`, `Would change my mind`, and `Unknowns`.
+For GitHub-only requests, start with repo/code quality and then include attached-token discovery. Use this compact shape:
+
+```text
+Verdict: <Pass | Watch | Small Spec | Trade Candidate>
+Confidence: <Low | Medium | High>
+
+What it is:
+<1-3 lines identifying GitHub repo/org, product, and whether a token appears attached.>
+
+Sources:
+- GitHub/code: <repo/org URL plus age/history note>
+- Website/docs: <repo homepage/docs, not found after checking repo/profile links, or unavailable with blocker>
+- X/social: <handle/link, not found after checking repo/profile/site links, or unavailable with blocker>
+- Source trace: <GitHub URL checked; README/docs/package/profile/homepage links checked; token candidate routes checked; Dexscreener/Bankr/Clanker/Virtuals checked if a token candidate was found>
+
+Scores:
+- Code: <0-10> - <repo age/activity/quality reason>
+- Product: <0-10 or N/A> - <website/docs/app proof reason>
+- Social: <0-10 or N/A> - <social/project signal reason>
+- Token: <0-10 or N/A> - <attached-token reason or no token found>
+- Provenance: <0-10 or N/A> - <attached-token launch/source confidence>
+- Overall: <0-10>
+
+Attached Token:
+- Status: <confirmed | likely | possible | not found | unavailable: blocker>
+- Candidate(s): <CA/ticker/platform or none>
+- Evidence: <first-party link, token page, repo docs, website/social link, or checked routes>
+
+GitHub / Code:
+- Age/history: <created/pushed/commit span/contributor note>
+- Activity: <recent commits/releases/issues/CI if checked>
+- Substance: <real code/tests/docs/contracts vs placeholder/template>
+- Risks: <missing tests, no releases, launch-day dump, secrets risk, unverified claims>
+
+My read:
+<2-5 sentences with practical posture. If a token is found, separate repo quality from token risk.>
+
+Would change my mind:
+- <specific repo/product/token evidence/check>
+
+Unknowns:
+- <what could not be verified>
+```
+
+For other non-token requests, omit irrelevant sections but keep `Verdict`, `Confidence`, `Scores`, `My read`, `Would change my mind`, and `Unknowns`.
 
 For deeper reports, add short sections only when they add decision value:
 
@@ -90,6 +134,8 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Do not use `endorsed please bro` as a final alignment label. Before endorsement it is `please bro` or `pre-endorsement speculation`; after clear target/project acknowledgement it becomes `community-launched + endorsed`.
 - Do not mark `Fee-claim status: claimed` from a launch tweet, website link, Agent Hour, or token acknowledgement. Claimed requires direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
+- For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
+- Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
 - For CA-only scans, structured token metadata must be checked before `not found`: Dexscreener exact CA search and token-pairs endpoints when available, then Bankr launch metadata/page, then official website/docs/X links.
 - For Bankr CA scans, Bankr exact lookup (`api.bankr.bot/token-launches/search?q=<contract>`) should populate deployer, fee recipient, website URL, tweet URL, and launch timestamp when available.

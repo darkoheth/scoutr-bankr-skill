@@ -147,6 +147,23 @@ Expected classification:
 - Official website copy says RUNNER is "the first clanker". Treat this as project/site provenance evidence for legacy Clanker context, with confidence/unknowns if Clanker creator metadata is unavailable.
 - Expected failure if the report leaves `Website/docs` blank, says no sources were found, or times out because it tries exhaustive website/social crawling.
 
+## GitHub-Only Input / Repo First, Token Second
+
+Input:
+
+```text
+https://github.com/1clawAI
+```
+
+Expected classification:
+
+- Treat the GitHub URL as the primary input, not as a missing-token error.
+- Inspect and score the GitHub org/repo quality first: org/repo age, repo list, recent pushes, README/docs, package/contracts/tests/CI where available, and whether history predates any token launch.
+- Then search outward for an attached token using repo/org profile links, README/docs/package files, homepage/docs links, X/social links, exact org/project/package searches, and launch-platform lookups.
+- If a token candidate is found, classify attachment confidence as `confirmed`, `likely`, or `possible` based on first-party linkage strength, then run the CA-only provenance path for that CA.
+- If no credible token is found, output `Attached Token: not found` with checked routes and keep `Token: N/A`; do not invent market or launch provenance.
+- Expected failure if the report only says "send a contract address", ignores the repo, or analyzes code without attempting attached-token discovery.
+
 ## Pass Criteria
 
 - Verdict appears first.

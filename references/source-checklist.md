@@ -52,6 +52,11 @@ Inspect:
 
 ## GitHub / Code
 
+- GitHub-only inputs are first-class. If the user sends a GitHub org/repo URL, score the repo first, then search outward for an attached token tied to the repo, package, docs, homepage, owner, or maintainer.
+- For GitHub-only scans, build a repo source map: owner, repo/org, description, topics, homepage, license, stars/forks/watchers, created date, pushed date, releases/tags, primary language, docs links, website links, package names, contract addresses, tickers, token names, X/Farcaster links, and maintainers.
+- Attached-token discovery path from GitHub: README/docs/config/package files -> repo homepage/docs -> GitHub org/user profile links -> maintainer profile links -> exact repo/org/package/domain searches -> Dexscreener/Bankr/Clanker/Virtuals exact or name searches.
+- Token attachment confidence must be explicit: `confirmed` when first-party repo/site/social/token page links the CA both ways or directly; `likely` for multiple first-party signals without direct CA; `possible` for ticker/name/proximity only; `not found` after checked routes.
+- Do not treat a maintainer's unrelated token as attached to a repo unless the repo/org/website/docs or official project social connects them.
 - GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
 - If Dexscreener has no links but Bankr exact lookup has a fee recipient, inspect the fee recipient's X profile and links before saying no website/docs/GitHub exists. For community/please-bro launches, this fee-recipient project evidence is often the main product/code route.
 - If Dexscreener/token metadata exposes docs or a website, inspect that route for GitHub before assigning `Code: N/A`.

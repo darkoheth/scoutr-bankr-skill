@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 16
+version: 17
 visibility: public
 metadata:
   clawdbot:
@@ -41,6 +41,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Clanker evidence is present via `b07` suffix, Clanker page/route, verified `ClankerToken` source, or Clanker API/tooling, the report must say `Launch source: Clanker / <underlying pool>` such as Uniswap v4. Do not downgrade it to `custom` just because Dexscreener labels the pool as Uniswap v4.
 - If Virtuals exact lookup resolves the CA as `tokenAddress` or `preToken`, the report must say `Launch source: Virtuals` with the Virtuals status (`UNDERGRAD`, `AVAILABLE`, etc.), token/pre-token address, Virtuals pair/LP when present, agent/project id when present, and Virtuals page/API evidence. Do not report it as Bankr, Clanker, or unknown just because Dexscreener has no pair.
 - New pairs often have empty Dexscreener metadata. If Dexscreener has no useful website/social links, pivot to Bankr exact metadata and the fee recipient/launcher social profiles: inspect fee-recipient X bio/profile links, launch tweet links, pinned/recent project posts, Bankr `websiteUrl`/`metadataUri`, and obvious exact project/org searches before saying sources or GitHub are missing.
+- GitHub links are first-class inputs. If the user sends only a GitHub org/repo URL, inspect and score the GitHub first, then try to discover any token attached to the repo, project, package, docs, website, maintainer, or owner. Do not stop at a code-only report unless token discovery routes were checked or blocked.
 - Use a latency guard. Do not spend the whole run crawling large websites, X pages, Framer bundles, Discord/Telegram, or every possible platform branch. Prefer structured APIs and page metadata first; if a source is slow, login-walled, huge, or JS-heavy, record the blocker and continue.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
 - Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.
@@ -59,6 +60,41 @@ For every token scan, apply these defaults automatically:
 - Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> Bankr links -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo. If a repo/org is found, inspect it before writing the final verdict.
 - Populate website/docs/GitHub fields with discovered URLs or explicit blockers. Never output an empty source line.
 - Return one compact report only.
+
+## Required GitHub-Only Retrieval Sequence
+
+When the input is a GitHub org/repo URL with no token contract, run this sequence before finalizing:
+
+1. Normalize the GitHub target:
+   - Identify whether it is an org, user, repo, subdirectory, release, package, or commit.
+   - For a repo, capture owner, repo name, default branch, description, topics, homepage, license, stars/forks/watchers, open issues/PRs when available, created date, pushed date, latest release/tag, and primary language.
+   - For an org/user, list the most relevant public repos by name match, recency, stars, topics, and homepage links. Pick the project repo(s) that match the user request.
+2. Inspect code quality:
+   - README specificity, install/run docs, examples, architecture docs, env examples, tests, CI, package files, contracts, deployment addresses, API docs, and obvious generated/template code.
+   - Commit/age history: creation date, first meaningful commit if available, commit span, recent commits, contributor count/span, launch-day dump risk, renamed repo risk, and whether history predates any token launch.
+   - Run a lightweight secret-risk text scan from visible filenames/content when possible. Never expose secrets; only report `potential secret-risk pattern found` with safe file context.
+   - Do not run project scripts or install dependencies unless the user explicitly asks and the code has been inspected.
+3. Build a `repo_source_map` before writing prose:
+   - `github_url`, `owner`, `repo`, `org_or_user`, `description`, `topics`, `homepage`, `license`, `created_at`, `pushed_at`, `stars`, `forks`, and `primary_language`.
+   - `docs_links`, `website_links`, `package_names`, `contract_addresses`, `chain_ids`, `tickers`, `token_names`, `x_handles`, `farcaster_links`, `discord_or_telegram_links`, and `maintainers`.
+   - `token_candidates`: every CA/ticker/token link discovered from README/docs/site/package/release/issues if relevant, plus search/API results.
+4. Discover attached token(s):
+   - Search repo README/docs/config/package files for contract addresses, token names, tickers/cashtags, Dexscreener links, Basescan/Blockscout links, Bankr/Clanker/Virtuals links, Farcaster mini-app links, and website/social links.
+   - Follow repo homepage/docs links and inspect metadata/visible links for token pages, CA, ticker, Dexscreener, Bankr, Clanker, Virtuals, X, Farcaster, and Dune.
+   - Inspect GitHub owner/org profile links and maintainer profile links for website/X/Farcaster. Use those only as discovery routes; do not treat maintainer-owned tokens as attached unless the project/repo/owner explicitly links or claims them.
+   - Search exact repo name, package name, org name, homepage domain, and likely ticker on Dexscreener and launch platforms. Prefer exact contract or exact first-party token links over ticker-only matches.
+   - For any candidate CA, run the Required CA-Only Retrieval Sequence and score token/provenance separately from repo quality.
+5. Token attachment confidence:
+   - `confirmed`: repo/org/website/docs/official social explicitly links the CA/token page, or the token page links back to the repo/project.
+   - `likely`: multiple first-party signals connect repo/project and token, but no direct CA link was found.
+   - `possible`: ticker/name/search match only, creator/maintainer proximity, or weak social hints.
+   - `not found`: checked repo, homepage/docs, owner/profile links, and exact project/token searches with no credible token candidate.
+6. Output shape for GitHub-first scans:
+   - Lead with repo verdict and confidence.
+   - Include `GitHub / Code` score even if no token is found.
+   - Include `Attached Token` section: `confirmed`, `likely`, `possible`, `not found`, or `unavailable: <blocker>`.
+   - If no credible token is found, do not invent market/provenance fields; write `Token: N/A` and list checked routes.
+   - If a token is found, include the normal Launch / Provenance and Market sections, clearly separating repo quality from token endorsement/provenance.
 
 ## Required CA-Only Retrieval Sequence
 
@@ -136,6 +172,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Fee recipient: N/A`, `Fee recipient: unknown`, or `Bankr relationship evidence: None found` after Bankr exact lookup returned a fee recipient, tweet URL, or website URL.
 - `Fee-claim status: claimed` without direct fee-claim evidence from Bankr-native metadata, a claim transaction/event, or explicit recipient claim. A launch tweet, website link, or token acknowledgement is endorsement evidence, not fee-claim evidence.
 - `Product: low because no website/docs` while a first-party website/docs link is present but uninspected.
+- GitHub-only input returns `send a contract address`, `cannot analyze token without CA`, or a code-only report without an `Attached Token` section.
+- GitHub-only input says `Attached Token: not found` while README/docs/package/homepage/profile links or exact repo/org/package/domain token searches were not checked or blocked.
 
 If one appears, do not ship the report. Retry the structured lookup or change the field to `unavailable: <exact blocker>`.
 
