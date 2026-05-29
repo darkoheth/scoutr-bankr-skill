@@ -11,6 +11,7 @@
 - Bankr provenance when applicable: Bankr token page URL, launcher/deployer, fee recipient, project/person the token points at, fee claim status if visible, and whether project/social links match the actual recipient.
 - `Please bro` risk: launcher/deployer and fee recipient differ, and the fee recipient/project has not clearly claimed fees or posted/linked the token contract. Treat this as provenance risk, not proof of scam.
 - Endorsement evidence: fee recipient claims Bankr fees, posts the CA, links the Bankr/token page, or clearly acknowledges the token from an official social/channel. Good GitHub/product quality alone is not endorsement.
+- Endorsement and fee claiming are separate. A community-launched token can be officially endorsed by a CA/token acknowledgement while fees remain unclaimed or unknown; report both fields separately.
 - Fee claims matter most when launcher/deployer and fee recipient differ. If the official project/person is the launcher/deployer or the same controlled party as the fee recipient, the launch is self-launched/aligned; unclaimed fees should not meaningfully penalize provenance. If a community or third-party account launched it, do not call it self-launched; official acknowledgement makes it `community-launched + endorsed`.
 - Bankr social proximity: for `please bro` launches, check whether the fee recipient/dev follows or engaged with Bankr launch-team accounts after launch, especially `@igoryuzo` and `@0xDeployer`. Also inspect replies under the target's launch/product posts for third-party Bankr support prompts that the target liked, replied to, or quoted. Direction matters: fee recipient/dev -> Bankr-linked interaction is stronger than Bankr team -> fee recipient/dev. This can indicate possible awareness or warming-up, but is not endorsement without a fee claim, CA post, token-page link, or clear acknowledgement.
 
@@ -37,6 +38,7 @@ Inspect:
 
 ## GitHub / Code
 
+- GitHub discovery path: check Dexscreener/token social links, Bankr launch-page links, official X bio/profile links, project website, docs site nav/footer, package/docs references, and search for the exact org/repo before saying no GitHub was found.
 - Repo/org age, stars/forks/watchers, license, topics, default branch, recent pushes.
 - Age quality: creation date, first meaningful commit date, commit span, contributor span, stale vs actively maintained, and whether history predates the token launch by weeks/months/years.
 - Required report note when GitHub is cited: include age/history checked with at least one concrete date/span/source, or write `age/history not checked`.

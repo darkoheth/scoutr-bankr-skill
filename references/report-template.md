@@ -25,6 +25,7 @@ Bankr / Provenance:
 - Fee recipient: <handle/address if known>
 - Alignment: <self-launched/aligned | community-launched + endorsed | pre-endorsement speculation | please bro | unclear>
 - Endorsement evidence: <CA post / token-page link / fee claim / clear acknowledgement / none found>
+- Fee-claim status: <claimed / unclaimed / unknown / not applicable>
 - Bankr relationship evidence: <Agent Hour / Bankr-team post / social engagement / none found / unknown>
 
 Market:
@@ -75,5 +76,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
 - For Bankr launches, `self-launched`, `community-launched`, and `endorsed` are not interchangeable. Use `self-launched` only when the official project/person appears to be the launcher/deployer or same controlled party as the fee recipient. If a community/third-party account launched it and the official project later acknowledged the token, call it `community-launched + endorsed`, not self-launched.
+- Endorsement evidence and fee-claim status are separate fields. If the project/dev publicly posts or acknowledges the CA but has not claimed fees, write `Alignment: community-launched + endorsed`, `Endorsement evidence: <specific post/link/acknowledgement>`, and `Fee-claim status: unclaimed/unknown`.
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
+- Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.

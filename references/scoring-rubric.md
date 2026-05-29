@@ -18,7 +18,7 @@ Use 0-10 scores. Prefer integer or half-point scores. Scores are directional, no
 
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
 
-Launcher/deployer and fee-recipient equality can support `self-launched` alignment only when they appear to be the official project/person or the same controlled party. If the token was deployed by a community or third-party launcher for a project, do not call it self-launched. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement. A community-launched token with later official acknowledgement should be scored as `community-launched + endorsed`.
+Launcher/deployer and fee-recipient equality can support `self-launched` alignment only when they appear to be the official project/person or the same controlled party. If the token was deployed by a community or third-party launcher for a project, do not call it self-launched. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement. A community-launched token with later official acknowledgement should be scored as `community-launched + endorsed`. Fee-claim status should still be reported separately; unclaimed/unknown fees can cap confidence or sizing without erasing endorsement from a clear CA acknowledgement.
 
 Bankr social proximity can slightly improve confidence or Watch priority, but should not by itself lift Provenance into official/aligned territory. Direction matters. A post-launch follow/reply/quote/like from the fee recipient/dev toward `@igoryuzo`, `@0xDeployer`, or an explicit third-party Bankr/community support prompt is stronger than `@igoryuzo` or `@0xDeployer` following the dev. Both are weaker than fee claiming, CA posting, or linking the token page.
 
@@ -43,6 +43,8 @@ For Bankr `please bro` launches, include a social-proximity note when the fee re
 For Bankr `please bro` launches, a strong fee-recipient GitHub can raise Code/Product scores, but should not raise Provenance above incomplete/unendorsed unless there is explicit token endorsement.
 
 Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development. If a report cites GitHub/code, it should state what was checked about age/history or explicitly say age/history was not checked.
+
+Discovery weighting: before assigning `Code: N/A` or saying no GitHub was found, follow first-party links from token metadata/Dexscreener, Bankr, X bio, website, docs nav/footer, and package/docs references. Missing an obvious official GitHub from those surfaces should be treated as a failed code check, not evidence that no repo exists.
 
 ## Product / Website
 

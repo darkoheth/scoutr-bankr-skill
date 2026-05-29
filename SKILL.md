@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 3
+version: 4
 visibility: public
 metadata:
   clawdbot:
@@ -22,6 +22,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Use `Alignment: self-launched/aligned` only when the launcher/deployer is the official project/person or the same controlled party as the fee recipient/project.
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Use `Alignment: endorsed` only when there is explicit token evidence: CA post, ticker mention, Bankr launch-page link, fee claim, or clear public acknowledgement of the token.
+- Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
@@ -33,10 +34,11 @@ Scoutr must work from short user prompts. A user should be able to send only `sc
 For every token scan, apply these defaults automatically:
 
 - Check Bankr launch provenance first when running in Bankr or when a Bankr launch page may exist.
-- For Bankr launches, capture launch source, deployer/launcher, fee recipient, deployer/recipient alignment, endorsement evidence, and Bankr relationship/event evidence.
+- For Bankr launches, capture launch source, deployer/launcher, fee recipient, launcher/recipient alignment, endorsement evidence, fee-claim status, and Bankr relationship/event evidence.
 - Separate `self-launched/aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, and `please bro`; do not collapse them together.
 - Use `unknown` instead of estimated liquidity, holder concentration, role state, tax status, or unverified source status.
 - Check official social links and fee-recipient/project context when available.
+- Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo.
 - Return one compact report only.
 
 ## Inputs
@@ -69,6 +71,7 @@ See `references/safety-rules.md` for the full safety checklist.
 
 1. Identify the asset/project.
    - Resolve chain, contract, ticker, pair, launch time, website, and social links.
+   - If Dexscreener, Bankr, or token metadata exposes website, docs, X, Telegram, or GitHub links, inspect those links and follow first-party outbound links before concluding a source is unavailable.
    - Note whether the launch source is a known platform, custom deployer, Uniswap v4 pool, fork, migration, or unclear.
    - When running inside Bankr, use Bankr-native launch/token metadata as the primary launch-source signal. If Bankr's runtime or token page identifies the contract as a Bankr launch, classify it as Bankr before interpreting explorer data.
    - For Bankr launches, inspect the Bankr token page for deployer, fee recipient, claimed project/person, and links before finalizing provenance. Recent Bankr launches are expected to use Doppler/Airlock/Whetstone/Uniswap v4 contracts under the hood; do not rule out Bankr solely because the on-chain owner, hook, pool manager, or verified source points to that infrastructure.
@@ -86,6 +89,7 @@ See `references/safety-rules.md` for the full safety checklist.
    - Use public web search/browser only as fallback or targeted verification. Check official account quality, launch thread, quote/reply clusters, founder links, and negative terms.
 
 4. Inspect GitHub/code when available.
+   - First search first-party surfaces for GitHub: Dexscreener/token socials, Bankr page links, official X bio, project website, docs site navigation/footer, docs repository links, package links, and organization links.
    - Repo/org age, real code vs placeholder, README/docs, commit pattern, tests, CI, build feasibility, contracts, secrets, and mismatch between claims and code.
    - Weight age and history heavily: an older repo/org with organic commits is a stronger signal than a fresh launch-day repo, even if both look polished.
    - If the report mentions GitHub/code, include an explicit age/history note such as repo/org creation date, first meaningful commit, commit span, active contributors, or `age/history not checked`. Do not let generic technical claims substitute for repo evidence.
@@ -103,7 +107,7 @@ See `references/safety-rules.md` for the full safety checklist.
 ## Output Rules
 
 - Lead with the verdict, not the research trail.
-- Use the stable compact structure in `references/report-template.md` by default. For Bankr launches, always include launch source, launcher/deployer, fee recipient, alignment, and endorsement evidence.
+- Use the stable compact structure in `references/report-template.md` by default. For Bankr launches, always include launch source, launcher/deployer, fee recipient, alignment, endorsement evidence, and fee-claim status.
 - Use concrete source-grounded facts: addresses, pair age, liquidity, holder concentration, repo status, specific social/account observations.
 - Mark unsupported claims as `unverified` instead of repeating project language as fact.
 - Put `unknown` for unavailable fields instead of estimating from ratios or typical launchpad behavior.
