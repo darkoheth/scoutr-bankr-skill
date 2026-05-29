@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 14
+version: 15
 visibility: public
 metadata:
   clawdbot:
@@ -36,7 +36,9 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - For CA-only scans, build a `source_map` before writing prose. It must contain any structured Dexscreener websites/socials and any exact Bankr launch fields. The final report must copy from this `source_map`; do not rely on memory, generic search summaries, or social-sentiment output for these fields.
 - If Bankr exact lookup returns `exactMatch`, the report must say `Launch source: Bankr / <launchType>` and must populate launcher/deployer, fee recipient, tweet URL if relevant, website URL if present, pool ID/tx hash if useful, and launch timestamp if useful. Do not later override this with `custom`, `unknown`, or `standard ERC-20` based on explorer or pool labels.
+- Use CA suffixes as launch-router hints for newer platform launches: `...ba3` strongly suggests newer Bankr/Doppler, while `...b07` strongly suggests newer Clanker. Some older Bankr launches also end in `b07`, so Bankr exact metadata/page wins over the suffix. If Bankr has no match and the CA ends `b07`, inspect Clanker and explorer `ClankerToken` evidence before calling the launch custom or unknown.
 - If Bankr exact lookup returns no match, do not force a Bankr frame. Check other launch ecosystems before concluding `unknown`, especially Virtuals for Base AI-agent tokens.
+- If Clanker evidence is present via `b07` suffix, Clanker page/route, verified `ClankerToken` source, or Clanker API/tooling, the report must say `Launch source: Clanker / <underlying pool>` such as Uniswap v4. Do not downgrade it to `custom` just because Dexscreener labels the pool as Uniswap v4.
 - If Virtuals exact lookup resolves the CA as `tokenAddress` or `preToken`, the report must say `Launch source: Virtuals` with the Virtuals status (`UNDERGRAD`, `AVAILABLE`, etc.), token/pre-token address, Virtuals pair/LP when present, agent/project id when present, and Virtuals page/API evidence. Do not report it as Bankr, Clanker, or unknown just because Dexscreener has no pair.
 - New pairs often have empty Dexscreener metadata. If Dexscreener has no useful website/social links, pivot to Bankr exact metadata and the fee recipient/launcher social profiles: inspect fee-recipient X bio/profile links, launch tweet links, pinned/recent project posts, Bankr `websiteUrl`/`metadataUri`, and obvious exact project/org searches before saying sources or GitHub are missing.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
@@ -72,7 +74,11 @@ When the input is only a contract address, run this sequence before finalizing:
    - Query Bankr exact launch search when public HTTP is available: `https://api.bankr.bot/token-launches/search?q=<contract>`.
    - If the result has `exactMatch`, use its `launchType`, `deployer`, `feeRecipient`, `tweetUrl`, `websiteUrl`, `poolId`, `txHash`, and `timestamp` as primary Bankr provenance fields.
    - Also construct/check `https://bankr.bot/launches/<contract>` or Bankr search for the exact CA. If a browser sees only the Bankr app shell, do not conclude no Bankr record exists; state `Bankr launch metadata unavailable via browser/app shell` unless another Bankr-native source resolves it.
-6. If Bankr exact lookup returns no match, check Virtuals before concluding unknown:
+6. If Bankr exact lookup returns no match, check Clanker and Virtuals before concluding unknown:
+   - If the CA ends in `b07`, treat this as a strong Clanker hint unless Bankr exact/page evidence says otherwise.
+   - Check Clanker routes or tools when available, such as `https://www.clanker.world/clanker/<contract>` and `https://www.clanker.world/token/<contract>`.
+   - Check explorer source/contract name for `ClankerToken`, Clanker factory/proxy labels, and Clanker-style Uniswap v4 pool evidence.
+   - If Clanker evidence is present but creator/launcher metadata is unavailable, report `Launch source: Clanker / <pool>` and `Launcher/deployer: unknown: Clanker creator metadata unavailable`, not `custom` or `unknown`.
    - Query Virtuals by exact CA as both graduated token and undergrad pre-token:
      - `https://api.virtuals.io/api/virtuals?populate=*&filters[tokenAddress][$eq]=<contract>`
      - `https://api.virtuals.io/api/virtuals?populate=*&filters[preToken][$eq]=<contract>`
@@ -95,6 +101,7 @@ Minimum `source_map` fields for CA-only scans:
 - `dex_websites`: every Dexscreener `info.websites` URL with labels.
 - `dex_socials`: every Dexscreener `info.socials` URL with types.
 - `bankr_exact`: exact launch fields when present, especially `launchType`, `deployer.xUsername`, `deployer.walletAddress`, `feeRecipient.xUsername`, `feeRecipient.walletAddress`, `tweetUrl`, and `websiteUrl`.
+- `clanker_evidence`: CA suffix, Clanker route/tool result, verified `ClankerToken` source, factory/deployer labels, creator/launcher if available, and underlying pool type.
 - `virtuals_exact`: exact Virtuals record fields when present, especially `id`, `name`, `symbol`, `status`, `tokenAddress`, `preToken`, `lpAddress`, `preTokenPair`, `virtualId`, `walletAddress`, `socials`, and `website`.
 - `fee_recipient_social_sources`: fee recipient X profile, launcher X profile if relevant, launch tweet, and any links extracted from bio/pinned/recent posts.
 - `github_candidates`: GitHub org/repo URLs found from Dexscreener links, Bankr links, official X, website, docs, or exact org/repo search.
@@ -112,6 +119,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
 - `Launch source: custom / unknown`, `not applicable`, or `standard ERC-20` after Bankr exact lookup returned `exactMatch`.
+- `Launch source: custom`, `Launch source: Uniswap v4 (Custom)`, or `Launch source: unknown` for a `b07` CA when Bankr exact lookup returned no match and Clanker evidence such as verified `ClankerToken` source or Clanker route exists.
+- `Launcher/deployer: unknown` on a Clanker launch without saying whether Clanker creator metadata was checked or unavailable.
 - `Launch source: Bankr`, `Launch source: unknown`, or `No launch provenance` after Virtuals exact lookup matched the CA as `tokenAddress` or `preToken`.
 - `No market data/no liquidity means no token exists` after Virtuals exact lookup matched an `UNDERGRAD`/pre-token record.
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.

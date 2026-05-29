@@ -111,6 +111,24 @@ Expected classification:
 - Expected failure if output says no launchpad record, no active token, or launch source unknown while Virtuals exact `preToken` lookup is available.
 - Expected failure if output includes Bankr launcher/fee-recipient/alignment fields as primary evidence for a non-Bankr Virtuals token.
 
+## AgentBounty / Clanker b07
+
+Input:
+
+```text
+0x33e167fa22c9d78236b1a21c80e8b712205d1b07
+```
+
+Expected classification:
+
+- Not Bankr if Bankr exact lookup returns no match.
+- CA ends in `b07`, which is a strong newer-Clanker hint after Bankr no-match.
+- Blockscout/explorer verified contract name/source is `ClankerToken`; Dexscreener labels the canonical pool as Uniswap v4.
+- Classify launch source as `Clanker / Uniswap v4`, not `Uniswap v4 (Custom)` and not unknown.
+- If Clanker creator/launcher metadata cannot be extracted from Clanker tools/page, write `Launcher/deployer: unknown: Clanker creator metadata unavailable`; do not let that erase Clanker provenance.
+- Dexscreener exposes first-party links: `https://agentbounty.dev`, founder site/newsletter, `https://x.com/agentbountydev`, Telegram, Discord, and Farcaster. These should populate sources, not blanks.
+- Expected failure if output says `custom launch`, `standard Uniswap v4 pool`, or `Launch source: unknown` without acknowledging Clanker evidence.
+
 ## Pass Criteria
 
 - Verdict appears first.

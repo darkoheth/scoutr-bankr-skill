@@ -31,6 +31,24 @@ If a token appears to be launched through a known platform, use platform docs or
 
 Bankr launch pages are a provenance source even when the underlying token path uses Airlock, Doppler, Whetstone, Rehype hooks, or Uniswap v4 pool-manager contracts. Bankr launches from roughly spring 2026 onward should be expected to show Doppler/Airlock-style deployment plumbing. Do not classify a token as "not Bankr" just because explorer ownership or pool activity points at those contracts. Check `https://bankr.bot/launches/<contract>` and/or the Bankr token page first when the CA suffix, user context, or social links suggest Bankr.
 
+Address suffix routing:
+
+- Newer Bankr/Doppler launches commonly end in `ba3`.
+- Newer Clanker launches commonly end in `b07`.
+- Some older Bankr launches also end in `b07` from before the Bankr Doppler migration. Bankr-native exact metadata/page evidence wins over suffix heuristics.
+- If Bankr exact lookup returns no match and the CA ends in `b07`, treat Clanker as the primary launch-source candidate.
+- If explorer verified source/name is `ClankerToken`, a Clanker page/route canonicalizes the address, or Clanker tooling resolves the token, classify as `Clanker / <underlying pool>`, not `custom`, even if Dexscreener labels the market as Uniswap v4.
+
+For Clanker launches, capture:
+
+- Clanker page/tool URL or exact blocker.
+- Creator/launcher when available.
+- Reward/fee recipient when available.
+- Underlying pool type, often Uniswap v4 for newer launches.
+- Verified source/name such as `ClankerToken`.
+
+If creator/launcher metadata is unavailable, write `unknown: Clanker creator metadata unavailable` rather than treating the whole launch as unknown.
+
 ## Virtuals
 
 Virtuals launches can look invisible to Dexscreener before graduation. For Base AI-agent tokens, especially when the symbol/name resolves on explorer but Dexscreener has no pair, check Virtuals directly before concluding there is no launch provenance.
