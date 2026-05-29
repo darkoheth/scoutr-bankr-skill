@@ -13,6 +13,19 @@ metadata:
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
 
+## Default Behavior
+
+Scoutr must work from short user prompts. A user should be able to send only `scoutr <contract>`, `check this token <contract>`, a Dexscreener link, an X post, a website, or a repo link. Do not require the user to provide detailed diligence instructions.
+
+For every token scan, apply these defaults automatically:
+
+- Check Bankr launch provenance first when running in Bankr or when a Bankr launch page may exist.
+- For Bankr launches, capture launch source, deployer/launcher, fee recipient, deployer/recipient alignment, endorsement evidence, and Bankr relationship/event evidence.
+- Separate `self-launched/aligned`, `endorsed`, `pre-endorsement speculation`, and `please bro`; do not collapse them together.
+- Use `unknown` instead of estimated liquidity, holder concentration, role state, tax status, or unverified source status.
+- Check official social links and fee-recipient/project context when available.
+- Return one compact report only.
+
 ## Inputs
 
 Accept any mix of:
@@ -87,6 +100,8 @@ See `references/safety-rules.md` for the full safety checklist.
 
 ## Example Prompts
 
+- `scoutr <contract>`
+- `check this token with scoutr <contract>`
 - `Use scoutr on this Base token: <contract or Dexscreener URL>`
 - `What is this coin and where did it launch from? <contract>`
 - `Check this token, X account, website, and GitHub before I ape.`
