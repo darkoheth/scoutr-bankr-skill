@@ -49,6 +49,8 @@ See `references/safety-rules.md` for the full safety checklist.
 
 2. Inspect token and market mechanics.
    - Liquidity, volume, FDV/market cap, pair age, holder count, top-holder concentration, verified source, proxy/admin/mint controls, tax/honeypot warnings when relevant.
+   - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown` and list the missing check under `Unknowns`.
+   - Do not use phrases like `smart money accumulation`, `verified source`, `healthy holder distribution`, or `low slippage` unless the supporting source/tool result was actually inspected.
    - For Bankr tokens, compare deployer vs fee recipient. If they differ and the fee recipient has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If they match, treat it as an aligned self-launch; do not require fee claiming as endorsement.
 
 3. Inspect social context.
@@ -68,6 +70,7 @@ See `references/safety-rules.md` for the full safety checklist.
 6. Synthesize.
    - Separate hard evidence from inference.
    - Penalize important unknowns instead of inventing precision.
+   - Never repeat the full report twice. Return exactly one report per user request unless the user explicitly asks for variants.
    - Produce a compact verdict using `references/report-template.md`.
 
 ## Output Rules
@@ -76,6 +79,8 @@ See `references/safety-rules.md` for the full safety checklist.
 - Use the stable compact structure in `references/report-template.md` by default. For Bankr launches, always include launch source, launcher/deployer, fee recipient, alignment, and endorsement evidence.
 - Use concrete source-grounded facts: addresses, pair age, liquidity, holder concentration, repo status, specific social/account observations.
 - Mark unsupported claims as `unverified` instead of repeating project language as fact.
+- Put `unknown` for unavailable fields instead of estimating from ratios or typical launchpad behavior.
+- Do not classify a launch as `endorsed` from deployer/owner equality alone. `Self-launched` means the launch appears aligned; `endorsed` requires explicit evidence such as a CA post, token-page link from the claimed account/site, fee claim, or clear acknowledgement.
 - Keep trading posture practical: `Pass`, `Watch`, `Small Spec`, or `Trade Candidate`.
 - Say when a deeper check is needed, especially top holders, live roles/admin state, or GitHub build/test verification.
 - Avoid financial advice language. This is diligence, not an instruction to trade.

@@ -2,6 +2,8 @@
 
 Use this compact structure by default. Keep the headings stable so repeated scans are easy to compare.
 
+Return this template exactly once. Do not repeat the full report, append a duplicate, or restate the same sections after the first completed report.
+
 ```text
 Verdict: <Pass | Watch | Small Spec | Trade Candidate>
 Confidence: <Low | Medium | High>
@@ -65,3 +67,10 @@ For deeper reports, add short sections only when they add decision value:
 - Source Links
 
 Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell, hold, or trade; use posture language such as `avoid`, `watch`, `punt-size only`, or `stronger candidate`.
+
+## Evidence Discipline
+
+- Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
+- Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
+- Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
+- For Bankr launches, `self-launched` and `endorsed` are not interchangeable. Use `self-launched` when deployer and fee recipient match. Use `endorsed` only when there is explicit public acknowledgement, fee claim, CA post, or a matching official link.
