@@ -11,6 +11,11 @@ Confidence: <Low | Medium | High>
 What it is:
 <1-3 lines identifying project, token, chain, launch source, site/social/repo if known.>
 
+Sources:
+- Website/docs: <URL, not found after checking X/token/Bankr/docs links, or unavailable with blocker>
+- X/social: <URL/handle, not found after checking token/Bankr/site links, or unavailable with blocker>
+- GitHub/code: <URL plus age/history note, not found after checked sources, or unavailable with blocker>
+
 Scores:
 - Token: <0-10> - <one-line reason>
 - Provenance: <0-10 or N/A> - <launch source, deployer/recipient alignment, endorsement status>
@@ -77,8 +82,10 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
 - For Bankr launches, `self-launched`, `community-launched`, and `endorsed` are not interchangeable. Use `self-launched` only when the official project/person appears to be the launcher/deployer or same controlled party as the fee recipient. If a community/third-party account launched it and the official project later acknowledged the token, call it `community-launched + endorsed`, not self-launched.
 - Endorsement evidence and fee-claim status are separate fields. If the project/dev publicly posts or acknowledges the CA but has not claimed fees, write `Alignment: community-launched + endorsed`, `Endorsement evidence: <specific post/link/acknowledgement>`, and `Fee-claim status: unclaimed/unknown`.
+- `Official (Bankr deployment)` is not valid endorsement evidence. Bankr deployment only establishes launch source; project endorsement requires project/dev/fee-recipient token acknowledgement.
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
+- Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.

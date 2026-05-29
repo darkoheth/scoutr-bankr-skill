@@ -67,6 +67,9 @@ Expected classification:
 - Expected failure if output says `GitHub repository not inspected`, `check GitHub for active development`, or `GitHub not directly linked in metadata` after seeing `docs.1claw.xyz` or `github.com/1clawAI`.
 - Expected behavior: inspect `https://github.com/1clawAI` in the same report, include org/repo age/history, and score Code from repo evidence. If blocked, state `GitHub inspection unavailable` with the blocker and URL.
 - If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
+- Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
+- Expected failure if `Website:` is blank. If live discovery fails, the report must still say `Website/docs: unavailable` with the checked sources/blocker, not leave an empty field.
+- Known first-party anchors for regression testing: `https://docs.1claw.xyz`, `https://1claw.xyz`, `https://github.com/1clawAI`, and the Bankr launch page for the CA. Refresh live data during real scans, but use these anchors to catch Bankr-runtime false negatives.
 
 ## DOT
 

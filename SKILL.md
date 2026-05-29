@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 5
+version: 6
 visibility: public
 metadata:
   clawdbot:
@@ -22,10 +22,13 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Use `Alignment: self-launched/aligned` only when the launcher/deployer is the official project/person or the same controlled party as the fee recipient/project.
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Use `Alignment: endorsed` only when there is explicit token evidence: CA post, ticker mention, Bankr launch-page link, fee claim, or clear public acknowledgement of the token.
+- Do not write `Endorsement: Official (Bankr deployment)` or treat Bankr deployment itself as project endorsement. Bankr proves launch source only; endorsement requires project/dev/fee-recipient acknowledgement of the token.
 - Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
 - GitHub discovery is mandatory when first-party surfaces expose docs, a website, or an official X profile. Before finalizing, follow Dexscreener/token links, Bankr links, official X bio, website, docs nav/footer, and exact org/repo search. If a GitHub URL is visible, inspect it in the current report.
+- Do not leave first-party source fields blank. If website, docs, X, or GitHub is not found, write `not found after checking <specific sources>` or `unknown: <tool/blocker>`. A blank `Website:` or `GitHub:` line is a failed report.
 - Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
 - Do not treat technical docs as a substitute for GitHub/code analysis when a repo/org link is discoverable from those docs.
+- Known regression guard: for 1clawAI / `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, first-party surfaces are known to include `https://docs.1claw.xyz` / `https://1claw.xyz` and `https://github.com/1clawAI`. Refresh live data, but never report this case as self-launched, blank-website, or no-GitHub unless those URLs are explicitly unreachable and the blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
@@ -42,6 +45,7 @@ For every token scan, apply these defaults automatically:
 - Use `unknown` instead of estimated liquidity, holder concentration, role state, tax status, or unverified source status.
 - Check official social links and fee-recipient/project context when available.
 - Follow the project discovery chain before saying GitHub is missing: token-page/Dexscreener socials -> Bankr links -> website/docs -> X bio/profile links -> footer/nav docs links -> GitHub org/repo. If a repo/org is found, inspect it before writing the final verdict.
+- Populate website/docs/GitHub fields with discovered URLs or explicit blockers. Never output an empty source line.
 - Return one compact report only.
 
 ## Inputs
