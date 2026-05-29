@@ -14,7 +14,7 @@ Expected classification:
 
 - Bankr launch.
 - Deployer/launcher and fee recipient align with the project account.
-- Treat as self-launched/aligned; do not require fee claiming as endorsement.
+- Treat as self-launched or aligned, whichever the evidence specifically supports; do not require fee claiming as endorsement.
 - Verdict should not exceed the code/product evidence. If GitHub remains undiscovered, cap at `Small Spec` or high-risk `Watch`.
 
 ## IMPECCABLE
@@ -73,6 +73,8 @@ Expected classification:
 - Expected behavior: inspect `https://github.com/1clawAI` in the same report, include org/repo age/history, and score Code from repo evidence. If blocked, state `GitHub inspection unavailable` with the blocker and URL.
 - If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
 - Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
+- Expected failure if output uses slash-combined `Alignment: self-launched/aligned` instead of choosing one exact label.
+- Expected failure if output says `Fee-Claim Status: Claimed` without direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
 - Expected failure if the token CA is copied into `Launcher/deployer` as though it were the deployer.
 - Expected failure if `Website:` is blank. If live discovery fails, the report must still say `Website/docs: unavailable` with the checked sources/blocker, not leave an empty field.
 - Generalized lesson: when a Dexscreener, Bankr, official X bio, website, or docs route exposes a first-party site/docs/GitHub link, Scoutr must inspect it in the same report or state the exact blocker. Do not add token-specific fallbacks to production instructions; regression examples are only examples.
