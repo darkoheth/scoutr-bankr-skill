@@ -27,8 +27,15 @@ When the user supplies only a contract address, do not rely on social sentiment 
 3. Extract `info.websites` and `info.socials`. Treat these as first-party source candidates unless they are clearly malicious/mismatched.
 4. Browse or search those exact URLs before claiming no website, docs, X, or GitHub exists.
 5. If the token data source has a docs URL, inspect docs nav/footer and page links for GitHub; docs often link the repo when Dexscreener does not.
+6. If Dexscreener has no useful website/social links, pivot to Bankr exact launch metadata and social profiles:
+   - Use Bankr `websiteUrl`, `tweetUrl`, and `metadataUri` first when present.
+   - Inspect the fee recipient X profile for bio links, pinned posts, recent project posts, docs, GitHub, and official website links.
+   - Inspect the launcher profile when it may identify the project or launch context, but do not treat launcher links as official project links unless they match the fee recipient/project.
+   - Search exact `tokenName`, `tokenSymbol`, fee-recipient handle, and discovered project names with `GitHub`, `docs`, `website`, and the CA.
 
 If Dexscreener or the token data source returns official links, the report must not say `not found after checking token metadata` for those same link types. It should either include the URLs or say the exact tool/runtime blocker that prevented inspection.
+
+If Dexscreener returns no links, the report must not conclude `no website`, `no X`, or `no GitHub` until the Bankr fee-recipient social fallback has been checked or explicitly marked unavailable.
 
 ## Default Rule For Dexscreener Social Links
 

@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 11
+version: 12
 visibility: public
 metadata:
   clawdbot:
@@ -34,6 +34,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - For CA-only scans, build a `source_map` before writing prose. It must contain any structured Dexscreener websites/socials and any exact Bankr launch fields. The final report must copy from this `source_map`; do not rely on memory, generic search summaries, or social-sentiment output for these fields.
 - If Bankr exact lookup returns `exactMatch`, the report must say `Launch source: Bankr / <launchType>` and must populate launcher/deployer, fee recipient, tweet URL if relevant, website URL if present, pool ID/tx hash if useful, and launch timestamp if useful. Do not later override this with `custom`, `unknown`, or `standard ERC-20` based on explorer or pool labels.
+- New pairs often have empty Dexscreener metadata. If Dexscreener has no useful website/social links, pivot to Bankr exact metadata and the fee recipient/launcher social profiles: inspect fee-recipient X bio/profile links, launch tweet links, pinned/recent project posts, Bankr `websiteUrl`/`metadataUri`, and obvious exact project/org searches before saying sources or GitHub are missing.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
 - Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.
 
@@ -67,8 +68,13 @@ When the input is only a contract address, run this sequence before finalizing:
    - Query Bankr exact launch search when public HTTP is available: `https://api.bankr.bot/token-launches/search?q=<contract>`.
    - If the result has `exactMatch`, use its `launchType`, `deployer`, `feeRecipient`, `tweetUrl`, `websiteUrl`, `poolId`, `txHash`, and `timestamp` as primary Bankr provenance fields.
    - Also construct/check `https://bankr.bot/launches/<contract>` or Bankr search for the exact CA. If a browser sees only the Bankr app shell, do not conclude no Bankr record exists; state `Bankr launch metadata unavailable via browser/app shell` unless another Bankr-native source resolves it.
-6. Follow discovered website/docs/X links. Inspect docs nav/footer and official X bio/profile links for GitHub. If GitHub is found, inspect the org/repo now.
-7. Only after these routes fail may `Sources` say `not found`, and it must name the checked routes.
+6. If Dexscreener has no useful `info.websites` or `info.socials`, do not stop. Use Bankr exact metadata and social fallback:
+   - Inspect Bankr `websiteUrl`, `tweetUrl`, and `metadataUri` when present.
+   - Inspect the fee recipient's X profile (`https://x.com/<feeRecipient.xUsername>`) and launcher profile when useful.
+   - Extract website/docs/GitHub/LinkedIn links from the fee recipient or project X bio, pinned post, launch tweet, and recent project posts.
+   - Search exact names from Bankr metadata (`tokenName`, `tokenSymbol`, fee recipient handle/display name when available) plus `GitHub`, `docs`, `website`, and the contract address.
+7. Follow discovered website/docs/X links. Inspect docs nav/footer and official X bio/profile links for GitHub. If GitHub is found, inspect the org/repo now.
+8. Only after these routes fail may `Sources` say `not found`, and it must name the checked routes, including whether fee-recipient social fallback was checked.
 
 Minimum `source_map` fields for CA-only scans:
 
@@ -76,6 +82,7 @@ Minimum `source_map` fields for CA-only scans:
 - `dex_websites`: every Dexscreener `info.websites` URL with labels.
 - `dex_socials`: every Dexscreener `info.socials` URL with types.
 - `bankr_exact`: exact launch fields when present, especially `launchType`, `deployer.xUsername`, `deployer.walletAddress`, `feeRecipient.xUsername`, `feeRecipient.walletAddress`, `tweetUrl`, and `websiteUrl`.
+- `fee_recipient_social_sources`: fee recipient X profile, launcher X profile if relevant, launch tweet, and any links extracted from bio/pinned/recent posts.
 - `github_candidates`: GitHub org/repo URLs found from Dexscreener links, Bankr links, official X, website, docs, or exact org/repo search.
 
 If the report contradicts the `source_map`, the report is wrong. Fix the report, not the source data.
@@ -87,6 +94,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Website/docs: not found after checking token metadata` while Dexscreener/token metadata, Bankr `websiteUrl`, official X bio, or docs links were not explicitly queried.
 - `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
 - `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
+- `GitHub/code: not found`, `Website/docs: not found`, or `X/social: not found` on a new/empty Dexscreener pair while Bankr exact lookup returned fee recipient or launcher X handles and those profiles were not checked.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
 - `Launch source: custom / unknown`, `not applicable`, or `standard ERC-20` after Bankr exact lookup returned `exactMatch`.
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.

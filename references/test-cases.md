@@ -63,6 +63,7 @@ Expected classification:
 - Bankr exact launch lookup should find an `exactMatch` with deployer `@1Nzz_`, fee recipient `@cryptomastery_`, `tweetUrl`, `websiteUrl`, pool ID, tx hash, and timestamp. Expected failure if these are reported unknown while the API is available.
 - Expected failure if the output says `Launch source: Custom`, `Launch source: unknown`, `Fee recipient: N/A`, or `Bankr relationship evidence: None found` while the Bankr exact lookup is available.
 - Expected failure if a later generic search, social summary, or explorer read overwrites exact Dexscreener/Bankr fields already found in the source map.
+- If Dexscreener metadata is empty on a fresh pair, expected behavior is to recover sources from Bankr `websiteUrl`/`tweetUrl` and the fee recipient social profile before saying website/docs/X/GitHub are missing.
 - Doppler/Airlock/Whetstone/Rehype/Uniswap v4 deployment plumbing is expected for newer Bankr launches and must not be used to rule out Bankr.
 - Launcher and fee recipient differ, and the launcher is not the official project account. Classify as pre-endorsement speculation / `please bro` unless fee recipient or official project posts the CA, links the token page, claims fees, or clearly acknowledges the token. If clear official acknowledgement exists, classify as `community-launched + endorsed`, not self-launched.
 - Real product/GitHub evidence improves Code/Product but does not complete endorsement by itself.
