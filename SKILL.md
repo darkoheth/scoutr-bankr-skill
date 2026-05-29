@@ -2,7 +2,7 @@
 name: scoutr
 description: Use when evaluating crypto token launches, project websites, X/social context, GitHub repositories, or launch provenance from a contract address, Dexscreener link, website, X account, docs, or repo. Produces read-only diligence with verdicts, scores, red flags, and next checks. Never trades, posts, connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 9
+version: 10
 visibility: public
 metadata:
   clawdbot:
@@ -33,6 +33,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - If the output would rely on an assumption, move it to `Unknowns` instead.
+- Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.
 
 ## Default Behavior
 
@@ -66,6 +67,19 @@ When the input is only a contract address, run this sequence before finalizing:
    - Also construct/check `https://bankr.bot/launches/<contract>` or Bankr search for the exact CA. If a browser sees only the Bankr app shell, do not conclude no Bankr record exists; state `Bankr launch metadata unavailable via browser/app shell` unless another Bankr-native source resolves it.
 6. Follow discovered website/docs/X links. Inspect docs nav/footer and official X bio/profile links for GitHub. If GitHub is found, inspect the org/repo now.
 7. Only after these routes fail may `Sources` say `not found`, and it must name the checked routes.
+
+## Failure-Pattern Self-Check
+
+Before finalizing a token report, scan the draft for these failure patterns:
+
+- `Website/docs: not found after checking token metadata` while Dexscreener/token metadata, Bankr `websiteUrl`, official X bio, or docs links were not explicitly queried.
+- `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
+- `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
+- `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
+- `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.
+- `Product: low because no website/docs` while a first-party website/docs link is present but uninspected.
+
+If one appears, do not ship the report. Retry the structured lookup or change the field to `unavailable: <exact blocker>`.
 
 ## Inputs
 

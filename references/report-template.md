@@ -92,3 +92,4 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - If a GitHub URL is found from any first-party route, inspect it before finalizing. Do not list `check GitHub` as a next step unless no GitHub URL was discoverable or the runtime explicitly could not inspect it.
 - If inspection is blocked, write `GitHub inspection unavailable: <reason>; discovered URL: <url>`.
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
+- Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.
