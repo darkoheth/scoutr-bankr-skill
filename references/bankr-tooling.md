@@ -73,6 +73,8 @@ Capture:
 - Fee recipient address/account.
 - Whether deployer and fee recipient match.
 - Whether the fee recipient/project has claimed fees, posted the CA, linked the token page, or otherwise clearly acknowledged the token.
+- Whether the fee recipient/project recently posted about the underlying product/project, even if the post does not mention the token.
+- Whether the fee recipient/project is scheduled for, appeared on, or was promoted by a Bankr show/event such as Bankr Agent Hour.
 - Whether the fee recipient/dev recently followed or engaged with Bankr launch-team accounts after token launch, especially `@igoryuzo` and `@0xDeployer`, and which direction the interaction happened.
 - Whether the fee recipient/dev liked, replied to, or quoted third-party replies that explicitly mention Bankr support, token support, the CA, ticker, or the Bankr community around the target/project.
 - Fee recipient/project GitHub or product links, when visible.
@@ -89,6 +91,14 @@ Fee-claim weighting:
 - If deployer and fee recipient match, do not require claimed fees as endorsement. The self-launch is already alignment; fee claiming is an operations/monetization signal only.
 - If deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
 - If deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
+
+Project/event evidence weighting:
+
+- A recent official fee-recipient/project post about the underlying product is product/social evidence. It can raise Product/Social confidence because it confirms the project is active.
+- A Bankr Agent Hour booking, Bankr-hosted event, or Bankr-team public promotion is stronger than generic social proximity because it shows Bankr ecosystem attention. Report it as `Bankr ecosystem relationship/event evidence`.
+- Do not automatically treat a product tweet or Agent Hour booking as token endorsement unless it explicitly mentions the token, CA, ticker, Bankr launch page, fee claim, or clearly acknowledges the Bankr-launched token.
+- If deployer and fee recipient match, the launch may be classified as `self-launched/aligned`; project tweets and Bankr Agent Hour evidence strengthen the read but should be described separately from formal token endorsement.
+- If deployer and fee recipient differ, project tweets and Agent Hour evidence can move the posture from weak `please bro` toward `pre-endorsement signal present`, but the endorsement call remains unresolved until the recipient acknowledges the token or claims fees.
 
 Social-proximity weighting:
 

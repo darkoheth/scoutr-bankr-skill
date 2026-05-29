@@ -22,6 +22,8 @@ Deployer/fee-recipient equality can support `self-launched` alignment, but it is
 
 Bankr social proximity can slightly improve confidence or Watch priority, but should not by itself lift Provenance into official/aligned territory. Direction matters. A post-launch follow/reply/quote/like from the fee recipient/dev toward `@igoryuzo`, `@0xDeployer`, or an explicit third-party Bankr/community support prompt is stronger than `@igoryuzo` or `@0xDeployer` following the dev. Both are weaker than fee claiming, CA posting, or linking the token page.
 
+Official product posts and Bankr event evidence should be scored on the right axis. A same-day post by the fee recipient/project about the underlying product can raise Social/Product scores. A scheduled Bankr Agent Hour appearance can raise Provenance confidence as Bankr relationship evidence. Neither should be described as token endorsement unless it explicitly references the token, CA, ticker, Bankr launch page, or fee claim.
+
 ## Social / X
 
 - 8-10: credible account/team, real discussion, quality replies/quotes, organic momentum, consistent claims.

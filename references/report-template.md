@@ -25,6 +25,7 @@ Bankr / Provenance:
 - Fee recipient: <handle/address if known>
 - Alignment: <self-launched | endorsed | pre-endorsement speculation | please bro | unclear>
 - Endorsement evidence: <CA post / token-page link / fee claim / clear acknowledgement / none found>
+- Bankr relationship evidence: <Agent Hour / Bankr-team post / social engagement / none found / unknown>
 
 Market:
 - FDV/MC: <value or unknown>
@@ -74,3 +75,4 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
 - For Bankr launches, `self-launched` and `endorsed` are not interchangeable. Use `self-launched` when deployer and fee recipient match. Use `endorsed` only when there is explicit public acknowledgement, fee claim, CA post, or a matching official link.
+- Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
