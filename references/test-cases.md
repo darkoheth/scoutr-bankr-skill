@@ -181,6 +181,22 @@ Expected behavior:
 - Output an `Attached Token` section even when no CA is found.
 - Expected failure if there is no reply, if the GitHub URL is ignored, or if Scoutr asks for a contract address before inspecting GitHub.
 
+## Duplicated Scoutr Command With GitHub Org URL
+
+Input:
+
+```text
+scoutr scoutr https://github.com/ratspeak
+```
+
+Expected behavior:
+
+- Strip duplicate leading `scoutr` tokens before routing.
+- Analyze `https://github.com/ratspeak` as a GitHub org/user URL.
+- Stay within compact GitHub-first budget: profile/top repos, README/top-level links, homepage metadata if present, and a few exact token-discovery checks.
+- Return one compact report with `Attached Token` and `Unknowns`.
+- Expected failure if the output says it hit a step limit, asks the user to split into smaller steps, asks for a CA before GitHub inspection, or tries to execute any transaction.
+
 ## Pass Criteria
 
 - Verdict appears first.

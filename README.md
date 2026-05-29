@@ -2,7 +2,7 @@
 
 Scoutr is a read-only Bankr skill for crypto launch diligence. It produces compact verdicts by combining Bankr-native launch metadata, token mechanics, X/social context, GitHub/code quality, product proof, and explicit provenance classification.
 
-Current skill version: `18`
+Current skill version: `19`
 
 Install in Bankr:
 
@@ -29,6 +29,8 @@ scoutr https://github.com/<org>
 ```
 
 `scoutr <anything>` should invoke the skill. GitHub, website, X, docs, and Dexscreener links do not need to include a contract address; Scoutr should choose the matching first-pass workflow, then search for attached token candidates.
+
+If the prompt is accidentally doubled, such as `scoutr scoutr https://github.com/<org>`, Scoutr should strip the extra command word and analyze the URL.
 
 Users should not need to add strict instructions. Scoutr's defaults already require Bankr provenance checks, explicit alignment vs endorsement classification, unknowns instead of estimated fields, and one compact report.
 

@@ -70,6 +70,18 @@ Expected response:
 - Include `Attached Token: confirmed`, `likely`, `possible`, `not found`, or `unavailable: <blocker>`.
 - Never stay silent and never reply only with a request for a contract address.
 
+Also handle duplicated command prefixes:
+
+```text
+scoutr scoutr https://github.com/ratspeak
+```
+
+Expected response:
+
+- Strip the extra leading `scoutr`.
+- Analyze `https://github.com/ratspeak` using the same compact GitHub-only flow.
+- Do not fail with a step-limit message; return the best compact report with explicit Unknowns.
+
 ## Response Tone
 
 Good:

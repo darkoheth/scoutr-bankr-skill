@@ -64,6 +64,8 @@ Unknowns:
 
 For GitHub-only requests, start with repo/code quality and then include attached-token discovery. Use this compact shape:
 
+Keep this shape compact enough for one Bankr turn. If token discovery is weak or inconclusive, do not launch a full token-provenance deep dive; report the weak lead and stop.
+
 ```text
 Verdict: <Pass | Watch | Small Spec | Trade Candidate>
 Confidence: <Low | Medium | High>

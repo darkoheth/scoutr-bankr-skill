@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 18
+version: 19
 visibility: public
 metadata:
   clawdbot:
@@ -28,6 +28,8 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
+- If the prompt repeats the command, such as `scoutr scoutr https://github.com/ratspeak`, strip duplicate leading `scoutr` tokens and use the remaining URL/text as the input payload.
+- GitHub-first mode must fit inside one Bankr turn. Use the compact retrieval budget below; do not exhaust the step budget trying to complete every possible search branch.
 - Return exactly one report. Never duplicate the report, even partially.
 - Never write `alignment: endorsed (self-launched)`, `aligned (self-launched)`, or similar mixed labels. Choose one classification.
 - Do not use slash-combined alignment labels like `self-launched/aligned`. Choose one label: `self-launched`, `aligned`, `community-launched + endorsed`, `pre-endorsement speculation`, `please bro`, or `unclear`.
@@ -71,6 +73,11 @@ The command parser/dispatcher must treat the full text after `scoutr` as the inp
 - `scoutr <ticker-or-project-name>`
 - `scoutr <contract-address>`
 
+Normalize duplicated command prefixes before routing:
+
+- `scoutr scoutr https://github.com/ratspeak` -> `https://github.com/ratspeak`
+- `scoutr check https://github.com/<org>` -> `https://github.com/<org>`
+
 For every token scan, apply these defaults automatically:
 
 - Check Bankr launch provenance first when running in Bankr or when a Bankr launch page may exist.
@@ -86,10 +93,19 @@ For every token scan, apply these defaults automatically:
 
 When the input is a GitHub org/repo URL with no token contract, run this sequence before finalizing:
 
+Step budget for GitHub-first mode:
+
+- Return a useful compact report in the same turn. Never fail with a "step limit" style answer.
+- Use at most 1 GitHub target lookup, 1 README/profile/content lookup per selected repo, 1 homepage/docs metadata lookup when present, and 2-4 exact token-discovery searches/API checks.
+- For org/user URLs, inspect the profile plus the top 3 most relevant repos by pinned/recent/starred/name match. Do not enumerate every repo.
+- For repo URLs, inspect the repo metadata plus README/top-level files only. Do not recursively crawl the repo.
+- If no strong CA/token page is found after those checks, output `Attached Token: not found` or `possible` with checked routes and stop.
+- Only run the full CA-only retrieval sequence when a confirmed or likely contract address/token page is found. For `possible` candidates, summarize why weak and put deeper token provenance in `Would change my mind` or `Unknowns`.
+
 1. Normalize the GitHub target:
    - Identify whether it is an org, user, repo, subdirectory, release, package, or commit.
    - For a repo, capture owner, repo name, default branch, description, topics, homepage, license, stars/forks/watchers, open issues/PRs when available, created date, pushed date, latest release/tag, and primary language.
-   - For an org/user, list the most relevant public repos by name match, recency, stars, topics, and homepage links. Pick the project repo(s) that match the user request.
+   - For an org/user, list only the top 3 most relevant public repos by name match, recency, stars, topics, and homepage links. Pick the project repo(s) that match the user request.
 2. Inspect code quality:
    - README specificity, install/run docs, examples, architecture docs, env examples, tests, CI, package files, contracts, deployment addresses, API docs, and obvious generated/template code.
    - Commit/age history: creation date, first meaningful commit if available, commit span, recent commits, contributor count/span, launch-day dump risk, renamed repo risk, and whether history predates any token launch.
@@ -100,11 +116,11 @@ When the input is a GitHub org/repo URL with no token contract, run this sequenc
    - `docs_links`, `website_links`, `package_names`, `contract_addresses`, `chain_ids`, `tickers`, `token_names`, `x_handles`, `farcaster_links`, `discord_or_telegram_links`, and `maintainers`.
    - `token_candidates`: every CA/ticker/token link discovered from README/docs/site/package/release/issues if relevant, plus search/API results.
 4. Discover attached token(s):
-   - Search repo README/docs/config/package files for contract addresses, token names, tickers/cashtags, Dexscreener links, Basescan/Blockscout links, Bankr/Clanker/Virtuals links, Farcaster mini-app links, and website/social links.
-   - Follow repo homepage/docs links and inspect metadata/visible links for token pages, CA, ticker, Dexscreener, Bankr, Clanker, Virtuals, X, Farcaster, and Dune.
+   - Search repo README, profile README, homepage field, topics, description, and top-level package/config/docs links for contract addresses, token names, tickers/cashtags, Dexscreener links, Basescan/Blockscout links, Bankr/Clanker/Virtuals links, Farcaster mini-app links, and website/social links.
+   - Follow repo homepage/docs links only to inspect metadata/visible links for token pages, CA, ticker, Dexscreener, Bankr, Clanker, Virtuals, X, Farcaster, and Dune. Do not crawl full docs sites in GitHub-first mode.
    - Inspect GitHub owner/org profile links and maintainer profile links for website/X/Farcaster. Use those only as discovery routes; do not treat maintainer-owned tokens as attached unless the project/repo/owner explicitly links or claims them.
    - Search exact repo name, package name, org name, homepage domain, and likely ticker on Dexscreener and launch platforms. Prefer exact contract or exact first-party token links over ticker-only matches.
-   - For any candidate CA, run the Required CA-Only Retrieval Sequence and score token/provenance separately from repo quality.
+   - For confirmed or likely candidate CAs, run the Required CA-Only Retrieval Sequence and score token/provenance separately from repo quality. For possible-only candidates, do not run the full CA path unless budget remains; report them as weak leads.
 5. Token attachment confidence:
    - `confirmed`: repo/org/website/docs/official social explicitly links the CA/token page, or the token page links back to the repo/project.
    - `likely`: multiple first-party signals connect repo/project and token, but no direct CA link was found.
