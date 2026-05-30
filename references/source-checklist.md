@@ -54,6 +54,10 @@ Inspect:
 ## GitHub / Code
 
 - GitHub-only inputs are first-class. If the user sends a GitHub org/repo URL, score the repo first, then search outward for an attached token tied to the repo, package, docs, homepage, owner, or maintainer.
+- RepoScan is the preferred outsourced deep-code analyzer for repo URLs when configured. Use it for originality/similarity/trust-score analysis, then keep Scoutr responsible for attached-token discovery, token provenance, market/social checks, and final trade posture.
+- RepoScan API-key path: `GET https://api.zauth.inc/api/bot/scan?repo=<owner>/<repo>` with `X-API-Key`; completed responses can include `zauthScore`, `tldr`, `diffUrl`, `iframeUrl`, metadata, red/green flags, and repo age/activity fields.
+- RepoScan x402 path: `POST https://api.zauth.inc/x402/reposcan` with `{ "repoUrl": "https://github.com/<owner>/<repo>" }`; completed responses can include `analysisMarkdown`, `comparisons`, `zauthScore`, and `scannedAt`. Do not initiate wallet signing/payment unless the user has explicitly authorized it or the environment already has an approved client/session.
+- If RepoScan is unavailable, blocked, unpaid, or times out, state `RepoScan: unavailable: <reason>` and continue with manual GitHub checks.
 - For GitHub-only scans, build a repo source map: owner, repo/org, description, topics, homepage, license, stars/forks/watchers, created date, pushed date, releases/tags, primary language, docs links, website links, package names, contract addresses, tickers, token names, X/Farcaster links, and maintainers.
 - Attached-token discovery path from GitHub: README/docs/config/package files -> repo homepage/docs -> GitHub org/user profile links -> maintainer profile links -> exact repo/org/package/domain searches -> Dexscreener/Bankr/Clanker/Virtuals exact or name searches.
 - Token attachment confidence must be explicit: `confirmed` when first-party repo/site/social/token page links the CA both ways or directly; `likely` for multiple first-party signals without direct CA; `possible` for ticker/name/proximity only; `not found` after checked routes.

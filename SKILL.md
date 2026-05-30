@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 24
+version: 25
 visibility: public
 metadata:
   clawdbot:
@@ -30,6 +30,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact lookup returns a `websiteUrl`, `Website/docs:` must contain that URL or an explicit mismatch/blocker. It must never be blank.
 - If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
 - If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
+- RepoScan is the preferred outsourced GitHub/code analyzer when available. If a GitHub repo URL is found and a RepoScan API key or already-authorized x402/SIWX client is configured, call RepoScan for repo originality/similarity/trust-score analysis before scoring Code. If RepoScan is unavailable, blocked, unpaid, or would require a new wallet signature/payment, use the manual GitHub checks below and state `RepoScan: unavailable: <reason>`.
 - Known regression: for EPITAPH `0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3`, Bankr exact metadata has `websiteUrl: https://www.epitaph-agent.xyz/`, X `@EpitaphAI`, and the website footer contains `https://github.com/Epitaph-AI/EpitaphAI`. Any report saying website/X blank, GitHub not found, or Code N/A is wrong.
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
@@ -102,6 +103,16 @@ For every token scan, apply these defaults automatically:
 ## Required GitHub-Only Retrieval Sequence
 
 When the input is a GitHub org/repo URL with no token contract, run this sequence before finalizing:
+
+RepoScan outsourcing:
+
+- For a direct repo URL, prefer RepoScan for deep repo/code analysis and similarity detection when credentials or prior authorization are already available.
+- For an org/user URL, first select the most relevant repo(s) using the compact budget, then run RepoScan on the selected repo rather than the org URL.
+- API-key REST path: `GET https://api.zauth.inc/api/bot/scan?repo=<owner>/<repo>` with `X-API-Key`. If the result is `scanning`, poll `GET https://api.zauth.inc/api/bot/progress/<scanId>` or retry the scan endpoint until completed within the latency guard.
+- x402 path: `POST https://api.zauth.inc/x402/reposcan` with body `{ "repoUrl": "https://github.com/<owner>/<repo>" }`, then poll `GET https://api.zauth.inc/x402/reposcan/<sessionToken>` when a session token is returned. Do not initiate a new payment, wallet signature, or SIWX flow unless the user has explicitly authorized that setup.
+- Use RepoScan fields as code evidence: `zauthScore`, `analysisMarkdown`/`tldr`, `comparisons`, `diffUrl`, and metadata such as stars, forks, commits, contributors, age, red flags, green flags, and last commit.
+- RepoScan improves Code/Product confidence but does not replace Scoutr's attached-token discovery, launch provenance, market checks, social checks, or endorsement/alignment logic.
+- If RepoScan fails or times out, record the blocker and continue with manual GitHub checks. Never return no report solely because RepoScan was unavailable.
 
 Step budget for GitHub-first mode:
 
