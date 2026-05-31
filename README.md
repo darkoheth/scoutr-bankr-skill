@@ -2,7 +2,7 @@
 
 Scoutr is a read-only Bankr skill for crypto launch diligence. It produces compact verdicts by combining Bankr-native launch metadata, token mechanics, X/social context, GitHub/code quality, product proof, and explicit provenance classification.
 
-Current skill version: `27`
+Current skill version: `28`
 
 Install in Bankr:
 
@@ -30,9 +30,7 @@ scoutr https://github.com/<org>
 
 `scoutr <anything>` should invoke the skill. GitHub, website, X, docs, and Dexscreener links do not need to include a contract address; Scoutr should choose the matching first-pass workflow, then search for attached token candidates.
 
-When RepoScan is configured through a no-per-scan-cost API key or free/internal integration, Scoutr can use it as an outsourced GitHub/code analyzer for repo originality, similarity, and trust-score evidence. It should not use paid x402/pay-per-scan RepoScan routes inside Bankr.
-
-When RepoScan is unavailable or would cost per scan, Scoutr uses a built-in RepoScan-lite fallback: GitHub metadata, repo age/activity, README/docs/package/contracts/deploy/test/CI inspection, visible token/social links, secret-risk heuristics, generated/template/fork indicators, and approximate similarity checks through exact repo/name/phrase searches. This is not Zauth's private large-index similarity engine, but it gives Scoutr the free signals needed for Bankr launch scouting. Scoutr still performs attached-token discovery, launch provenance, market/social checks, and the final trade-posture verdict itself.
+Scoutr uses a built-in RepoScan-style repo scanner for GitHub/code analysis. It does not call external paid scanners or payment-gated scan APIs. The scanner gathers GitHub metadata, repo age/activity, README/docs/package/contracts/deploy/test/CI evidence, visible token/social links, secret-risk heuristics, generated/template/fork indicators, and approximate similarity checks through exact repo/name/phrase searches. This is not a private large-index similarity engine, but it gives Scoutr the free signals needed for Bankr launch scouting. Scoutr still performs attached-token discovery, launch provenance, market/social checks, and the final trade-posture verdict itself.
 
 If the prompt is accidentally doubled, such as `scoutr scoutr https://github.com/<org>`, Scoutr should strip the extra command word and analyze the URL.
 

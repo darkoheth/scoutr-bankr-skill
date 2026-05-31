@@ -75,10 +75,10 @@ What it is:
 
 Sources:
 - GitHub/code: <repo/org URL plus age/history note>
-- RepoScan: <zauthScore/tldr/diffUrl if used, or unavailable with blocker; include RepoScan-lite score when fallback used>
+- Repo scan: <score plus metadata/activity/substance/similarity/secret-risk summary>
 - Website/docs: <repo homepage/docs, not found after checking repo/profile links, or unavailable with blocker>
 - X/social: <handle/link, not found after checking repo/profile/site links, or unavailable with blocker>
-- Source trace: <GitHub URL checked; RepoScan used or unavailable; README/docs/package/profile/homepage links checked; token candidate routes checked; Dexscreener/Bankr/Clanker/Virtuals checked if a token candidate was found>
+- Source trace: <GitHub URL checked; repo scanner used; README/docs/package/profile/homepage links checked; token candidate routes checked; Dexscreener/Bankr/Clanker/Virtuals checked if a token candidate was found>
 
 Scores:
 - Code: <0-10> - <repo age/activity/quality reason>
@@ -95,8 +95,7 @@ Attached Token:
 
 GitHub / Code:
 - Age/history: <created/pushed/commit span/contributor note>
-- RepoScan: <Zauth trust score if available, or unavailable blocker>
-- RepoScan-lite: <fallback score, metadata/activity/substance/similarity/secret-risk summary, or not run>
+- Repo scan: <score, metadata/activity/substance/similarity/secret-risk summary>
 - Activity: <recent commits/releases/issues/CI if checked>
 - Substance: <real code/tests/docs/contracts vs placeholder/template>
 - Risks: <missing tests, no releases, launch-day dump, secrets risk, unverified claims>
@@ -140,7 +139,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Do not use `endorsed please bro` as a final alignment label. Before endorsement it is `please bro` or `pre-endorsement speculation`; after clear target/project acknowledgement it becomes `community-launched + endorsed`.
 - Do not mark `Fee-claim status: claimed` from a launch tweet, website link, Agent Hour, or token acknowledgement. Claimed requires direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
-- If RepoScan is available through a no-per-scan-cost API key or free/internal integration, use it as the preferred deep code/originality signal and include its score/findings compactly. Do not use paid x402/pay-per-scan RepoScan from Bankr; say why and continue with manual GitHub inspection.
+- Use Scoutr's built-in repo scanner as the GitHub/code signal. Do not call external paid repo scanners or payment-gated scan APIs.
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
 - Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
