@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 26
+version: 27
 visibility: public
 metadata:
   clawdbot:
@@ -30,7 +30,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact lookup returns a `websiteUrl`, `Website/docs:` must contain that URL or an explicit mismatch/blocker. It must never be blank.
 - If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
 - If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
-- RepoScan is an optional outsourced GitHub/code analyzer only when it is available through a no-per-scan-cost API key or preconfigured free/internal integration. Do not use paid x402/pay-per-scan RepoScan routes inside the Bankr skill. If RepoScan is unavailable, blocked, paid, unpaid, or would require wallet/payment authorization, use the manual GitHub checks below and state `RepoScan: unavailable: <reason>`.
+- RepoScan is an optional outsourced GitHub/code analyzer only when it is available through a no-per-scan-cost API key or preconfigured free/internal integration. Do not use paid x402/pay-per-scan RepoScan routes inside the Bankr skill. If RepoScan is unavailable, blocked, paid, unpaid, or would require wallet/payment authorization, run the built-in RepoScan-lite fallback below and state `RepoScan: unavailable: <reason>; RepoScan-lite: used`.
 - Known regression: for EPITAPH `0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3`, Bankr exact metadata has `websiteUrl: https://www.epitaph-agent.xyz/`, X `@EpitaphAI`, and the website footer contains `https://github.com/Epitaph-AI/EpitaphAI`. Any report saying website/X blank, GitHub not found, or Code N/A is wrong.
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
@@ -113,6 +113,16 @@ RepoScan outsourcing:
 - Use RepoScan fields as code evidence: `zauthScore`, `analysisMarkdown`/`tldr`, `comparisons`, `diffUrl`, and metadata such as stars, forks, commits, contributors, age, red flags, green flags, and last commit.
 - RepoScan improves Code/Product confidence but does not replace Scoutr's attached-token discovery, launch provenance, market checks, social checks, or endorsement/alignment logic.
 - If RepoScan fails or times out, record the blocker and continue with manual GitHub checks. Never return no report solely because RepoScan was unavailable.
+
+RepoScan-lite fallback:
+
+- When paid Zauth RepoScan is unavailable, approximate the useful public signals locally rather than skipping code analysis.
+- Collect repo metadata via GitHub pages/API/search when available: creation date, pushed date, stars, forks, license, topics, default branch, owner profile, fork status, homepage, primary language, open issues, release/tag presence, commit count when cheaply available, contributor count when cheaply available, and last commit summary when available.
+- Inspect top-level repo material only under the latency guard: README, package/config files, `.env.example`, docs/deploy/contracts directories when listed, CI workflow names, test directories, examples, and deployment/address files. Do not recursively crawl large repos by default.
+- Run static text heuristics over visible filenames/content: contract addresses, tickers/cashtags, chain IDs, Bankr/Clanker/Virtuals/Dexscreener/Basescan links, website/docs/X/Farcaster/Telegram/Discord links, package names, suspicious secret keywords, private-key/env examples, deploy scripts, test presence, generated-template markers, and copied-fork indicators. Never print secrets; report only safe context such as `potential secret-risk pattern in .env.example`.
+- Approximate originality/similarity with cheap public checks: exact repo/name searches, exact distinctive README/package phrase searches, GitHub code/search snippets when available, fork/parent metadata, same-file-name/package-name collisions, and whether the repo appears to be a sample/template/fork. Mark this as `similarity: approximate`, not as Zauth-equivalent.
+- Score the fallback explicitly: `RepoScan-lite score: <0-10>` based on repo age/activity, code substance, tests/CI/docs, secret risk, originality approximation, product/token linkage, and provenance consistency.
+- Treat this fallback as evidence for Code/Product only. It does not replace attached-token discovery, Bankr launch provenance, social checks, holder/liquidity checks, or the final Scoutr verdict.
 
 Step budget for GitHub-first mode:
 

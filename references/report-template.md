@@ -75,7 +75,7 @@ What it is:
 
 Sources:
 - GitHub/code: <repo/org URL plus age/history note>
-- RepoScan: <zauthScore/tldr/diffUrl if used, or unavailable with blocker>
+- RepoScan: <zauthScore/tldr/diffUrl if used, or unavailable with blocker; include RepoScan-lite score when fallback used>
 - Website/docs: <repo homepage/docs, not found after checking repo/profile links, or unavailable with blocker>
 - X/social: <handle/link, not found after checking repo/profile/site links, or unavailable with blocker>
 - Source trace: <GitHub URL checked; RepoScan used or unavailable; README/docs/package/profile/homepage links checked; token candidate routes checked; Dexscreener/Bankr/Clanker/Virtuals checked if a token candidate was found>
@@ -95,7 +95,8 @@ Attached Token:
 
 GitHub / Code:
 - Age/history: <created/pushed/commit span/contributor note>
-- RepoScan: <trust score, key similarity/originality findings, red/green flags, or unavailable blocker>
+- RepoScan: <Zauth trust score if available, or unavailable blocker>
+- RepoScan-lite: <fallback score, metadata/activity/substance/similarity/secret-risk summary, or not run>
 - Activity: <recent commits/releases/issues/CI if checked>
 - Substance: <real code/tests/docs/contracts vs placeholder/template>
 - Risks: <missing tests, no releases, launch-day dump, secrets risk, unverified claims>
