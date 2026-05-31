@@ -217,7 +217,7 @@ Expected classification:
 - Inspect and score the GitHub org/repo quality first: org/repo age, repo list, recent pushes, README/docs, package/contracts/tests/CI where available, and whether history predates any token launch.
 - Then search outward for an attached token using repo/org profile links, README/docs/package files, homepage/docs links, X/social links, exact org/project/package searches, and launch-platform lookups.
 - If a token candidate is found, classify attachment confidence as `confirmed`, `likely`, or `possible` based on first-party linkage strength, then run the CA-only provenance path for that CA.
-- If RepoScan is configured or already authorized, use it for repo trust/originality/similarity analysis and include a compact `RepoScan` source/code note. If it is unavailable or would require a new payment/signature, continue manually and state the blocker.
+- If RepoScan is configured through a no-per-scan-cost API key or free/internal integration, use it for repo trust/originality/similarity analysis and include a compact `RepoScan` source/code note. If it is unavailable or would require paid x402/payment/signature, continue manually and state the blocker.
 - If no credible token is found, output `Attached Token: not found` with checked routes and keep `Token: N/A`; do not invent market or launch provenance.
 - Expected failure if the report only says "send a contract address", ignores the repo, or analyzes code without attempting attached-token discovery.
 
