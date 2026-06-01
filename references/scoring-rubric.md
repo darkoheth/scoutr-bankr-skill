@@ -16,6 +16,10 @@ Use 0-10 scores. Prefer integer or half-point scores. Scores are directional, no
 - 2-4: `please bro` pattern, unclear deployer, mismatched links, unclaimed fee recipient, or launch appears to target a third party without confirmation.
 - 0-1: impersonation, fake official claims, hostile fee routing, or explicit denial by the claimed project/person.
 
+Bankr fee-recipient linkage is not endorsement. Treat `feeRecipient.xUsername`, fee-recipient wallet routing, Bankr `websiteUrl`, or social/profile linkage as provenance context only. It can explain why traders are watching, but it does not complete the endorsement check unless the fee recipient/project claims fees, posts the CA/ticker, links the Bankr/token page, or clearly acknowledges the exact token from an official channel.
+
+When deployer/launcher differs from fee recipient and explicit acknowledgement is missing, provenance normally belongs in the 2-6 range depending on source quality and social proximity. Do not score Provenance 8+ or return `Trade Candidate` solely because the fee recipient is a verified/official project account.
+
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
 
 Launcher/deployer and fee-recipient equality can support `self-launched` alignment only when they appear to be the official project/person or the same controlled party. If the token was deployed by a community or third-party launcher for a project, do not call it self-launched. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement. A community-launched token with later official acknowledgement should be scored as `community-launched + endorsed`. Fee-claim status should still be reported separately; unclaimed/unknown fees can cap confidence or sizing without erasing endorsement from a clear CA acknowledgement.
@@ -61,6 +65,8 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 - `Watch`: overall 4-5.9, confidence is low because key evidence is missing, or a Bankr token has unresolved `please bro` provenance.
 - `Small Spec`: overall 6-7.4 with no hard safety failures, but meaningful risk remains.
 - `Trade Candidate`: overall 7.5+ with at least three independent green flags and no unresolved major red flags.
+
+Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
 
 Confidence:
 

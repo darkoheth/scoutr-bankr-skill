@@ -138,6 +138,8 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Treat Bankr Agent Hour or Bankr-hosted event evidence as relationship/context evidence, not automatic token endorsement unless the event/post explicitly mentions the token or launch.
 - Do not use `endorsed please bro` as a final alignment label. Before endorsement it is `please bro` or `pre-endorsement speculation`; after clear target/project acknowledgement it becomes `community-launched + endorsed`.
 - Do not mark `Fee-claim status: claimed` from a launch tweet, website link, Agent Hour, or token acknowledgement. Claimed requires direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
+- Do not mark `Alignment: community-launched + endorsed` or write official endorsement when the only evidence is Bankr fee-recipient routing, a fee-recipient X handle/wallet, a Bankr website URL, or project/social/profile linkage. Fee recipient means potential beneficiary, not token acknowledgement.
+- `Endorsement evidence` must name explicit token acknowledgement evidence or say `none found`. Valid evidence includes fee claim, CA post, ticker/token post, Bankr/token-page link, or clear acknowledgement of the exact token from an official channel.
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Use Scoutr's built-in repo scanner as the GitHub/code signal. Do not call external paid repo scanners or payment-gated scan APIs.
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
@@ -160,6 +162,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - Never leave `Website/docs`, `X/social`, or `GitHub/code` blank. Blank source fields hide failed retrieval. Use a URL, `not found after checking <sources>`, or `unavailable: <blocker>`.
 - For Bankr exact matches, a blank `Website/docs`, `X/social`, or `Launch tweet` field is a hard failure whenever Bankr returned `websiteUrl`, `tweetUrl`, deployer X, or fee-recipient X.
 - If using separate `Website:` and `Docs:` lines instead of the combined template field, the same no-blank rule applies to each line.
+- If deployer/launcher differs from fee recipient and `Endorsement evidence` is `none found`, reject `Alignment: community-launched + endorsed`, `Verdict: Trade Candidate`, and `Confidence: High`.
 - Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.
 - Before sending, reject the draft if it has only Stats/Security/Summary and no Launch/Provenance, Sources, GitHub/code, Unknowns, or Source trace for a Bankr exact match.
 - The `Source trace` line is a compact audit trail, not a long research log. Its job is to make missing-source failures obvious before the report ships.

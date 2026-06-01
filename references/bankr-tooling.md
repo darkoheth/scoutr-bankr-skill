@@ -103,6 +103,7 @@ Capture:
 - Fee recipient address/account.
 - Whether launcher/deployer and fee recipient match, and whether that launcher is the official project/person or a community/third-party account.
 - Whether the fee recipient/project has claimed fees, posted the CA, linked the token page, or otherwise clearly acknowledged the token.
+- Whether fee-recipient linkage is only routing/context. A fee recipient handle/wallet, project website, or official social link is not endorsement by itself.
 - Fee-claim status as its own field: claimed, unclaimed, unknown, or not applicable.
 - Whether the fee recipient/project recently posted about the underlying product/project, even if the post does not mention the token.
 - Whether the fee recipient/project is scheduled for, appeared on, or was promoted by a Bankr show/event such as Bankr Agent Hour.
@@ -129,6 +130,7 @@ Fee-claim weighting:
 - For community launches, official acknowledgement and fee claim are separate signals. A dev/project CA post can make the token endorsed even before fees are claimed; unclaimed fees should remain a named unknown/risk rather than blocking the endorsement label.
 - A Bankr `tweetUrl` authored by the fee recipient/project is acknowledgement/endorsement evidence. It does not prove self-launch when the Bankr deployer wallet differs from the fee-recipient wallet and there is no source tying that deployer to the official project/person.
 - If Bankr exact metadata has a raw deployer wallet with no launcher username and a different fee-recipient wallet/X account, default to third-party/community launch until control is proven. With an official fee-recipient token post, classify `community-launched + endorsed`; without it, classify `please bro` or `pre-endorsement speculation`.
+- Do not classify `community-launched + endorsed` solely because the fee recipient is the official project/person. The explicit endorsement check still needs a fee claim, CA post, token-page link, or clear acknowledgement of the exact token.
 - If launcher/deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
 - If launcher/deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
 - Only mark `Fee-claim status: claimed` with direct claim evidence from Bankr metadata, a claim transaction/event, or an explicit recipient statement. Do not infer fee claiming from a launch tweet, website link, CA acknowledgement, or Agent Hour booking.

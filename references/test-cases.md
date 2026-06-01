@@ -185,6 +185,26 @@ Expected classification:
 - Expected failure if `X/social:` or `Launch tweet:` is blank even though Bankr exact returned `https://x.com/epitaphai` and `@EpitaphAI`.
 - Expected failure if output says `security: safe (bankr_deployed)` as though Bankr deployment alone verifies code/product/security beyond launch source.
 
+## Brain / BRAIN Fee-Recipient Is Not Endorsement
+
+Input:
+
+```text
+Brain / $Brain Bankr launch where Bankr metadata lists @BrainDotFi as fee recipient, while launcher/deployer is a different raw wallet or otherwise not proven to be @BrainDotFi
+```
+
+Expected classification:
+
+- Bankr / Doppler launch source if Bankr exact lookup resolves.
+- Fee recipient may be `@BrainDotFi`, but that alone is not endorsement.
+- If `@BrainDotFi` has not claimed fees, posted the CA/ticker/token page, linked the Bankr/token page, or clearly acknowledged the exact token, classify as `please bro` or `pre-endorsement speculation`, not `community-launched + endorsed`.
+- `Endorsement evidence` should be `none found` or name explicit token acknowledgement evidence. It must not say `fee recipient is the verified project X account` as endorsement evidence.
+- Provenance should not be 9+ solely from Bankr launch plus official fee recipient.
+- Verdict should be capped at `Watch` or cautious `Small Spec` while endorsement is unresolved, even if market/social/product quality is strong.
+- Expected failure if output says `officially endorsed by the project team`, `official project endorsement via Bankr fee-recipient linkage`, or `Trade Candidate / High confidence` without explicit acknowledgement.
+- Expected failure if `Website/docs:` or `X/social:` is blank while the report claims website/X were followed.
+- Expected failure if token score/security cites `bankr_deployed` as proof of safety.
+
 ## RUNNER / Legacy Clanker + Heavy Site
 
 Input:
