@@ -128,6 +128,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 ## Evidence Discipline
 
 - Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
+- For holder count, include source and timestamp/age when available, especially on launches under 24h old. Do not call holders `extremely low`, `pre-distribution`, or highly concentrated from an old/stale count; re-check or write `holders: stale/unverified`.
 - Keep `Unknowns` short and decision-oriented. Default to 1-3 bullets. Do not repeat Red flags or Would-change-my-mind items, and do not list every generic diligence check that could be done later.
 - If market data is unavailable across multiple fields, collapse it into one compact blocker such as `Market depth/holders unavailable from checked sources`, not separate bullets for liquidity, lock status, holder distribution, developer allocation, and taxes.
 - If product/app behavior was not inspected, state that in Product or Red flags as `product proof limited to landing/docs`; do not repeat it as a generic Unknown unless it is the main reason the verdict is capped.
@@ -149,6 +150,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Code scores need visible evidence. A repo URL, active commits, multiple contributors, docs, or project structure is not enough for Code 8+. Use 8+ only when inspected code substance, tests/CI or equivalent verification, and organic pre-launch history are all present. Same-day/launch-week repos normally cap at 4, or 6 if meaningful code was inspected but history/tests remain thin.
 - If Code, liquidity, holder concentration, or provenance alignment is materially unchecked, do not return High confidence or `Trade Candidate`; cap the posture and say what evidence would unlock the higher score.
+- If holder count changes materially between sources or contradicts trade activity, report the freshest source and downgrade confidence until top-holder distribution is checked.
 - Use Scoutr's built-in repo scanner as the GitHub/code signal. Do not call external paid repo scanners or payment-gated scan APIs.
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
 - Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.

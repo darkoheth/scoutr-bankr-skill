@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 34
+version: 35
 visibility: public
 metadata:
   clawdbot:
@@ -60,6 +60,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - When any first-party route exposes docs, a website, or GitHub, treat that as available source material for the current report. Do not downgrade to `no website`, `no GitHub`, or `lacks product proof` unless those exact first-party routes were checked and failed or the runtime blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not estimate liquidity, holder concentration, or top-holder quality from charts, pool vibes, or generic scan labels. Use directly checked values or `unknown`.
+- Holder counts are volatile on fresh launches. When reporting a holder count, include the source and timestamp/age if available, and avoid phrases like `extremely low` or `pre-distribution` unless the holder count was freshly checked from a token explorer or equivalent live source. If high trade count/volume suggests the holder count may be stale or indexing-lagged, re-check or write `holders: stale/unverified` instead of treating the old number as a core red flag.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
 - For CA-only scans, build a `source_map` before writing prose. It must contain any structured Dexscreener websites/socials and any exact Bankr launch fields. The final report must copy from this `source_map`; do not rely on memory, generic search summaries, or social-sentiment output for these fields.
@@ -82,6 +83,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Use `Unknowns` only for material decision blockers that remain after the checked routes. Keep it to 1-3 bullets by default. Do not use `Unknowns` as a laundry list of every possible diligence task.
 - Do not duplicate items across `Red flags`, `Would change my mind`, and `Unknowns`. If a missing item is already a red flag or a would-change-my-mind condition, put it in the section where it best helps the decision and do not repeat it.
 - `Trade Candidate` requires all major axes to be directly supported, not merely inferred: Bankr/provenance alignment must be explicit, liquidity and holder/concentration checks must not be material unknowns, and Code/Product scores above 7 must cite inspected evidence. If liquidity is unknown, concentration is not checked, or Code is based on a fresh repo without verified tests/CI/history, cap the verdict at `Watch` or `Small Spec` and confidence at Medium.
+- Do not mark `Confidence: High` when the thesis relies on a stale holder count, unchecked top-holder distribution, or a holder count that contradicts current explorer/market activity. Re-check live explorer metadata or lower confidence.
 - If all market fields are unavailable from checked sources, say that once in `Market` or one compact `Unknowns` bullet. Do not list separate generic bullets for liquidity, lock status, holders, concentration, developer allocation, taxes, and agent functionality unless each was specifically attempted and affects the verdict.
 - Do not list generic unknowns like `actual functionality beyond landing page` when the report already scored Product from website/docs and did not inspect the app. Instead, write the direct blocker in Product or Red flags, such as `product proof limited to landing/docs`.
 - Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.

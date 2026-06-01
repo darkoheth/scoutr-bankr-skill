@@ -91,3 +91,5 @@ Confidence:
 Scores should degrade when important fields are unknown. Do not fill missing values with estimates from "typical" pools or inferred ratios. Unknown liquidity, unchecked top-holder concentration, or unavailable admin/role state should be named as unknowns and should cap confidence at Medium unless the user requested a very fast read.
 
 Do not overfit the `Unknowns` section. If several numeric market checks are unavailable, collapse them into one material blocker and let the score/confidence carry the penalty. Unknowns should explain the verdict cap, not enumerate a full future audit checklist.
+
+Fresh-launch holder counts can lag. Do not heavily penalize a launch from an old holder snapshot when current explorer metadata or trading activity shows distribution is changing quickly. Use the freshest count with timestamp/source, and score concentration from actual top-holder distribution when available rather than holder count alone.

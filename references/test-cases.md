@@ -334,3 +334,18 @@ Expected behavior:
 - Good GitHub/product proof is scored separately from token endorsement.
 - Unknowns are explicit when Bankr-native tools, X search, holder data, or GitHub checks are unavailable.
 - No output tells the user to buy, sell, hold, or trade.
+
+## Fresh Launch Holder Count / Stale Snapshot
+
+Input shape:
+
+```text
+Bankr/Doppler token launched minutes ago with high trade count and explorer holder count changing quickly.
+```
+
+Expected behavior:
+
+- Holder count should include source and timestamp/age when available, such as `BaseScan showed 257 holders at <timestamp>`.
+- Expected failure if a stale early holder count like `23 holders` is used later as a core red flag while current explorer metadata shows materially more holders.
+- Expected failure if the report says `Confidence: High` while top-holder distribution is unchecked and holder count evidence is stale or contradictory.
+- Holder count alone should not become `extremely concentrated`; concentration requires top-holder distribution, excluding pool/DEX/system addresses where possible.
