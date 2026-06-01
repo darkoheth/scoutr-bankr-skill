@@ -77,3 +77,5 @@ Confidence:
 ## Numeric Evidence
 
 Scores should degrade when important fields are unknown. Do not fill missing values with estimates from "typical" pools or inferred ratios. Unknown liquidity, unchecked top-holder concentration, or unavailable admin/role state should be named as unknowns and should cap confidence at Medium unless the user requested a very fast read.
+
+Do not overfit the `Unknowns` section. If several numeric market checks are unavailable, collapse them into one material blocker and let the score/confidence carry the penalty. Unknowns should explain the verdict cap, not enumerate a full future audit checklist.

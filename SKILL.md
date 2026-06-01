@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 30
+version: 31
 visibility: public
 metadata:
   clawdbot:
@@ -73,7 +73,10 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If a website is too large or visually noisy, use a link-extraction pass (`href`, `github.com`, `docs.`, `x.com`, `twitter.com`) before reading prose. Do not conclude `GitHub not discoverable via first-party surfaces` unless the raw/link extraction pass and exact org/repo search both failed or were explicitly blocked.
 - GitHub links are first-class inputs. If the user sends only a GitHub org/repo URL, inspect and score the GitHub first, then try to discover any token attached to the repo, project, package, docs, website, maintainer, or owner. Do not stop at a code-only report unless token discovery routes were checked or blocked.
 - Use a latency guard. Do not spend the whole run crawling large websites, X pages, Framer bundles, Discord/Telegram, or every possible platform branch. Prefer structured APIs and page metadata first; if a source is slow, login-walled, huge, or JS-heavy, record the blocker and continue.
-- If the output would rely on an assumption, move it to `Unknowns` instead.
+- Use `Unknowns` only for material decision blockers that remain after the checked routes. Keep it to 1-3 bullets by default. Do not use `Unknowns` as a laundry list of every possible diligence task.
+- Do not duplicate items across `Red flags`, `Would change my mind`, and `Unknowns`. If a missing item is already a red flag or a would-change-my-mind condition, put it in the section where it best helps the decision and do not repeat it.
+- If all market fields are unavailable from checked sources, say that once in `Market` or one compact `Unknowns` bullet. Do not list separate generic bullets for liquidity, lock status, holders, concentration, developer allocation, taxes, and agent functionality unless each was specifically attempted and affects the verdict.
+- Do not list generic unknowns like `actual functionality beyond landing page` when the report already scored Product from website/docs and did not inspect the app. Instead, write the direct blocker in Product or Red flags, such as `product proof limited to landing/docs`.
 - Before sending, run the failure-pattern self-check below. If any failure pattern matches, redo the relevant retrieval step and fix the report.
 
 ## Default Behavior
@@ -239,6 +242,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `GitHub/code: not found`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` after a first-party website's raw HTML/link list contains `github.com`.
 - `GitHub/code: not found`, `Website/docs: not found`, or `X/social: not found` on a new/empty Dexscreener pair while Bankr exact lookup returned fee recipient or launcher X handles and those profiles were not checked.
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
+- `Unknowns` has more than 3 bullets, repeats the Red flags/Would change my mind, or lists generic diligence tasks instead of unresolved blockers from checked routes.
+- `Unknowns` separately lists multiple market sub-checks such as liquidity, lock status, holders, concentration, and developer allocation after `Market` already says those fields are unknown. Collapse them into one market-data blocker.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
 - `Launch source: custom / unknown`, `not applicable`, or `standard ERC-20` after Bankr exact lookup returned `exactMatch`.
 - `Launch source: custom`, `Launch source: Uniswap v4 (Custom)`, or `Launch source: unknown` for a `b07` CA when Bankr exact lookup returned no match and validated Clanker evidence such as verified `ClankerToken` source, factory labels, or token-specific Clanker API/route data exists.
@@ -298,7 +303,7 @@ See `references/safety-rules.md` for the full safety checklist.
 
 2. Inspect token and market mechanics.
    - Liquidity, volume, FDV/market cap, pair age, holder count, top-holder concentration, verified source, proxy/admin/mint controls, tax/honeypot warnings when relevant.
-   - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown` and list the missing check under `Unknowns`.
+   - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown`; add one compact Unknowns blocker only when the missing data materially caps the verdict.
    - Do not use phrases like `smart money accumulation`, `verified source`, `healthy holder distribution`, or `low slippage` unless the supporting source/tool result was actually inspected.
    - For Bankr tokens, compare launcher/deployer vs fee recipient/project. If the launcher is a community or third-party account and the fee recipient/project has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If the launcher is a community or third-party account and the fee recipient/project has clearly acknowledged the token, tag it as `community-launched + endorsed`, not self-launched. If Bankr only shows a raw deployer wallet and a different fee-recipient wallet/X account, do not infer they are the same party. If the official project/person directly launched it, tag `self-launched`. If launcher/deployer and fee recipient appear to be the same controlled official party but direct self-launch evidence is unclear, tag `aligned`. Do not require fee claiming as endorsement for self-launched or aligned cases.
 

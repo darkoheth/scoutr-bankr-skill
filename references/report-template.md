@@ -59,7 +59,7 @@ Would change my mind:
 - <specific evidence/check>
 
 Unknowns:
-- <what could not be verified>
+- <1-3 material blockers that remain after checked routes; omit this section if there are no meaningful unresolved blockers>
 ```
 
 For GitHub-only requests, start with repo/code quality and then include attached-token discovery. Use this compact shape:
@@ -107,7 +107,7 @@ Would change my mind:
 - <specific repo/product/token evidence/check>
 
 Unknowns:
-- <what could not be verified>
+- <1-3 material blockers that remain after checked routes; omit this section if there are no meaningful unresolved blockers>
 ```
 
 For other non-token requests, omit irrelevant sections but keep `Verdict`, `Confidence`, `Scores`, `My read`, `Would change my mind`, and `Unknowns`.
@@ -128,6 +128,9 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 ## Evidence Discipline
 
 - Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
+- Keep `Unknowns` short and decision-oriented. Default to 1-3 bullets. Do not repeat Red flags or Would-change-my-mind items, and do not list every generic diligence check that could be done later.
+- If market data is unavailable across multiple fields, collapse it into one compact blocker such as `Market depth/holders unavailable from checked sources`, not separate bullets for liquidity, lock status, holder distribution, developer allocation, and taxes.
+- If product/app behavior was not inspected, state that in Product or Red flags as `product proof limited to landing/docs`; do not repeat it as a generic Unknown unless it is the main reason the verdict is capped.
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
 - Do not put the token CA in the launcher/deployer field unless a source explicitly says the token contract is also the deployer. Use `unknown` for missing launcher/deployer.
@@ -163,6 +166,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - For Bankr exact matches, a blank `Website/docs`, `X/social`, or `Launch tweet` field is a hard failure whenever Bankr returned `websiteUrl`, `tweetUrl`, deployer X, or fee-recipient X.
 - If using separate `Website:` and `Docs:` lines instead of the combined template field, the same no-blank rule applies to each line.
 - If deployer/launcher differs from fee recipient and `Endorsement evidence` is `none found`, reject `Alignment: community-launched + endorsed`, `Verdict: Trade Candidate`, and `Confidence: High`.
+- Reject drafts where `Unknowns` is longer than 3 bullets or mostly repeats already-stated risks. Compress to the few blockers that would materially change the verdict.
 - Before sending, reject the draft if it says source links were not found but structured token metadata, Bankr exact lookup, or a discovered website/docs route was not checked. Retry the lookup or state the exact blocker.
 - Before sending, reject the draft if it has only Stats/Security/Summary and no Launch/Provenance, Sources, GitHub/code, Unknowns, or Source trace for a Bankr exact match.
 - The `Source trace` line is a compact audit trail, not a long research log. Its job is to make missing-source failures obvious before the report ships.
