@@ -243,6 +243,8 @@ Expected classification:
 - Expected failure if the report says `launch tweet verified` when the available Bankr `tweetUrl` is only `https://x.com/atriumhermes` or another profile/account URL rather than a specific token/CA/ticker post.
 - Expected failure if the report returns `Trade Candidate / High confidence` while liquidity depth is unknown, holder concentration is unchecked, or provenance alignment depends on inferred deployer/fee-recipient control.
 - If deployer `@Stevezach_man` and fee recipient `@atriumhermes` differ, do not call it `self-launched` unless a checked first-party source proves the deployer is controlled by the official project/team. Use `aligned`, `community-launched + endorsed`, or `pre-endorsement speculation` according to the explicit evidence.
+- Expected failure if the report attaches Nous Research, `NousResearch/hermes-agent`, or 100k+ GitHub star metrics to Atrium unless a checked first-party Atrium/Nous source explicitly proves official ownership or endorsement. Atrium's website links `https://github.com/Atrium-Hermes/Atrium`; score that repo directly.
+- Expected failure if the report says `@Stevezach_man` works for Nous, Atrium is the official Nous/Hermes token, or Atrium is backed by Nous based only on wording about Hermes compatibility or skill marketplaces.
 - `Unknowns` should be concise and decision-changing, usually 1-2 bullets for this shape:
   - official CA/token acknowledgement not found;
   - holder concentration/admin-state unavailable if not directly checked.

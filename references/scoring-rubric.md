@@ -54,6 +54,7 @@ Score caps:
 - Fresh repo with meaningful inspected code but no checked tests/CI and little history: cap Code at 6.
 - Multiple contributors, active commits, or clear project structure do not justify Code 8+ by themselves. Code 8+ requires inspected substance plus tests/CI or equivalent verification and organic history that predates the token launch.
 - If the report cannot name what files/tests/CI/history were checked, Code must stay at 5 or below and confidence cannot be High because of code quality.
+- If the report uses GitHub metrics from a repo other than the exact first-party linked repo/org, the Code score is invalid. Adjacent upstreams, dependencies, forks, compatible runtimes, or projects with similar names cannot be used for stars/forks/history unless first-party evidence identifies them as the official project repo.
 
 Discovery weighting: before assigning `Code: N/A` or saying no GitHub was found, follow first-party links from token metadata/Dexscreener, Bankr, X bio, website, docs nav/footer, and package/docs references. Missing an obvious official GitHub from those surfaces should be treated as a failed code check, not evidence that no repo exists.
 
@@ -76,6 +77,8 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
 
 Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, or Code/Product 7+ is unsupported by named inspected evidence. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
+
+Do not raise Provenance, Social, Product, or Overall because of an assumed affiliation with a prominent lab/company. Employment, ownership, official token status, and endorsement require direct checked evidence from the named party or project-controlled source.
 
 Confidence:
 
