@@ -2,7 +2,7 @@
 
 Scoutr should use Bankr-native X/search/social tools as the default social-research path when running inside Bankr. Do not bundle API keys, paid credentials, cookies, or private tokens.
 
-Inside Bankr, Bankr-native launch/token metadata is the primary provenance source. If the Bankr runtime, token page, or `/launches/<contract>` record identifies a contract as a Bankr launch, treat it as Bankr first and use explorer/Dexscreener/Doppler/Airlock evidence only as mechanics and configuration context. Outside Bankr, manually check `https://bankr.bot/launches/<contract>` when the user context, CA suffix, or social links suggest Bankr.
+Inside Bankr, Bankr-native launch/token metadata is the primary provenance source. If the Bankr runtime, token page, or `/launches/<contract>` record identifies a contract as a Bankr launch, treat it as Bankr first and use explorer/Dexscreener/Doppler/Airlock evidence only as mechanics and configuration context. Outside Bankr, manually check `https://bankr.bot/launches/<contract>` when the user context, CA suffix, or social links suggest Bankr. If the user supplies a Bankr launch URL directly, extract the contract from the URL and query the exact Bankr API before any non-Bankr classification.
 
 ## Preferred Bankr-Native Calls
 
@@ -90,6 +90,7 @@ Use exact Bankr launch lookup when available:
 
 - `https://api.bankr.bot/token-launches/search?q=<contract>`
 - If the response includes `exactMatch`, use it before explorer inference.
+- For user-supplied Bankr launch URLs or newer `ba3` CAs, retry the exact API lookup with normalized lowercase and original input casing before writing no-match.
 - Important fields: `launchType`, `tokenName`, `tokenSymbol`, `chain`, `tokenAddress`, `poolId`, `txHash`, `deployer.walletAddress`, `deployer.xUsername`, `feeRecipient.walletAddress`, `feeRecipient.xUsername`, `tweetUrl`, `websiteUrl`, `metadataUri`, and `timestamp`.
 - If the API is unavailable but `https://bankr.bot/launches/<contract>` opens only the app shell, do not treat the app shell as a negative result. Mark Bankr metadata unavailable by browser/app-shell blocker and continue with Dexscreener/explorer evidence.
 

@@ -223,22 +223,25 @@ Expected classification:
 - Official website copy says RUNNER is "the first clanker". Treat this as project/site provenance evidence for legacy Clanker context, with confidence/unknowns if Clanker creator metadata is unavailable.
 - Expected failure if the report leaves `Website/docs` blank, says no sources were found, or times out because it tries exhaustive website/social crawling.
 
-## Atrium Hermes / Good Read, Too Many Generic Unknowns
+## Atrium Hermes / Bankr Exact Match + No Generic Unknowns
 
 Input:
 
 ```text
-Atrium Hermes / ATRIUM Base launch with Dexscreener exact CA checked, Bankr exact no match, Virtuals exact no match, website/docs/X discovered, and GitHub created 2026-06-01
+https://bankr.bot/launches/0x61701f785fa8ff6ad1d4ad4ec5490cdbc910bba3
 ```
 
 Expected classification:
 
-- A `Watch` / Medium-confidence read is acceptable when provenance is unresolved, repo is same-day fresh, and market/holder data is unavailable.
+- Bankr exact lookup resolves Atrium Hermes / ATRIUM as a Bankr / Doppler launch. Expected Bankr fields include token address `0x61701f785fa8ff6ad1d4ad4ec5490cdbc910bba3`, deployer `@Stevezach_man` / `0x9f7b8986f391ccdd7d7c70d516be6c60d6e5f92c`, fee recipient `@atriumhermes` / `0x12b9b3bb80380ff0e0c914a853b0da1614e49756`, `websiteUrl: https://atriumhermes.tech/`, `tweetUrl: https://x.com/atriumhermes`, pool ID `0x934358d8a9bee7f802c560c392ca9f11c846182f69c3efc926c7ab07e990859c`, and tx hash `0xf664a5ef2f2f8bda55336dd70604f8f56ef7ffddb20db5104b703c7a6beb3490`.
+- Expected failure if report says Bankr exact lookup no match, `Launch source: Uniswap v4 / Custom`, or Virtuals no-match as primary provenance while the Bankr exact route is available.
+- Dexscreener exact CA/token-pairs expose a canonical WETH pair with liquidity, FDV/market cap, 24h volume, pairCreatedAt, website `https://atriumhermes.tech/`, docs `https://atriumhermes.tech/docs`, and X `https://x.com/atriumhermes`. These should populate Sources and Market, not Unknowns.
+- A `Watch` / Medium-confidence read can still be correct if endorsement is unresolved and repo/code is same-day fresh, but the reason should not be missing Bankr or market/source fields.
 - Blank `Website/docs:` and `X/social:` are failures if website/docs/X were discovered or followed. Populate the actual URLs/handles or a checked-source blocker.
 - `GitHub/code` should include the repo URL plus age/history note, not only `(Created: 2026-06-01)`.
 - `Unknowns` should be concise and decision-changing, usually 1-2 bullets for this shape:
   - official CA/token acknowledgement not found;
-  - market depth/holders unavailable from checked sources.
+  - holder concentration/admin-state unavailable if not directly checked.
 - Do not list separate generic unknowns for liquidity lock, top holders, developer allocation, and actual app functionality if Market/Product/Red flags already state those limits.
 - Product proof limited to landing/docs belongs in Product or Red flags, not repeated as `Actual functionality ... unknown`.
 - `Would change my mind` should contain future evidence that upgrades the thesis, not duplicate every Unknown.
