@@ -48,6 +48,13 @@ For Bankr `please bro` launches, a strong fee-recipient GitHub can raise Code/Pr
 
 Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development. If a report cites GitHub/code, it should state what was checked about age/history or explicitly say age/history was not checked.
 
+Score caps:
+
+- Same-day or launch-week repo/org with no directly checked tests/CI and no meaningful pre-launch history: cap Code at 4.
+- Fresh repo with meaningful inspected code but no checked tests/CI and little history: cap Code at 6.
+- Multiple contributors, active commits, or clear project structure do not justify Code 8+ by themselves. Code 8+ requires inspected substance plus tests/CI or equivalent verification and organic history that predates the token launch.
+- If the report cannot name what files/tests/CI/history were checked, Code must stay at 5 or below and confidence cannot be High because of code quality.
+
 Discovery weighting: before assigning `Code: N/A` or saying no GitHub was found, follow first-party links from token metadata/Dexscreener, Bankr, X bio, website, docs nav/footer, and package/docs references. Missing an obvious official GitHub from those surfaces should be treated as a failed code check, not evidence that no repo exists.
 
 Do not let the report end with GitHub as an unchecked next step when a first-party GitHub URL is visible. If found, inspect it and score Code from repo/org evidence. If inspection is blocked by tool/runtime limits, cap confidence at Medium and state the exact blocker plus discovered URL.
@@ -67,6 +74,8 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 - `Trade Candidate`: overall 7.5+ with at least three independent green flags and no unresolved major red flags.
 
 Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
+
+Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, or Code/Product 7+ is unsupported by named inspected evidence. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
 
 Confidence:
 

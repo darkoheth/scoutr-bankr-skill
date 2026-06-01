@@ -239,6 +239,10 @@ Expected classification:
 - A `Watch` / Medium-confidence read can still be correct if endorsement is unresolved and repo/code is same-day fresh, but the reason should not be missing Bankr or market/source fields.
 - Blank `Website/docs:` and `X/social:` are failures if website/docs/X were discovered or followed. Populate the actual URLs/handles or a checked-source blocker.
 - `GitHub/code` should include the repo URL plus age/history note, not only `(Created: 2026-06-01)`.
+- Expected failure if a launch-week or same-day Atrium GitHub jumps from low/early to `Code: 8+` without naming inspected tests/CI, substantial pre-launch history, and concrete code files. Bankr source recovery can fix missing source fields, but it must not automatically upgrade code quality.
+- Expected failure if the report says `launch tweet verified` when the available Bankr `tweetUrl` is only `https://x.com/atriumhermes` or another profile/account URL rather than a specific token/CA/ticker post.
+- Expected failure if the report returns `Trade Candidate / High confidence` while liquidity depth is unknown, holder concentration is unchecked, or provenance alignment depends on inferred deployer/fee-recipient control.
+- If deployer `@Stevezach_man` and fee recipient `@atriumhermes` differ, do not call it `self-launched` unless a checked first-party source proves the deployer is controlled by the official project/team. Use `aligned`, `community-launched + endorsed`, or `pre-endorsement speculation` according to the explicit evidence.
 - `Unknowns` should be concise and decision-changing, usually 1-2 bullets for this shape:
   - official CA/token acknowledgement not found;
   - holder concentration/admin-state unavailable if not directly checked.
