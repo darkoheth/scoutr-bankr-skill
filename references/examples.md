@@ -82,6 +82,31 @@ Expected response:
 - Analyze `https://github.com/ratspeak` using the same compact GitHub-only flow.
 - Do not fail with a step-limit message; return the best compact report with explicit Unknowns.
 
+## Reply-Style Scoutr Invocation
+
+User replies to a GitHub/GitLab repo, Dexscreener/token page, X post/account, project website, or docs link with:
+
+```text
+scoutr this
+```
+
+Also valid:
+
+```text
+scan this
+check this
+explain this
+```
+
+Expected response:
+
+- Resolve `this` from the replied-to message, attached preview/card, quoted text, or immediately supplied context.
+- If the resolved payload is a repo, use GitHub-first mode.
+- If it is a token page/contract/Dexscreener link, use token-first mode.
+- If it is a website/docs/X link, use the matching website-first or social-first discovery flow, then search for attached token and GitHub candidates.
+- Include the selected input in `Source trace`, especially if the original message had multiple links.
+- Never ask the user to paste the same URL again when it is available from the reply context.
+
 ## Response Tone
 
 Good:

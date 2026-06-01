@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 28
+version: 29
 visibility: public
 metadata:
   clawdbot:
@@ -31,8 +31,10 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
 - If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
 - Scoutr must run its built-in repo scanner for GitHub/code analysis. Do not call external paid repo scanners or payment-gated scan APIs. The scanner should approximate RepoScan-style evidence locally: metadata, activity, substance, secret-risk heuristics, token/social link extraction, and originality/similarity checks from public search signals.
+- Copy the Gitlawb Intern interaction pattern, adapted for diligence: if the user replies to a GitHub/GitLab/Dexscreener/Bankr/Clanker/Virtuals/X/website/docs link with `scoutr this`, `scan this`, `explain this`, `check this`, or similar, treat the replied-to link/card/quoted text as the input payload. Do not require the URL to be repeated in the command text.
 - Known regression: for EPITAPH `0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3`, Bankr exact metadata has `websiteUrl: https://www.epitaph-agent.xyz/`, X `@EpitaphAI`, and the website footer contains `https://github.com/Epitaph-AI/EpitaphAI`. Any report saying website/X blank, GitHub not found, or Code N/A is wrong.
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
+- Reply-style invocation is valid. `scoutr this`, `scan this`, `explain this`, and `check this` should resolve `this` from the message being replied to, the attached preview/card, or the immediately supplied link/context. If multiple candidate links are present, prioritize explicit crypto/project links over generic profile links, then state which input was selected in `Source trace`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
 - If the prompt repeats the command, such as `scoutr scoutr https://github.com/ratspeak`, strip duplicate leading `scoutr` tokens and use the remaining URL/text as the input payload.
 - GitHub-first mode must fit inside one Bankr turn. Use the compact retrieval budget below; do not exhaust the step budget trying to complete every possible search branch.
@@ -76,6 +78,9 @@ Scoutr must work from short user prompts. A user should be able to send only `sc
 
 The command parser/dispatcher must treat the full text after `scoutr` as the input payload, not only contract-address substrings. Examples that must invoke Scoutr:
 
+- `scoutr this` as a reply to a GitHub/GitLab/Dexscreener/X/website/docs link
+- `scan this` as a reply to a repo/token/project link
+- `explain this` as a reply to a GitHub/GitLab repo link
 - `scoutr https://github.com/ratspeak`
 - `scoutr https://github.com/<org>`
 - `scoutr https://github.com/<org>/<repo>`
@@ -88,6 +93,12 @@ Normalize duplicated command prefixes before routing:
 
 - `scoutr scoutr https://github.com/ratspeak` -> `https://github.com/ratspeak`
 - `scoutr check https://github.com/<org>` -> `https://github.com/<org>`
+
+Resolve deictic commands before routing:
+
+- `scoutr this` -> the replied-to or attached URL/text payload.
+- `scan this repo` -> the replied-to or attached GitHub/GitLab URL.
+- `explain this` -> GitHub-first mode when the replied-to payload is a repo, otherwise the best matching Scoutr workflow for the replied-to link.
 
 For every token scan, apply these defaults automatically:
 
