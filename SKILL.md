@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 35
+version: 36
 visibility: public
 metadata:
   clawdbot:
@@ -48,6 +48,9 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Fee recipient linkage is not endorsement. A Bankr `feeRecipient.xUsername`, fee-recipient wallet, website URL, or social URL only proves where fees/metadata point. It does not prove the project endorsed, launched, or claimed the token.
 - If the Bankr deployer/launcher is only a raw wallet or differs from the fee recipient/project, classify the launch as `please bro` or `pre-endorsement speculation` unless the fee recipient/project explicitly claims fees, posts the CA/ticker as the token, links the Bankr/token page, or clearly acknowledges the exact token from an official channel.
 - A Bankr `tweetUrl` from the fee recipient or official project/person is endorsement/acknowledgement evidence, not self-launch evidence by itself. If the Bankr deployer wallet differs from the fee recipient and no source proves the deployer is controlled by that recipient, do not write `self-launched`.
+- A Bankr `tweetUrl` that is an old product announcement, repo/docs announcement, founder manifesto, generic account/profile URL, or project homepage is not token endorsement unless it contains or links the exact CA, ticker-as-token, Bankr/token page, fee claim, or explicit token acknowledgement. Treat it as product/social evidence only.
+- A first-party website/docs/GitHub link proves product linkage, not token-launch endorsement. Good product/code evidence must not upgrade `please bro` or `pre-endorsement speculation` to `self-launched`, `aligned`, or `community-launched + endorsed` without an explicit token claim.
+- If Bankr exact metadata routes fees to an official project account but the deployer is a different wallet/account and the `tweetUrl` predates the token launch or discusses only product/code, write `Endorsement evidence: none found for this CA` and cap Provenance at 5 unless stronger acknowledgement evidence is found.
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Do not use bare `Alignment: endorsed`; endorsement is evidence/status, not a launch alignment bucket. For a third-party launch with explicit acknowledgement, use `Alignment: community-launched + endorsed`.
 - Do not write `Endorsement: Official (Bankr deployment)`, `Official project endorsement via fee-recipient linkage`, or treat Bankr deployment/fee-recipient routing itself as project endorsement. Bankr proves launch source and fee routing only; endorsement requires project/dev/fee-recipient acknowledgement of the exact token.
@@ -66,6 +69,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - For CA-only scans, build a `source_map` before writing prose. It must contain any structured Dexscreener websites/socials and any exact Bankr launch fields. The final report must copy from this `source_map`; do not rely on memory, generic search summaries, or social-sentiment output for these fields.
 - If Bankr exact lookup returns `exactMatch`, the report must say `Launch source: Bankr / <launchType>` and must populate launcher/deployer, fee recipient, tweet URL if relevant, website URL if present, pool ID/tx hash if useful, and launch timestamp if useful. Do not later override this with `custom`, `unknown`, or `standard ERC-20` based on explorer or pool labels.
 - Do not write `launch tweet verified` unless the checked URL is a specific token/CA/ticker launch post. A Bankr `tweetUrl` that is only an account/profile URL, X handle, or project homepage is social source evidence, not a verified launch tweet.
+- Do not write `official project launch via Bankr`, `official launch tweet`, or `official project launch` when the Bankr `tweetUrl` is a product/repo launch post that does not mention the token/CA/Bankr page. Say `Bankr tweetUrl points to product/social evidence, not a token acknowledgement`.
 - Do not claim a deployer, fee recipient, or project account works for a lab/company/foundation unless a checked first-party source states that relationship. Similar names, ecosystem references, follows, repo mentions, or using another project's tech do not prove employment or official affiliation.
 - A report that only returns market stats plus `security: safe (bankr_deployed)` is incomplete for Scoutr. Bankr launch provenance, first-party source discovery, and GitHub/product checks are required whenever Bankr exact metadata exposes a website, X handle, tweet URL, metadata URI, deployer, or fee recipient.
 - Do not use `bankr_deployed` as a security score reason. Bankr deployment is launch provenance, not proof of holder health, role/admin safety, code quality, liquidity safety, or buy/sell viability.
@@ -264,6 +268,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.
 - `Fee recipient: N/A`, `Fee recipient: unknown`, or `Bankr relationship evidence: None found` after Bankr exact lookup returned a fee recipient, tweet URL, or website URL.
 - `Alignment: community-launched + endorsed`, `Endorsement evidence: fee recipient is official project`, `official endorsement via Bankr fee-recipient linkage`, or similar wording when the only evidence is Bankr fee-recipient routing, website metadata, or social/profile linkage. Fee-recipient linkage alone is not endorsement.
+- `Endorsement evidence: official launch tweet`, `official project launch via Bankr`, or `self-launched` when the Bankr `tweetUrl` is an older product/repo/docs announcement that does not mention the exact CA, token, ticker-as-token, Bankr page, or fee claim.
 - `Verdict: Trade Candidate` or `Confidence: High` for a Bankr launch where deployer/launcher differs from fee recipient and endorsement is unresolved. Cap unresolved third-party/please-bro Bankr launches at `Watch` or cautious `Small Spec` unless direct CA/token acknowledgement or fee-claim evidence exists.
 - `Alignment: self-launched` while Bankr exact lookup shows deployer/launcher and fee recipient are different wallets and no source proves the deployer is controlled by the fee recipient/project. A fee-recipient `tweetUrl`, website URL, or CA acknowledgement should make this `community-launched + endorsed`, not `self-launched`.
 - A market-only report that omits `Launch / Provenance`, `Sources`, `GitHub/code`, or `Source trace` after Bankr exact lookup returns website/X/metadata fields.

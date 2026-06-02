@@ -33,6 +33,25 @@ Expected classification:
 - Target/founder liking a Bankr-community prompt is social proximity, not endorsement.
 - Cap at `Watch+` or cautious `Small Spec` unless explicit endorsement appears.
 
+## Evokoa / Product Proof Is Not Token Endorsement
+
+Input:
+
+```text
+0x02aceb16a30e1467f61127b4ceb65967d89c5ba3
+```
+
+Expected classification:
+
+- Bankr / Doppler exact match. Bankr fields include deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb`, fee recipient `@evokoa_ai` / `0x589df37198898a44862f9d1cd194bbe631a2e1b6`, `tweetUrl: https://x.com/daleverett/status/2054537123123110277?s=20`, website `https://evokoa.com/`, and pool ID `0x574d92f9605704cba0f3153d11d8f8ab2632a9500bde196d4aaf9273eeeedd70`.
+- The `tweetUrl` is a May 13, 2026 pgGraph/product/repo launch post from Evokoa's cofounder. It is real product evidence, but it does not mention the token CA, ticker, Bankr page, fee claim, or token launch.
+- Deployer and fee recipient differ. Do not infer `@pola_pola0` controls Evokoa, works for Evokoa, or launched officially unless a checked first-party source states that relationship.
+- Website/docs/GitHub (`https://github.com/Evokoa/pggraph`) can score Code/Product well, but cannot convert launch alignment to `self-launched`, `aligned`, or `community-launched + endorsed` without an explicit token acknowledgement.
+- Expected alignment is `please bro` or `pre-endorsement speculation` until `@evokoa_ai`, Dale, Dalton, the Evokoa site/docs, or Bankr-native fee claim evidence acknowledges the exact token.
+- Expected failure if the report says `Alignment: self-launched`, `Official project launch via Bankr`, `Endorsement evidence: launch tweet by @daleverett`, or Provenance 9+ based on the product tweet/website/GitHub alone.
+- Expected behavior: `Endorsement evidence: none found for this CA; Bankr tweetUrl points to product/social evidence, not token acknowledgement`.
+- Cap confidence at Medium while endorsement is unresolved even if product/code quality is high.
+
 ## HERALD
 
 Input:
