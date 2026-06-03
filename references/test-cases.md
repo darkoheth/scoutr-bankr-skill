@@ -82,6 +82,7 @@ Input:
 
 ```text
 Blitz / BLITZ Bankr launch where Bankr exact lookup lists deployer @pola_pola0 and fee recipient @blitzdotdev
+CA: 0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3
 ```
 
 Expected classification:
@@ -103,9 +104,10 @@ Expected classification:
 - `Alignment: community-launched + endorsed` also fails unless the report cites the exact token acknowledgement source: CA, Bankr/token page, ticker-as-token, fee claim, official site/docs token link, or official reply/quote context containing the CA/Bankr page/ticker. Founder/project acknowledgement alone is not enough.
 - Expected failure if the report says `Alignment: community-launched + endorsed` with `Endorsement evidence: fee recipient @blitzdotdev is the official project account; launch tweet from @minjunesh acknowledges the project`.
 - Expected failure if the report has a blank `Launch tweet:` line while claiming official/community endorsement.
-- Expected failure if the report says `Alignment: self-launched`, `Provenance: 9+`, `Verdict: Trade Candidate`, `Confidence: High`, `Strong provenance: direct alignment`, `self-launched by founder @minjunesh`, `Launcher/deployer: @pola_pola0 (Minjune Song / @minjunesh)`, `Launcher/deployer: @pola_pola0 (Verified affiliation via Bankr metadata)`, `Endorsement evidence: official project account is fee recipient`, or `launch tweet from @minjunesh` without exact-token context.
+- Expected failure if the report says `Alignment: self-launched`, `Provenance: 9+`, `Provenance: 9 - Official self-launch`, `Verdict: Trade Candidate`, `Confidence: High`, `Strong provenance: direct alignment`, `self-launched by founder @minjunesh`, `Launcher/deployer: @pola_pola0 (Minjune Song / @minjunesh)`, `Launcher/deployer: @pola_pola0 (Verified affiliation via Bankr metadata)`, `Endorsement evidence: official project account is fee recipient`, or `launch tweet from @minjunesh` without exact-token context.
 - Expected failure if the report says `Alignment: aligned`, `Provenance: 8+`, or `Endorsement evidence: launch tweet by @minjunesh; fee recipient is official project account` before exact-token acknowledgement.
-- Expected failure if the report uses softened provenance claims such as `official token for the ecosystem`, `Verified founder-linked wallet`, `direct self-launch by known founder`, `official project lead`, `alignment is perfect`, or `official token` without exact-token acknowledgement or direct deployer-control proof.
+- Expected failure if the report uses softened provenance claims such as `official token for the ecosystem`, `Verified founder-linked wallet`, `direct self-launch by known founder`, `official project lead`, `alignment is perfect`, `official token`, `deployer and fee recipient are verified project handles`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, or `direct alignment` without exact-token acknowledgement or direct deployer-control proof.
+- Expected failure if the report writes `Endorsement evidence: Official launch tweet from @minjunesh (linked to project) and fee-recipient linkage` or treats a Minjune/Blitz product tweet as token-launch evidence.
 - Expected behavior before exact-token acknowledgement: `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`, `Fee recipient: @blitzdotdev`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
 
 ## HERALD

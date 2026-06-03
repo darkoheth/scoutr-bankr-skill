@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 45
+version: 46
 visibility: public
 metadata:
   clawdbot:
@@ -21,6 +21,16 @@ metadata:
 # Scoutr
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
+
+## Hard Provenance Stop
+
+When Bankr exact metadata shows deployer/launcher differs from fee recipient/project, and the report does not cite either a fee claim or exact-token acknowledgement from an official/project source:
+
+- The report must use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
+- The report must use `Endorsement evidence: none found for this CA`.
+- Provenance score must be <= 6, confidence must be <= Medium, and verdict must be <= `Watch` / cautious `Small Spec`.
+- Product quality, official fee recipient, founder/project tweets, GitHub quality, and fee routing stay in Product/Social/Code. They do not upgrade Provenance.
+- Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
 
 ## Critical Output Contract
 
@@ -291,7 +301,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Endorsement evidence: none found` when an official fee-recipient/project account has replied to or quoted a post containing the exact CA/Bankr page/ticker-as-token with language such as `thanks for supporting us`, `we will use the fees`, `fees go to building`, or similar acceptance of the token-fee context.
 - `Endorsement evidence: fees mentioned` when the official post does not have exact-token context. Fee language must be tied to a checked exact CA, Bankr page, ticker-as-token, or quoted/replied post that contains one.
 - `Verdict: Trade Candidate` or `Confidence: High` for a Bankr launch where deployer/launcher differs from fee recipient and endorsement is unresolved. Cap unresolved third-party/please-bro Bankr launches at `Watch` or cautious `Small Spec` unless direct CA/token acknowledgement or fee-claim evidence exists.
-- `Provenance: 8+`, `Alignment: aligned`, or `Endorsement evidence` other than `none found for this CA` when deployer/launcher differs from fee recipient and no exact-token acknowledgement or fee claim is cited.
+- `Provenance: 8+`, `Provenance: 9`, `Alignment: aligned`, `Alignment: self-launched`, or `Endorsement evidence` other than `none found for this CA` when deployer/launcher differs from fee recipient and no exact-token acknowledgement or fee claim is cited.
+- `official self-launch`, `deployer and fee recipient are verified project handles`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, or `direct alignment` when deployer/launcher differs from fee recipient and no exact-token acknowledgement or fee claim is cited.
 - `Alignment: self-launched` while Bankr exact lookup shows deployer/launcher and fee recipient are different wallets and no source proves the deployer is controlled by the fee recipient/project. A fee-recipient `tweetUrl`, website URL, or CA acknowledgement should make this `community-launched + endorsed`, not `self-launched`.
 - `Alignment: self-launched` or `Alignment: aligned` because the deployer has generic crypto activity, follows/replies to ecosystem accounts, appears near project accounts in social search, or launched with fees routed to the project. Deployer/project control requires a first-party statement, official profile bio/link, project site/team page, repo/org membership signal, or exact-token post from the deployer that is corroborated by the project.
 - `Launcher/deployer: <third-party handle> (Verified affiliation via Bankr metadata)`, `Self-launched by founder <founder handle>`, or similar wording when Bankr exact metadata lists a different deployer handle/wallet and no source explicitly ties that deployer to the founder/project. Bankr deployer metadata is not founder/team affiliation metadata.
