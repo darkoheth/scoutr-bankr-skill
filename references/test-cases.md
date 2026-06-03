@@ -59,6 +59,7 @@ Input:
 ```text
 SPARKLE / sparkleware Bankr launch where Bankr exact lookup lists deployer @callmexenom and fee recipient @sparklewarefun
 https://x.com/callmexenom
+https://x.com/sparklewarefun/status/2062232924221821168
 ```
 
 Expected classification:
@@ -69,8 +70,11 @@ Expected classification:
 - Do not infer `@callmexenom` is part of Sparkleware/Aeon from fee routing, follows, replies, ecosystem proximity, or a good product/GitHub trail.
 - Expected alignment is `please bro` or `pre-endorsement speculation` until first-party evidence proves `@callmexenom` is the team/deployer for Sparkleware, or until `@sparklewarefun`/official site/docs posts the exact CA, Bankr page, ticker-as-token, fee claim, or clear token acknowledgement.
 - If the official Sparkleware account/site clearly acknowledges the exact token but deployer affiliation remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
+- Official soft-endorsement evidence exists in tweet `2062232924221821168`: `@sparklewarefun` replied/posted in direct context of a prompt containing exact CA `0x842e863b9a7b3d0e325daf3888a4e181641ccba3` and Bankr fee context, saying the project would use the fees to keep building on `@aeonframework` and `@miroshark_`. This is exact-token acknowledgement / soft endorsement.
+- Expected behavior after finding that tweet: `Alignment: community-launched + endorsed`; `Endorsement evidence: official @sparklewarefun fee-context acknowledgement in reply/quote context for exact CA`; `Fee-claim status: unclaimed/unknown unless Bankr claim evidence is directly checked`; deployer affiliation still unproven.
 - Expected failure if the report says `Alignment: self-launched`, `Alignment: aligned`, `official project launch via Bankr`, Provenance 8+, `Verdict: Trade Candidate`, or `Confidence: High` based only on fee recipient `@sparklewarefun`, product integration with Aeon, or unproven deployer profile context.
-- Expected behavior: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)` and `Endorsement evidence: none found for this CA` unless exact-token acknowledgement is directly checked.
+- Expected failure if Scoutr says `Endorsement evidence: none found for this CA` after the official fee-context post is available and checked.
+- Expected behavior before finding exact-token acknowledgement: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)` and `Endorsement evidence: none found for this CA`.
 
 ## HERALD
 

@@ -57,6 +57,7 @@ For token/project diligence, run the social pass before the final verdict:
    - contract address
    - official X handle
    - founder/team handles
+   - official X handle plus exact endorsement terms: `fees`, `claim`, `claimed`, `support`, `supporting`, `thank you`, `thanks`, `Bankr`, `token`, `launch`, and the exact CA
 
 2. Search negative/context terms:
    - `<ticker> scam rug honeypot exploit fake`
@@ -104,12 +105,14 @@ Capture:
 - Fee recipient address/account.
 - Whether launcher/deployer and fee recipient match, and whether that launcher is the official project/person or a community/third-party account.
 - Whether the fee recipient/project has claimed fees, posted the CA, linked the token page, or otherwise clearly acknowledged the token.
+- Whether the official fee recipient/project account replied to or quoted a post containing the exact CA, Bankr page, or ticker-as-token with language accepting support, thanking supporters, or saying it will use token fees. Count this as exact-token soft endorsement, not fee claiming.
 - Whether fee-recipient linkage is only routing/context. A fee recipient handle/wallet, project website, or official social link is not endorsement by itself.
 - Fee-claim status as its own field: claimed, unclaimed, unknown, or not applicable.
 - Whether the fee recipient/project recently posted about the underlying product/project, even if the post does not mention the token.
 - Whether the fee recipient/project is scheduled for, appeared on, or was promoted by a Bankr show/event such as Bankr Agent Hour.
 - Whether the fee recipient/dev recently followed or engaged with Bankr launch-team accounts after token launch, especially `@igoryuzo` and `@0xDeployer`, and which direction the interaction happened.
 - Whether the fee recipient/dev liked, replied to, or quoted third-party replies that explicitly mention Bankr support, token support, the CA, ticker, or the Bankr community around the target/project.
+- Whether those interactions include exact-token fee language from the official account, such as "we will use the fees" or "thank you for supporting us" in a reply/quote context containing the exact CA. If yes, treat as acknowledgement, not mere social proximity.
 - Fee recipient/project GitHub or product links, when visible.
 - GitHub discovery chain from first-party sources: token-page/Dexscreener links, Bankr links, official X bio, project site, docs site nav/footer, package/docs links, then exact org/repo search.
 
@@ -132,6 +135,7 @@ Fee-claim weighting:
 - A Bankr `tweetUrl` authored by the fee recipient/project is acknowledgement/endorsement evidence. It does not prove self-launch when the Bankr deployer wallet differs from the fee-recipient wallet and there is no source tying that deployer to the official project/person.
 - If Bankr exact metadata has a raw deployer wallet with no launcher username and a different fee-recipient wallet/X account, default to third-party/community launch until control is proven. With an official fee-recipient token post, classify `community-launched + endorsed`; without it, classify `please bro` or `pre-endorsement speculation`.
 - Do not classify `community-launched + endorsed` solely because the fee recipient is the official project/person. The explicit endorsement check still needs a fee claim, CA post, token-page link, or clear acknowledgement of the exact token.
+- Official fee-context replies/quotes can satisfy clear acknowledgement when the parent/quoted post contains the exact CA, Bankr page, or ticker-as-token. This is often phrased indirectly, such as thanking supporters or saying the project will use the fees. Report the parent/quote context so the reader can see why it counts.
 - If launcher/deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
 - If launcher/deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
 - Only mark `Fee-claim status: claimed` with direct claim evidence from Bankr metadata, a claim transaction/event, or an explicit recipient statement. Do not infer fee claiming from a launch tweet, website link, CA acknowledgement, or Agent Hour booking.
@@ -148,6 +152,7 @@ Social-proximity weighting:
 
 - Post-launch follows, replies, likes, quotes, or visible interaction from the fee recipient/dev toward `@igoryuzo` or `@0xDeployer` can support a "watch for endorsement" thesis.
 - A target/dev like or reply on a third-party "Bankr community would support you" style post is a meaningful awareness signal. Report it as `target acknowledged Bankr/community prompt`, not as endorsement.
+- If the target/dev reply goes further and acknowledges token fees/support in direct context of a post with the exact CA or Bankr page, upgrade it from social proximity to soft endorsement. Keep fee-claim status separate.
 - Direction matters. Fee recipient/dev -> Bankr team is stronger because it can show the claimed project/person is paying attention to the launch path. Bankr team -> fee recipient/dev is weaker unless the Bankr team clearly acknowledges the specific token.
 - This is not the same as endorsement. Do not classify as `self-launched`, `aligned`, or `community-launched + endorsed` from social proximity alone.
 - Timestamp matters. Engagement after launch is more meaningful than old follows, generic Bankr ecosystem chatter, or trader replies mentioning the project.

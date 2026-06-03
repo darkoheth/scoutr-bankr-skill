@@ -18,9 +18,13 @@ Use 0-10 scores. Prefer integer or half-point scores. Scores are directional, no
 
 Bankr fee-recipient linkage is not endorsement. Treat `feeRecipient.xUsername`, fee-recipient wallet routing, Bankr `websiteUrl`, or social/profile linkage as provenance context only. It can explain why traders are watching, but it does not complete the endorsement check unless the fee recipient/project claims fees, posts the CA/ticker, links the Bankr/token page, or clearly acknowledges the exact token from an official channel.
 
+Official reply/quote context can complete the endorsement check when it is exact-token contextual. If the official fee recipient/project account replies to or quotes a post that contains the exact CA, Bankr/token page, or ticker-as-token and says it will use fees, thanks supporters, acknowledges support, or otherwise accepts the token-fee context, classify as exact-token acknowledgement / soft endorsement. This can move a third-party Bankr launch from `please bro` to `community-launched + endorsed`, but it does not prove `self-launched` or actual fee claiming.
+
 When deployer/launcher differs from fee recipient and explicit acknowledgement is missing, provenance normally belongs in the 2-6 range depending on source quality and social proximity. Do not score Provenance 8+ or return `Trade Candidate` solely because the fee recipient is a verified/official project account.
 
 When deployer/launcher is a different X account from the fee recipient/project, deployer affiliation must be first-party evidence. A thin profile, generic crypto replies, follows, ecosystem proximity, or fee routing to the project does not prove the deployer is on the team. Without deployer-control proof or exact-token acknowledgement, cap Provenance at 6, cap verdict at `Watch` or cautious `Small Spec`, and cap Confidence at Medium.
+
+When exact-token soft endorsement exists but deployer-control proof and fee-claim evidence remain missing, Provenance can usually land around 6.5-8 depending on clarity of the official acknowledgement, but avoid 9-10 clean-official scoring. Keep fee-claim status separate.
 
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
 
@@ -29,6 +33,8 @@ Launcher/deployer and fee-recipient equality can support `self-launched` alignme
 Bankr social proximity can slightly improve confidence or Watch priority, but should not by itself lift Provenance into official/aligned territory. Direction matters. A post-launch follow/reply/quote/like from the fee recipient/dev toward `@igoryuzo`, `@0xDeployer`, or an explicit third-party Bankr/community support prompt is stronger than `@igoryuzo` or `@0xDeployer` following the dev. Both are weaker than fee claiming, CA posting, or linking the token page.
 
 Official product posts and Bankr event evidence should be scored on the right axis. A same-day post by the fee recipient/project about the underlying product can raise Social/Product scores. A scheduled Bankr Agent Hour appearance can raise Provenance confidence as Bankr relationship evidence. Neither should be described as token endorsement unless it explicitly references the token, CA, ticker, Bankr launch page, or fee claim.
+
+Treat `fees` as a query-expansion trigger, not as standalone evidence. Fee language counts for endorsement only when tied to an official account and exact-token context from the same post, a quoted post, or the parent/replied-to post.
 
 ## Social / X
 
