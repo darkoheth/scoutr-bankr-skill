@@ -20,6 +20,8 @@ Bankr fee-recipient linkage is not endorsement. Treat `feeRecipient.xUsername`, 
 
 When deployer/launcher differs from fee recipient and explicit acknowledgement is missing, provenance normally belongs in the 2-6 range depending on source quality and social proximity. Do not score Provenance 8+ or return `Trade Candidate` solely because the fee recipient is a verified/official project account.
 
+When deployer/launcher is a different X account from the fee recipient/project, deployer affiliation must be first-party evidence. A thin profile, generic crypto replies, follows, ecosystem proximity, or fee routing to the project does not prove the deployer is on the team. Without deployer-control proof or exact-token acknowledgement, cap Provenance at 6, cap verdict at `Watch` or cautious `Small Spec`, and cap Confidence at Medium.
+
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.
 
 Launcher/deployer and fee-recipient equality can support `self-launched` alignment only when they appear to be the official project/person or the same controlled party. If the token was deployed by a community or third-party launcher for a project, do not call it self-launched. Reserve `endorsed` for explicit public evidence: fee claim, CA post, token-page link from the claimed account/site, or clear acknowledgement. A community-launched token with later official acknowledgement should be scored as `community-launched + endorsed`. Fee-claim status should still be reported separately; unclaimed/unknown fees can cap confidence or sizing without erasing endorsement from a clear CA acknowledgement.
@@ -79,6 +81,8 @@ Unresolved third-party Bankr launches are a major provenance red flag. If the la
 Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, or Code/Product 7+ is unsupported by named inspected evidence. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
 
 Do not raise Provenance, Social, Product, or Overall because of an assumed affiliation with a prominent lab/company. Employment, ownership, official token status, and endorsement require direct checked evidence from the named party or project-controlled source.
+
+Do not return `Confidence: High` when a Bankr deployer differs from the official fee recipient and the report cannot cite first-party proof that the deployer controls or represents the project. Good code/product evidence can make the token more watchable, but unresolved deployer affiliation remains a provenance blocker.
 
 Confidence:
 

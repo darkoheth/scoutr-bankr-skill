@@ -77,6 +77,28 @@ For known platform launches, prioritize:
 - Holder concentration excluding pool/DEX addresses.
 - Metadata/social links and whether they match official project claims.
 
+## Deployer Affiliation Check
+
+For Bankr launches where the deployer/launcher differs from the fee recipient or claimed project account, verify affiliation before using `self-launched` or `aligned`.
+
+Valid affiliation evidence includes:
+
+- Deployer profile bio/name/link identifies the project, team, founder, or official role.
+- First-party project website/docs/team page names or links the deployer.
+- Official project X/site/docs/repo links to the deployer as team, maintainer, founder, or launch operator.
+- GitHub org/repo membership or maintainer evidence clearly ties the deployer handle to the project.
+- The deployer posts the exact CA/Bankr page as a project launch and the official project account/site corroborates it.
+
+Invalid affiliation evidence:
+
+- Bankr fee recipient routing to the project.
+- Generic crypto replies, likes, follows, or ecosystem participation.
+- Deployer appears near project accounts in search results or social graphs.
+- Product/code quality from the fee-recipient project.
+- Similar names, shared ecosystem terms, or a repo mentioning Aeon/MCP/Base/etc.
+
+If affiliation is not proven, write `Launcher/deployer: @handle (affiliation to <project> not found)` and keep alignment at `please bro` or `pre-endorsement speculation` unless the official project has explicitly acknowledged the exact token. If exact-token acknowledgement exists but deployer control remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
+
 ## Custom ERC-20 Launches
 
 For custom verified contracts, inspect:

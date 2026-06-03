@@ -52,6 +52,26 @@ Expected classification:
 - Expected behavior: `Endorsement evidence: none found for this CA; Bankr tweetUrl points to product/social evidence, not token acknowledgement`.
 - Cap confidence at Medium while endorsement is unresolved even if product/code quality is high.
 
+## Sparkleware / Unproven Deployer Profile Is Not Self-Launch
+
+Input:
+
+```text
+SPARKLE / sparkleware Bankr launch where Bankr exact lookup lists deployer @callmexenom and fee recipient @sparklewarefun
+https://x.com/callmexenom
+```
+
+Expected classification:
+
+- Bankr launch if Bankr exact lookup resolves.
+- `@sparklewarefun` may be the official project/social account and Sparkleware/Aeon product/code evidence may be real, but that does not prove the deployer controls or belongs to Sparkleware.
+- Visible/indexed `@callmexenom` profile evidence checked on 2026-06-03 did not prove Sparkleware/Aeon affiliation: display name `rn`, bio effectively `pizza`, `gmon.link/rn`, and recent visible activity around generic degen/AVAX/Fogo/Capy replies rather than Sparkleware, Sparkleweave, Aeon, `@aeonframework`, or `@sparklewarefun`.
+- Do not infer `@callmexenom` is part of Sparkleware/Aeon from fee routing, follows, replies, ecosystem proximity, or a good product/GitHub trail.
+- Expected alignment is `please bro` or `pre-endorsement speculation` until first-party evidence proves `@callmexenom` is the team/deployer for Sparkleware, or until `@sparklewarefun`/official site/docs posts the exact CA, Bankr page, ticker-as-token, fee claim, or clear token acknowledgement.
+- If the official Sparkleware account/site clearly acknowledges the exact token but deployer affiliation remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
+- Expected failure if the report says `Alignment: self-launched`, `Alignment: aligned`, `official project launch via Bankr`, Provenance 8+, `Verdict: Trade Candidate`, or `Confidence: High` based only on fee recipient `@sparklewarefun`, product integration with Aeon, or unproven deployer profile context.
+- Expected behavior: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)` and `Endorsement evidence: none found for this CA` unless exact-token acknowledgement is directly checked.
+
 ## HERALD
 
 Input:
