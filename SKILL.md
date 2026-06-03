@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 46
+version: 47
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,15 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Provenance score must be <= 6, confidence must be <= Medium, and verdict must be <= `Watch` / cautious `Small Spec`.
 - Product quality, official fee recipient, founder/project tweets, GitHub quality, and fee routing stay in Product/Social/Code. They do not upgrade Provenance.
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
+
+## CA-Only Fast Path
+
+For a CA-only prompt, recover structured launch metadata before broad search:
+
+- If the CA ends `ba3`, is a Bankr URL, or Bankr is otherwise likely, run the exact Bankr lookup first: `api.bankr.bot/token-launches/search?q=<contract>` or the Bankr-native token launch tool when available.
+- If Bankr exact lookup returns `exactMatch`, copy `launchType`, deployer, fee recipient, `tweetUrl`, `websiteUrl`, pool, tx, and timestamp into `source_map` before Dexscreener, X, GitHub, or product searches.
+- Do not spend the tool budget on broad social/product/GitHub discovery until Bankr exact metadata is captured or explicitly unavailable.
+- If the runtime hits a tool limit before Bankr exact metadata returns, the report must say `Bankr exact metadata unavailable: <blocker>` and must not infer launch source solely from suffix unless marked as inferred.
 
 ## Critical Output Contract
 
