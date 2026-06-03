@@ -37,6 +37,24 @@ If Dexscreener or the token data source returns official links, the report must 
 
 If Dexscreener returns no links, the report must not conclude `no website`, `no X`, or `no GitHub` until the Bankr fee-recipient social fallback has been checked or explicitly marked unavailable.
 
+## Unendorsed Target-Project Discovery
+
+For `please bro` and `pre-endorsement speculation`, keep two tracks separate:
+
+- Token provenance: whether the exact token was launched/endorsed by the claimed project.
+- Target project quality: whether the project being targeted is real and has product/code/social proof.
+
+An unendorsed token can still point at a real project. Do not collapse Code/Product to N/A just because endorsement is missing. After Bankr/Dex metadata, run target-project discovery from:
+
+- token name and symbol
+- fee-recipient X handle/display name
+- Bankr `websiteUrl`, `tweetUrl`, and `metadataUri`
+- official X bio/profile links, pinned/recent posts, and founder/team names
+- exact project-name searches with `GitHub`, `docs`, `website`, and product keywords
+- first-party website raw links for `github.com`, docs, Discord, X/Twitter, npm/package names, or app/download links
+
+If target-project GitHub/product evidence is found, report it as `Target project GitHub/Product`, not as token endorsement. If the report says `GitHub/code: not found`, it must name the target-project discovery routes checked.
+
 ## Default Rule For Dexscreener Social Links
 
 When Dexscreener or another token data source provides an official X/Twitter link:

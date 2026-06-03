@@ -60,6 +60,8 @@ For Bankr `please bro` launches, include a social-proximity note when the fee re
 
 For Bankr `please bro` launches, a strong fee-recipient GitHub can raise Code/Product scores, but should not raise Provenance above incomplete/unendorsed unless there is explicit token endorsement.
 
+For unendorsed `please bro` or `pre-endorsement speculation`, Code/Product should describe the likely target project when first-party evidence is found. Strong target-project code can make the token more watchable, but it must not improve Provenance or imply token endorsement. If the likely target project's GitHub is found through official site/social/search, score it under Code even when `Endorsement evidence: none found for this CA`.
+
 Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development. If a report cites GitHub/code, it should state what was checked about age/history or explicitly say age/history was not checked.
 
 Score caps:

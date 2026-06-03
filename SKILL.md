@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 41
+version: 42
 visibility: public
 metadata:
   clawdbot:
@@ -65,6 +65,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
 - GitHub discovery is mandatory when first-party surfaces expose docs, a website, or an official X profile. Before finalizing, follow Dexscreener/token links, Bankr links, official X bio, website, docs nav/footer, and exact org/repo search. If a GitHub URL is visible, inspect it in the current report.
 - Do not write `GitHub inspection unavailable: no first-party GitHub link found` unless the report names the first-party routes checked, such as Bankr metadata, Dexscreener/social links, official X bio, website raw links, docs nav/footer, package/app docs, and exact org/repo search. If a first-party website or official founder/project source was found but not link-extracted, GitHub discovery is incomplete.
+- Unendorsed provenance must not erase product/code discovery. For `please bro` or `pre-endorsement speculation`, still inspect the likely target project from token name, fee-recipient handle/display name, Bankr/Dex metadata, social search, website search, and exact project-name GitHub search. Score that under Code/Product as target-project evidence, while clearly stating it does not prove token endorsement.
 - Website checks must extract outbound links, not just summarize above-the-fold page text. Scan page HTML/markdown/link lists for `href=` URLs and raw `github.com/...` strings, including footer links, before writing `GitHub/code: not found`.
 - Do not leave first-party source fields blank. If website, docs, X, or GitHub is not found, write `not found after checking <specific sources>` or `unknown: <tool/blocker>`. A blank `Website:`, `Docs:`, `Website/docs:`, or `GitHub:` line is a failed report.
 - Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
@@ -264,6 +265,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
 - `GitHub/code: not found`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` after a first-party website's raw HTML/link list contains `github.com`.
 - `GitHub inspection unavailable: no first-party GitHub link found` without naming the first-party routes checked. This is especially invalid when the report also says website/product/founder sources were verified, because those routes must be searched for GitHub links before declaring none found.
+- `Website/docs: not found`, `X/social: not found`, `GitHub/code: not found`, or `Product: N/A` for an unendorsed `please bro` launch before searching the likely target project from token name and fee-recipient handle/display name. Unendorsed token provenance means "not official token", not "no product exists."
 - `GitHub/code: not found`, `Website/docs: not found`, or `X/social: not found` on a new/empty Dexscreener pair while Bankr exact lookup returned fee recipient or launcher X handles and those profiles were not checked.
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
 - `Unknowns` has more than 3 bullets, repeats the Red flags/Would change my mind, or lists generic diligence tasks instead of unresolved blockers from checked routes.
