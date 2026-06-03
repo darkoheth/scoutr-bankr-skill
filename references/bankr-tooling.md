@@ -121,7 +121,7 @@ Classify with exactly one alignment label:
 
 - `Self-launched`: the official project/person directly launched/deployed the token.
 - `Aligned`: the launcher/deployer and fee recipient appear controlled by the same official project/person, but direct self-launch evidence is unclear.
-- `Community-launched + endorsed`: a community or third-party account launched the token, and the fee recipient/project later clearly acknowledged it by claiming fees, posting the CA, linking the token page, or acknowledging it from an official account.
+- `Community-launched + endorsed`: a community or third-party account launched the token, and the fee recipient/project later clearly acknowledged the exact token by claiming fees, posting the CA, linking the token page, or acknowledging the exact CA/Bankr page/ticker-as-token from an official account.
 - `Pre-endorsement speculation`: fee recipient/project has meaningful product or GitHub signal, but has not claimed fees or posted/linked the token. This can explain bids, but is not endorsement.
 - `Please bro`: launcher/deployer and fee recipient differ, and someone appears to have launched a token for a project/person hoping the recipient claims fees or endorses it later.
 - `Unclear`: Bankr page or social evidence is unavailable or contradictory.
@@ -137,6 +137,7 @@ Fee-claim weighting:
 - A Bankr `tweetUrl` or social post authored by a founder/lead dev is only endorsement when the post itself contains or directly links the exact token context. Founder/lead-dev product announcements, app launches, repo launches, funding posts, or generic project updates should not be called token launch tweets.
 - If Bankr exact metadata has a raw deployer wallet with no launcher username and a different fee-recipient wallet/X account, default to third-party/community launch until control is proven. With an official fee-recipient token post, classify `community-launched + endorsed`; without it, classify `please bro` or `pre-endorsement speculation`.
 - Do not classify `community-launched + endorsed` solely because the fee recipient is the official project/person. The explicit endorsement check still needs a fee claim, CA post, token-page link, or clear acknowledgement of the exact token.
+- Do not classify `community-launched + endorsed` when the only checked official/founder post acknowledges the project, product, repo, app, or company. The post must acknowledge the token context itself. In the report, name the exact CA, Bankr/token page, ticker-as-token, fee claim, or parent/quoted post context that made it token-specific.
 - Official fee-context replies/quotes can satisfy clear acknowledgement when the parent/quoted post contains the exact CA, Bankr page, or ticker-as-token. This is often phrased indirectly, such as thanking supporters or saying the project will use the fees. Report the parent/quote context so the reader can see why it counts.
 - If launcher/deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
 - If launcher/deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.

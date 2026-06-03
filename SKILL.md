@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 40
+version: 41
 visibility: public
 metadata:
   clawdbot:
@@ -60,9 +60,11 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact metadata routes fees to an official project account but the deployer is a different X account whose profile/bio/recent visible activity does not prove project affiliation, write `Launcher/deployer: @handle (affiliation to <project> not found)` and classify as `please bro` or `pre-endorsement speculation` unless exact-token acknowledgement exists.
 - If a third-party/community launcher deployed the token for a project, do not call it self-launched even when the fee recipient or official project later acknowledges it. Use `community-launched + endorsed` or `pre-endorsement speculation` depending on evidence.
 - Do not use bare `Alignment: endorsed`; endorsement is evidence/status, not a launch alignment bucket. For a third-party launch with explicit acknowledgement, use `Alignment: community-launched + endorsed`.
+- `Alignment: community-launched + endorsed` requires exact-token evidence in the same report. The `Endorsement evidence` line must cite what exact token identifier was acknowledged (CA, Bankr/token page, ticker-as-token/cashtag) and where it was acknowledged (specific tweet/post/link, official site/docs, fee-claim evidence, or parent/quoted post context). If the evidence only says the project/founder was acknowledged, the project account is official, or the fee recipient is official, the alignment must stay `please bro` or `pre-endorsement speculation`.
 - Do not write `Endorsement: Official (Bankr deployment)`, `Official project endorsement via fee-recipient linkage`, or treat Bankr deployment/fee-recipient routing itself as project endorsement. Bankr proves launch source and fee routing only; endorsement requires project/dev/fee-recipient acknowledgement of the exact token.
 - Keep endorsement status separate from fee-claim status. A project/dev can endorse a community launch by posting or acknowledging the CA while fees remain unclaimed.
 - GitHub discovery is mandatory when first-party surfaces expose docs, a website, or an official X profile. Before finalizing, follow Dexscreener/token links, Bankr links, official X bio, website, docs nav/footer, and exact org/repo search. If a GitHub URL is visible, inspect it in the current report.
+- Do not write `GitHub inspection unavailable: no first-party GitHub link found` unless the report names the first-party routes checked, such as Bankr metadata, Dexscreener/social links, official X bio, website raw links, docs nav/footer, package/app docs, and exact org/repo search. If a first-party website or official founder/project source was found but not link-extracted, GitHub discovery is incomplete.
 - Website checks must extract outbound links, not just summarize above-the-fold page text. Scan page HTML/markdown/link lists for `href=` URLs and raw `github.com/...` strings, including footer links, before writing `GitHub/code: not found`.
 - Do not leave first-party source fields blank. If website, docs, X, or GitHub is not found, write `not found after checking <specific sources>` or `unknown: <tool/blocker>`. A blank `Website:`, `Docs:`, `Website/docs:`, or `GitHub:` line is a failed report.
 - Never put `check GitHub` or `GitHub not inspected` in Next Steps when a first-party GitHub URL was available. Either inspect the repo/org now, or write `GitHub inspection unavailable` with the exact blocker/tool limitation and the discovered URL.
@@ -261,6 +263,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
 - `GitHub/code: not found` while a website/docs URL was found but docs nav/footer or exact org/repo search was not inspected.
 - `GitHub/code: not found`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` after a first-party website's raw HTML/link list contains `github.com`.
+- `GitHub inspection unavailable: no first-party GitHub link found` without naming the first-party routes checked. This is especially invalid when the report also says website/product/founder sources were verified, because those routes must be searched for GitHub links before declaring none found.
 - `GitHub/code: not found`, `Website/docs: not found`, or `X/social: not found` on a new/empty Dexscreener pair while Bankr exact lookup returned fee recipient or launcher X handles and those profiles were not checked.
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
 - `Unknowns` has more than 3 bullets, repeats the Red flags/Would change my mind, or lists generic diligence tasks instead of unresolved blockers from checked routes.
@@ -275,6 +278,9 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Launcher/deployer: <same as token contract>` when no source explicitly identifies the token contract as deployer.
 - `Fee recipient: N/A`, `Fee recipient: unknown`, or `Bankr relationship evidence: None found` after Bankr exact lookup returned a fee recipient, tweet URL, or website URL.
 - `Alignment: community-launched + endorsed`, `Endorsement evidence: fee recipient is official project`, `official endorsement via Bankr fee-recipient linkage`, or similar wording when the only evidence is Bankr fee-recipient routing, website metadata, or social/profile linkage. Fee-recipient linkage alone is not endorsement.
+- `Alignment: community-launched + endorsed` with `Endorsement evidence` that does not cite an exact CA, Bankr/token page, ticker-as-token/cashtag, fee claim, or official source context for the exact token. Project acknowledgement, founder acknowledgement, product acknowledgement, official account status, and fee-recipient status are insufficient.
+- `Endorsement evidence: <founder/project> acknowledges the project`, `launch tweet from <founder> acknowledges the project`, or similar wording. Acknowledging the project is not acknowledging the token.
+- Blank `Launch tweet:` combined with any endorsement claim. If the launch/acknowledgement tweet URL is blank or unavailable, either cite the exact checked source elsewhere or write `Endorsement evidence: none found for this CA`.
 - `Endorsement evidence: official launch tweet`, `official project launch via Bankr`, or `self-launched` when the Bankr `tweetUrl` is an older product/repo/docs announcement that does not mention the exact CA, token, ticker-as-token, Bankr page, or fee claim.
 - `Endorsement evidence: launch tweet from lead dev`, `lead dev launch tweet`, or similar wording when the checked post is a product/app/repo announcement and not an exact-token acknowledgement. Founder/lead-dev authority does not replace exact token context.
 - `Endorsement evidence: none found` when an official fee-recipient/project account has replied to or quoted a post containing the exact CA/Bankr page/ticker-as-token with language such as `thanks for supporting us`, `we will use the fees`, `fees go to building`, or similar acceptance of the token-fee context.
