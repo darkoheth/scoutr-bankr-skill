@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 47
+version: 48
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,16 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Provenance score must be <= 6, confidence must be <= Medium, and verdict must be <= `Watch` / cautious `Small Spec`.
 - Product quality, official fee recipient, founder/project tweets, GitHub quality, and fee routing stay in Product/Social/Code. They do not upgrade Provenance.
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
+
+Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
+
+- `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`
+- `Fee recipient: @blitzdotdev`
+- `Alignment: please bro` or `Alignment: pre-endorsement speculation`
+- `Endorsement evidence: none found for this CA`
+- Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
+
+For this Blitz case, the phrases `Launch tweet from founder @minjunesh`, `Founder @minjunesh explicitly tweeted the launch`, `officially endorsed`, `Official Alignment`, `Alignment: Aligned`, `Provenance: 8.5`, and `verified project handle` are failed output unless the same line cites exact-token acknowledgement.
 
 ## CA-Only Fast Path
 
