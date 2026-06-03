@@ -26,6 +26,8 @@ When deployer/launcher is a different X account from the fee recipient/project, 
 
 Do not use transitive identity shortcuts in provenance scoring. Verifying a project founder/lead dev verifies that person, not the separate Bankr deployer. Verifying an official fee recipient verifies fee routing, not launch control. Provenance cannot score 8+ unless the exact deployer handle/wallet is tied to the project/founder or the exact token has been acknowledged.
 
+Do not replace a missing identity link with soft wording. `Founder-linked wallet`, `official project lead`, `direct self-launch by a known builder`, and `official token for the ecosystem` are high-provenance claims. They require direct deployer-control proof or exact-token acknowledgement, not just real product/code and a verified founder.
+
 When exact-token soft endorsement exists but deployer-control proof and fee-claim evidence remain missing, Provenance can usually land around 6.5-8 depending on clarity of the official acknowledgement, but avoid 9-10 clean-official scoring. Keep fee-claim status separate.
 
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.

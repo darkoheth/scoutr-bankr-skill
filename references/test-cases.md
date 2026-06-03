@@ -103,6 +103,7 @@ Expected classification:
 - Expected failure if the report says `Alignment: community-launched + endorsed` with `Endorsement evidence: fee recipient @blitzdotdev is the official project account; launch tweet from @minjunesh acknowledges the project`.
 - Expected failure if the report has a blank `Launch tweet:` line while claiming official/community endorsement.
 - Expected failure if the report says `Alignment: self-launched`, `Provenance: 9+`, `Verdict: Trade Candidate`, `Confidence: High`, `Strong provenance: direct alignment`, `self-launched by founder @minjunesh`, `Launcher/deployer: @pola_pola0 (Minjune Song / @minjunesh)`, `Launcher/deployer: @pola_pola0 (Verified affiliation via Bankr metadata)`, `Endorsement evidence: official project account is fee recipient`, or `launch tweet from @minjunesh` without exact-token context.
+- Expected failure if the report uses softened provenance claims such as `official token for the ecosystem`, `Verified founder-linked wallet`, `direct self-launch by known founder`, `official project lead`, `alignment is perfect`, or `official token` without exact-token acknowledgement or direct deployer-control proof.
 - Expected behavior before exact-token acknowledgement: `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`, `Fee recipient: @blitzdotdev`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
 
 ## HERALD
