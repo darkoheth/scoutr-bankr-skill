@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 48
+version: 49
 visibility: public
 metadata:
   clawdbot:
@@ -41,6 +41,8 @@ Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, B
 - Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
 
 For this Blitz case, the phrases `Launch tweet from founder @minjunesh`, `Founder @minjunesh explicitly tweeted the launch`, `officially endorsed`, `Official Alignment`, `Alignment: Aligned`, `Provenance: 8.5`, and `verified project handle` are failed output unless the same line cites exact-token acknowledgement.
+
+For this Blitz case, `Alignment: community-launched + endorsed` is also failed output unless the `Endorsement evidence` line names the exact acknowledged token context: CA `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, a Bankr/Doppler token page for that CA, ticker-as-token/cashtag in a token launch context, official site/docs token link, official reply/quote context containing the CA/page/ticker, or a fee-claim source. If endorsement evidence says only `founder posted the launch tweet`, `fees routed to official project`, `founder endorsement`, `project/founder signal`, or `official handle`, replace it with `Endorsement evidence: none found for this CA` and use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
 
 ## CA-Only Fast Path
 
