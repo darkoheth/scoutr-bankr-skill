@@ -76,6 +76,26 @@ Expected classification:
 - Expected failure if Scoutr says `Endorsement evidence: none found for this CA` after the official fee-context post is available and checked.
 - Expected behavior before finding exact-token acknowledgement: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)` and `Endorsement evidence: none found for this CA`.
 
+## Blitz / Lead-Dev Product Tweet Is Not Self-Launch
+
+Input:
+
+```text
+Blitz / BLITZ Bankr launch where Bankr exact lookup lists deployer @pola_pola0 and fee recipient @blitzdotdev
+```
+
+Expected classification:
+
+- Bankr / Doppler launch if Bankr exact lookup resolves.
+- Deployer `@pola_pola0` and official fee recipient `@blitzdotdev` differ. Do not infer `@pola_pola0` controls Blitz or is part of the Blitz team unless checked first-party sources prove that relationship.
+- `@blitzdotdev` being the official project account and fee recipient is fee routing/source context only. It is not endorsement by itself.
+- High-quality product/code evidence, such as a real macOS app, MCP server, Swift repo, or strong GitHub history, should score Code/Product well but must not upgrade Provenance to `self-launched`, `aligned`, or `Trade Candidate`.
+- A tweet from a claimed founder/lead dev such as `@minjunesh` is not token endorsement unless the checked tweet mentions or directly links the exact CA, Bankr/token page, ticker-as-token, fee claim, or clear token acknowledgement. If it is only a Blitz product/app/repo announcement, score it under Product/Social only.
+- Expected alignment is `please bro` or `pre-endorsement speculation` until `@blitzdotdev`, the Blitz site/docs, a verified Blitz founder/lead-dev account, or Bankr-native fee-claim evidence acknowledges the exact token.
+- If an official Blitz account or verified lead-dev account clearly acknowledges the exact token but deployer affiliation remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
+- Expected failure if the report says `Alignment: self-launched`, `Provenance: 9+`, `Verdict: Trade Candidate`, `Confidence: High`, `Strong provenance: direct alignment`, `Endorsement evidence: official project account is fee recipient`, or `launch tweet from @minjunesh` without exact-token context.
+- Expected behavior before exact-token acknowledgement: `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`, `Fee recipient: @blitzdotdev`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
+
 ## HERALD
 
 Input:

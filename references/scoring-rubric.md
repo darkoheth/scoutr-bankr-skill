@@ -34,6 +34,8 @@ Bankr social proximity can slightly improve confidence or Watch priority, but sh
 
 Official product posts and Bankr event evidence should be scored on the right axis. A same-day post by the fee recipient/project about the underlying product can raise Social/Product scores. A scheduled Bankr Agent Hour appearance can raise Provenance confidence as Bankr relationship evidence. Neither should be described as token endorsement unless it explicitly references the token, CA, ticker, Bankr launch page, or fee claim.
 
+Founder/lead-dev posts follow the same exact-token rule. A credible founder or lead dev announcing the product, app, repo, docs, funding, or roadmap can raise Product/Social, but it does not raise Provenance to endorsed/self-launched unless the post mentions or links the exact CA, Bankr/token page, ticker-as-token, fee claim, or clear token acknowledgement.
+
 Treat `fees` as a query-expansion trigger, not as standalone evidence. Fee language counts for endorsement only when tied to an official account and exact-token context from the same post, a quoted post, or the parent/replied-to post.
 
 ## Social / X

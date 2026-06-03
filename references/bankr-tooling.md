@@ -109,6 +109,7 @@ Capture:
 - Whether fee-recipient linkage is only routing/context. A fee recipient handle/wallet, project website, or official social link is not endorsement by itself.
 - Fee-claim status as its own field: claimed, unclaimed, unknown, or not applicable.
 - Whether the fee recipient/project recently posted about the underlying product/project, even if the post does not mention the token.
+- Whether any claimed founder/lead-dev tweet used as endorsement actually mentions or links the exact CA, Bankr page, ticker-as-token, fee claim, or token context. If it is only a product/app/repo announcement, count it as Product/Social evidence only.
 - Whether the fee recipient/project is scheduled for, appeared on, or was promoted by a Bankr show/event such as Bankr Agent Hour.
 - Whether the fee recipient/dev recently followed or engaged with Bankr launch-team accounts after token launch, especially `@igoryuzo` and `@0xDeployer`, and which direction the interaction happened.
 - Whether the fee recipient/dev liked, replied to, or quoted third-party replies that explicitly mention Bankr support, token support, the CA, ticker, or the Bankr community around the target/project.
@@ -133,6 +134,7 @@ Fee-claim weighting:
 - If a community or third-party launcher deployed the token, do not call it self-launched even if the official project later acknowledges it. Use `community-launched + endorsed`.
 - For community launches, official acknowledgement and fee claim are separate signals. A dev/project CA post can make the token endorsed even before fees are claimed; unclaimed fees should remain a named unknown/risk rather than blocking the endorsement label.
 - A Bankr `tweetUrl` authored by the fee recipient/project is acknowledgement/endorsement evidence. It does not prove self-launch when the Bankr deployer wallet differs from the fee-recipient wallet and there is no source tying that deployer to the official project/person.
+- A Bankr `tweetUrl` or social post authored by a founder/lead dev is only endorsement when the post itself contains or directly links the exact token context. Founder/lead-dev product announcements, app launches, repo launches, funding posts, or generic project updates should not be called token launch tweets.
 - If Bankr exact metadata has a raw deployer wallet with no launcher username and a different fee-recipient wallet/X account, default to third-party/community launch until control is proven. With an official fee-recipient token post, classify `community-launched + endorsed`; without it, classify `please bro` or `pre-endorsement speculation`.
 - Do not classify `community-launched + endorsed` solely because the fee recipient is the official project/person. The explicit endorsement check still needs a fee claim, CA post, token-page link, or clear acknowledgement of the exact token.
 - Official fee-context replies/quotes can satisfy clear acknowledgement when the parent/quoted post contains the exact CA, Bankr page, or ticker-as-token. This is often phrased indirectly, such as thanking supporters or saying the project will use the fees. Report the parent/quote context so the reader can see why it counts.
@@ -143,6 +145,7 @@ Fee-claim weighting:
 Project/event evidence weighting:
 
 - A recent official fee-recipient/project post about the underlying product is product/social evidence. It can raise Product/Social confidence because it confirms the project is active.
+- A founder/lead-dev post about the app, repo, product, or company is also Product/Social evidence unless it explicitly names or links the token. Do not convert it into Provenance endorsement just because the author is credible or tied to the project.
 - A Bankr Agent Hour booking, Bankr-hosted event, or Bankr-team public promotion is stronger than generic social proximity because it shows Bankr ecosystem attention. Report it as `Bankr ecosystem relationship/event evidence`.
 - Do not automatically treat a product tweet or Agent Hour booking as token endorsement unless it explicitly mentions the token, CA, ticker, Bankr launch page, fee claim, or clearly acknowledges the Bankr-launched token.
 - If the official project/person is the launcher/deployer or same controlled party as the fee recipient, the launch may be classified as `self-launched` or `aligned`; project tweets and Bankr Agent Hour evidence strengthen the read but should be described separately from formal token endorsement.
