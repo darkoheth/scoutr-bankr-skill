@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 50
+version: 51
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,8 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Provenance score must be <= 6, confidence must be <= Medium, and verdict must be <= `Watch` / cautious `Small Spec`.
 - Product quality, official fee recipient, founder/project tweets, GitHub quality, and fee routing stay in Product/Social/Code. They do not upgrade Provenance.
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
+
+A raw Bankr deployer wallet is a different/unproven launcher unless directly tied to the fee recipient/project. If Bankr exact metadata has a raw deployer wallet, a fee-recipient X account, and a `tweetUrl` that is only a product/app/project announcement, the launch remains unresolved. Do not write `Alignment: aligned`, `Provenance: 8+`, `official endorsement`, or `launch tweet from founder` unless that tweet/source contains exact-token context.
 
 Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
 
@@ -86,6 +88,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Mechanical cap: when Bankr deployer/launcher differs from fee recipient/project and no exact-token acknowledgement or fee claim is found, the report must use `Alignment: please bro` or `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, Provenance score <= 6, Confidence <= Medium, and verdict <= `Watch` / cautious `Small Spec`. Do not use `Alignment: aligned`.
 - A Bankr `tweetUrl` from the fee recipient or official project/person is endorsement/acknowledgement evidence, not self-launch evidence by itself. If the Bankr deployer wallet differs from the fee recipient and no source proves the deployer is controlled by that recipient, do not write `self-launched`.
 - A Bankr `tweetUrl` that is an old product announcement, repo/docs announcement, founder manifesto, generic account/profile URL, or project homepage is not token endorsement unless it contains or links the exact CA, ticker-as-token, Bankr/token page, fee claim, or explicit token acknowledgement. Treat it as product/social evidence only.
+- A Bankr `tweetUrl` attached to launch metadata is not automatically a token launch tweet. Read the tweet text/context. If it announces only the app/product/project and does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or explicit token acknowledgement, call it `product tweet` / `product announcement`, not `launch tweet`, and do not use it as endorsement evidence.
 - A founder/lead-dev product tweet is not token endorsement unless it contains or directly links the exact CA, Bankr/token page, ticker-as-token, fee claim, or explicit token acknowledgement. Do not call it a `launch tweet` anywhere in the report unless the checked tweet is a token launch/acknowledgement post, not an app/repo/product announcement. Use `founder/product tweet` or `product/social evidence` instead.
 - Official-account reply/quote context can be endorsement. If the fee recipient/project account replies to, quotes, or otherwise directly engages with a post that contains the exact CA, Bankr/token page, or ticker-as-token and says it will use token fees, thanks supporters, acknowledges support, or otherwise accepts the token context, treat this as exact-token acknowledgement / soft endorsement. Report it as `community-launched + endorsed` when deployer control remains unproven, not `self-launched`.
 - The word `fees` is a search trigger, not endorsement by itself. Generic fee talk, product revenue talk, or Bankr fee-recipient routing does not count unless the official account's post/reply/quote is tied to the exact token context.
@@ -318,6 +321,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Endorsement evidence: <founder/project> acknowledges the project`, `launch tweet from <founder> acknowledges the project`, or similar wording. Acknowledging the project is not acknowledging the token.
 - Blank `Launch tweet:` combined with any endorsement claim. If the launch/acknowledgement tweet URL is blank or unavailable, either cite the exact checked source elsewhere or write `Endorsement evidence: none found for this CA`.
 - `Endorsement evidence: official launch tweet`, `official project launch via Bankr`, or `self-launched` when the Bankr `tweetUrl` is an older product/repo/docs announcement that does not mention the exact CA, token, ticker-as-token, Bankr page, or fee claim.
+- `Endorsement evidence: Launch tweet from <founder>`, `Alignment: aligned`, or `Provenance: 8+` when Bankr exact metadata has only a raw deployer wallet, official fee-recipient X account, and a product/app/project tweet without exact-token context.
 - `Endorsement evidence: launch tweet from lead dev`, `lead dev launch tweet`, `launch tweet came from founder`, `founder posted the launch tweet`, or similar wording when the checked post is a product/app/repo announcement and not an exact-token acknowledgement. Founder/lead-dev authority does not replace exact token context.
 - `Endorsement evidence: none found` when an official fee-recipient/project account has replied to or quoted a post containing the exact CA/Bankr page/ticker-as-token with language such as `thanks for supporting us`, `we will use the fees`, `fees go to building`, or similar acceptance of the token-fee context.
 - `Endorsement evidence: fees mentioned` when the official post does not have exact-token context. Fee language must be tied to a checked exact CA, Bankr page, ticker-as-token, or quoted/replied post that contains one.

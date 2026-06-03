@@ -113,6 +113,27 @@ Expected classification:
 - Expected failure if the report uses `launch tweet came from the project founder`, `founder posted the launch tweet`, or similar launch-tweet wording for a product/app/repo tweet that lacks exact CA/Bankr page/ticker/fee-claim context.
 - Expected behavior before exact-token acknowledgement: `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`, `Fee recipient: @blitzdotdev`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
 
+## Offset / Bankr TweetUrl Product Tweet Is Not Token Endorsement
+
+Input:
+
+```text
+OFFSET / Offset Bankr launch where Bankr exact lookup lists raw deployer wallet 0xf7523b7e7ff6e4878caff14a824857df00844b7e and fee recipient @offsetxyz
+CA: 0x4db8a6e3e5650fb75133c8ea8f4f9b8aa8478ba3
+tweetUrl: https://x.com/vicpolisetty/status/2062287502140969395
+```
+
+Expected classification:
+
+- Bankr / Doppler launch if Bankr exact lookup resolves.
+- Fee recipient `@offsetxyz` is the official product account for `useoffset.xyz`, a Hyperliquid perp hedging / event-risk product.
+- Bankr deployer is a raw wallet and is not proven to be Victor, `@offsetxyz`, or the project unless a direct source ties it to them.
+- The Bankr `tweetUrl` from `@vicpolisetty` is product/social evidence: it announces building `@offsetxyz`, links `useoffset.xyz`, and describes Hyperliquid/Polymarket hedging. It does not mention the token CA, ticker-as-token, Bankr/Doppler page, fee claim, or explicit token acknowledgement in the checked text.
+- Expected alignment is `please bro` or `pre-endorsement speculation` until `@offsetxyz`, Victor, the site/docs, or Bankr-native fee-claim evidence acknowledges the exact token.
+- Expected behavior: `Launcher/deployer: 0xf752...b7e (affiliation to Offset not found)`, `Fee recipient: @offsetxyz`, `Alignment: pre-endorsement speculation` or `please bro`, and `Endorsement evidence: none found for this CA`.
+- Expected failure if the report says `Alignment: aligned`, `Provenance: 8+`, `Endorsement evidence: Launch tweet from @vicpolisetty`, `founder launch tweet`, `official endorsement`, or `high provenance alignment` based only on the product tweet and fee-recipient routing.
+- Product/GitHub/source evidence must stay separate: `useoffset.xyz` is a real product site; GitHub was not found by exact `offsetxyz` / `useoffset Hyperliquid` repo search during the regression.
+
 ## HERALD
 
 Input:
