@@ -24,6 +24,8 @@ When deployer/launcher differs from fee recipient and explicit acknowledgement i
 
 When deployer/launcher is a different X account from the fee recipient/project, deployer affiliation must be first-party evidence. A thin profile, generic crypto replies, follows, ecosystem proximity, or fee routing to the project does not prove the deployer is on the team. Without deployer-control proof or exact-token acknowledgement, cap Provenance at 6, cap verdict at `Watch` or cautious `Small Spec`, and cap Confidence at Medium.
 
+Do not use transitive identity shortcuts in provenance scoring. Verifying a project founder/lead dev verifies that person, not the separate Bankr deployer. Verifying an official fee recipient verifies fee routing, not launch control. Provenance cannot score 8+ unless the exact deployer handle/wallet is tied to the project/founder or the exact token has been acknowledged.
+
 When exact-token soft endorsement exists but deployer-control proof and fee-claim evidence remain missing, Provenance can usually land around 6.5-8 depending on clarity of the official acknowledgement, but avoid 9-10 clean-official scoring. Keep fee-claim status separate.
 
 For Bankr tokens, do not penalize unclaimed fees much when the launcher/deployer and fee recipient appear to be the same official party. Penalize unclaimed fees mainly when the launcher/deployer and fee recipient differ and the fee recipient has not otherwise acknowledged the token.

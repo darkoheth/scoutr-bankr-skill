@@ -81,6 +81,8 @@ For known platform launches, prioritize:
 
 For Bankr launches where the deployer/launcher differs from the fee recipient or claimed project account, verify affiliation before using `self-launched` or `aligned`.
 
+Identity links are not transitive unless directly proven. A checked source may prove `@minjunesh -> Blitz` and another source may prove `@blitzdotdev -> Blitz`, but that still does not prove `@pola_pola0 -> @minjunesh` or `@pola_pola0 -> Blitz`. Each handle/wallet relationship must be supported by a source that names or links the exact parties.
+
 Valid affiliation evidence includes:
 
 - Deployer profile bio/name/link identifies the project, team, founder, or official role.
@@ -88,10 +90,13 @@ Valid affiliation evidence includes:
 - Official project X/site/docs/repo links to the deployer as team, maintainer, founder, or launch operator.
 - GitHub org/repo membership or maintainer evidence clearly ties the deployer handle to the project.
 - The deployer posts the exact CA/Bankr page as a project launch and the official project account/site corroborates it.
+- Bankr metadata explicitly states a role/affiliation relationship, not merely separate deployer and fee-recipient fields.
 
 Invalid affiliation evidence:
 
 - Bankr fee recipient routing to the project.
+- Bankr metadata that separately lists a deployer handle/wallet and a fee-recipient handle/wallet.
+- First-party evidence that verifies a founder/lead dev but does not tie that founder/lead dev to the deployer handle/wallet.
 - Generic crypto replies, likes, follows, or ecosystem participation.
 - Deployer appears near project accounts in search results or social graphs.
 - Product/code quality from the fee-recipient project.
