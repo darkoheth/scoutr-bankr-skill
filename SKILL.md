@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 53
+version: 54
 visibility: public
 metadata:
   clawdbot:
@@ -63,6 +63,16 @@ Known hard regression: for Arkhai `0xe194bdfca43ecb917b1cd283dd72f40f6948dba3`, 
 - Verdict <= `Pass` / hard `Watch`, Confidence <= Medium
 
 For this Arkhai case, `Watch` is acceptable only if the report clearly names the no-token/no-fee official statement as a major red flag. It is failed output to say only `no mention of a token` when an official no-token statement was visible. It is also failed output to write `Liquidity: unknown` when Dexscreener exact token-pairs returned main WETH liquidity around `$40k-$45k`; use the checked value or mark the specific data-source blocker.
+
+Known hard regression: for Saperly `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`, Bankr exact metadata has deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb`, fee recipient `@trysaperly` / `0x3c5a660dabf53598222514d7508995cb4518ddf7`, `tweetUrl: https://x.com/trysaperly/status/2051302295619469431`, and `websiteUrl: https://saperly.com/`. The tweet introduces the Saperly product/website as a phone carrier for AI agents and does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. `@pola_pola0` profile evidence visible via public X says only `CRYPTO BILLIONAIRE`, has low followers, and does not prove Saperly founder/project affiliation. Unless another official source acknowledges the exact token or proves deployer control, output must be:
+
+- `Launcher/deployer: @pola_pola0 (affiliation to Saperly not found)`
+- `Fee recipient: @trysaperly`
+- `Alignment: please bro` or `Alignment: pre-endorsement speculation`
+- `Endorsement evidence: none found for this CA`
+- Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
+
+For this Saperly case, `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@pola_pola0 (Founder)`, `official launch tweet`, `fee-claim status: claimed`, `fees claimed by official account`, or `alignment between founder, project account, and token fees is perfect` are failed output unless the report cites direct deployer-founder proof plus exact-token acknowledgement or fee-claim evidence. Product/docs/GitHub quality must stay separate from token provenance.
 
 ## CA-Only Fast Path
 
