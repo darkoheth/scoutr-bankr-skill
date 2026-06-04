@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 52
+version: 53
 visibility: public
 metadata:
   clawdbot:
@@ -55,6 +55,14 @@ Known hard regression: for Bitter `0x696ace6f17b966dd667501b6952b56f7b8653ba3`, 
 - Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
 
 For this Bitter case, `Alignment: aligned`, `Provenance: 8+`, `Confidence: High`, `Code: 8+`, `project lead posted the launch tweet`, `official endorsement`, `direct alignment`, `fee recipient / project lead explicitly linking the launch`, or `GitHub discovery via official X bio` are failed output unless the same report cites exact-token acknowledgement and a first-party GitHub link. Compact reports follow the same exact-token evidence rule; shorter mode must not skip endorsement proof. If GitHub is found only through exact-name/user search and not from Bankr metadata, website raw links, official X bio, docs, or app links, describe it as `adjacent developer GitHub found by search` and do not use it for high Code scoring.
+
+Known hard regression: for Arkhai `0xe194bdfca43ecb917b1cd283dd72f40f6948dba3`, Bankr exact metadata has only raw deployer `0xe438e37f68f0f1e9620df1bf4d72ee307b6ab1f4`, raw fee recipient `0x98fcd5aad41af6f1c05754c3b28298f3d9fcb05f`, no `tweetUrl`, and no `websiteUrl`. The likely target project `https://arkhai.io/` is real and links `https://github.com/arkhai-io` and `@arkhai_io`, but official visible/pinned SCM launch language says `No token. No fees.` If that official no-token/no-fee statement is found, report it as explicit negative provenance evidence:
+
+- `Alignment: please bro`
+- `Endorsement evidence: none found for this CA; official @arkhai_io/SCM messaging says "No token. No fees."`
+- Verdict <= `Pass` / hard `Watch`, Confidence <= Medium
+
+For this Arkhai case, `Watch` is acceptable only if the report clearly names the no-token/no-fee official statement as a major red flag. It is failed output to say only `no mention of a token` when an official no-token statement was visible. It is also failed output to write `Liquidity: unknown` when Dexscreener exact token-pairs returned main WETH liquidity around `$40k-$45k`; use the checked value or mark the specific data-source blocker.
 
 ## CA-Only Fast Path
 

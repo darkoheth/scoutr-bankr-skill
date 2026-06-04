@@ -486,3 +486,38 @@ Expected behavior:
 - `GitHub/code: not found` is acceptable only after checking Bankr metadata, website raw links, X bio, and exact Bitter/Ruemic GitHub searches.
 - Compact mode has the same expected behavior.
 - Expected failure if output says `Alignment: aligned`, `Provenance: 8+`, `Confidence: High`, `Code: 8+`, `project lead posted the launch tweet`, `direct alignment`, `fee recipient / project lead explicitly linking the launch`, or `GitHub discovery via official X bio` without exact-token evidence and a first-party GitHub link.
+
+## Arkhai Official No-Token Statement
+
+Input:
+
+```text
+scoutr 0xe194bdfca43ecb917b1cd283dd72f40f6948dba3
+```
+
+Bankr exact metadata:
+
+```text
+tokenName: Arkhai
+tokenSymbol: Arkhai
+launchType: doppler
+deployer: 0xe438e37f68f0f1e9620df1bf4d72ee307b6ab1f4
+feeRecipient: 0x98fcd5aad41af6f1c05754c3b28298f3d9fcb05f
+tweetUrl: none
+websiteUrl: none
+```
+
+Target-project discovery:
+
+```text
+https://arkhai.io/ links https://github.com/arkhai-io and @arkhai_io. Official/pinned SCM language says "No token. No fees."
+```
+
+Expected behavior:
+
+- Keep target-project Product/Code evidence separate from token provenance.
+- Use `Alignment: please bro`.
+- Use `Endorsement evidence: none found for this CA; official @arkhai_io/SCM messaging says "No token. No fees."` or equivalent.
+- Verdict must be `Pass` or hard `Watch`; Confidence must be <= Medium.
+- Report live Dexscreener/Gecko liquidity if those values were checked; do not write `Liquidity: unknown` after exact pair data returned liquidity around `$40k-$45k`.
+- Expected failure if the report only says `no mention of a token` without naming the official no-token/no-fee statement.
