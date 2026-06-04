@@ -54,7 +54,7 @@ Known hard regression: for Bitter `0x696ace6f17b966dd667501b6952b56f7b8653ba3`, 
 - `Endorsement evidence: none found for this CA`
 - Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
 
-For this Bitter case, `Alignment: aligned`, `Provenance: 8+`, `project lead posted the launch tweet`, `official endorsement`, `direct alignment`, or `fee recipient / project lead explicitly linking the launch` are failed output unless the same report cites exact-token acknowledgement. Compact reports follow the same exact-token evidence rule; shorter mode must not skip endorsement proof.
+For this Bitter case, `Alignment: aligned`, `Provenance: 8+`, `Confidence: High`, `Code: 8+`, `project lead posted the launch tweet`, `official endorsement`, `direct alignment`, `fee recipient / project lead explicitly linking the launch`, or `GitHub discovery via official X bio` are failed output unless the same report cites exact-token acknowledgement and a first-party GitHub link. Compact reports follow the same exact-token evidence rule; shorter mode must not skip endorsement proof. If GitHub is found only through exact-name/user search and not from Bankr metadata, website raw links, official X bio, docs, or app links, describe it as `adjacent developer GitHub found by search` and do not use it for high Code scoring.
 
 ## CA-Only Fast Path
 

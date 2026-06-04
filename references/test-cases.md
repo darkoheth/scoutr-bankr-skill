@@ -485,4 +485,4 @@ Expected behavior:
 - Keep Product evidence from `https://bitter.sh/` separate from Provenance.
 - `GitHub/code: not found` is acceptable only after checking Bankr metadata, website raw links, X bio, and exact Bitter/Ruemic GitHub searches.
 - Compact mode has the same expected behavior.
-- Expected failure if output says `Alignment: aligned`, `Provenance: 8+`, `project lead posted the launch tweet`, `direct alignment`, or `fee recipient / project lead explicitly linking the launch` without exact-token evidence.
+- Expected failure if output says `Alignment: aligned`, `Provenance: 8+`, `Confidence: High`, `Code: 8+`, `project lead posted the launch tweet`, `direct alignment`, `fee recipient / project lead explicitly linking the launch`, or `GitHub discovery via official X bio` without exact-token evidence and a first-party GitHub link.
