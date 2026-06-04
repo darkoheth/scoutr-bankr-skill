@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 54
+version: 55
 visibility: public
 metadata:
   clawdbot:
@@ -33,6 +33,8 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
 
 A raw Bankr deployer wallet is a different/unproven launcher unless directly tied to the fee recipient/project. If Bankr exact metadata has a raw deployer wallet, a fee-recipient X account, and a `tweetUrl` that is only a product/app/project announcement, the launch remains unresolved. Do not write `Alignment: aligned`, `Provenance: 8+`, `official endorsement`, or `launch tweet from founder` unless that tweet/source contains exact-token context.
+
+Immediate Saperly stop: if the input is `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`, do not call it `Trade Candidate`, `self-launched`, `aligned`, or `official self-launch` unless direct first-party proof ties deployer `@pola_pola0` to Saperly and an official source acknowledges the exact CA/Bankr token/fee claim. The Bankr tweet `https://x.com/trysaperly/status/2051302295619469431` is a product announcement only. Fee routing to `@trysaperly` is not endorsement. Product/code quality is not provenance. The correct unresolved output is `Alignment: please bro` or `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, Confidence <= Medium, and verdict <= `Watch` / cautious `Small Spec`.
 
 Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
 
