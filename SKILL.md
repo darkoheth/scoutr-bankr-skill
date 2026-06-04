@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts, connects
   wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 51
+version: 52
 visibility: public
 metadata:
   clawdbot:
@@ -45,6 +45,16 @@ Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, B
 For this Blitz case, the phrases `Launch tweet from founder @minjunesh`, `Founder @minjunesh explicitly tweeted the launch`, `officially endorsed`, `Official Alignment`, `Alignment: Aligned`, `Provenance: 8.5`, and `verified project handle` are failed output unless the same line cites exact-token acknowledgement.
 
 For this Blitz case, `Alignment: community-launched + endorsed` is also failed output unless the `Endorsement evidence` line names the exact acknowledged token context: CA `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, a Bankr/Doppler token page for that CA, ticker-as-token/cashtag in a token launch context, official site/docs token link, official reply/quote context containing the CA/page/ticker, or a fee-claim source. If endorsement evidence says only `founder posted the launch tweet`, `fees routed to official project`, `founder endorsement`, `project/founder signal`, or `official handle`, replace it with `Endorsement evidence: none found for this CA` and use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
+
+Known hard regression: for Bitter `0x696ace6f17b966dd667501b6952b56f7b8653ba3`, Bankr deployer `@hyporliquid` / `0x0c7e483f60163cbd9aa24e85a7ab9cd9fe1b82e0` differs from fee recipient `@Ruemic` / `0xc2a0b33358ed101d6b4f2ab5b40d5c1f7a97c1c0`. Bankr `tweetUrl` is `https://x.com/Ruemic/status/2058027079950795157`, where Ruemic says he quit his job and is starting a company called Bitter. That is product/social evidence only; it is not token endorsement because it does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or explicit token support. Unless another official source acknowledges this exact token context, output must be:
+
+- `Launcher/deployer: @hyporliquid`
+- `Fee recipient: @Ruemic`
+- `Alignment: please bro` or `Alignment: pre-endorsement speculation`
+- `Endorsement evidence: none found for this CA`
+- Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
+
+For this Bitter case, `Alignment: aligned`, `Provenance: 8+`, `project lead posted the launch tweet`, `official endorsement`, `direct alignment`, or `fee recipient / project lead explicitly linking the launch` are failed output unless the same report cites exact-token acknowledgement. Compact reports follow the same exact-token evidence rule; shorter mode must not skip endorsement proof.
 
 ## CA-Only Fast Path
 

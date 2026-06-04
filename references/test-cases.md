@@ -450,3 +450,39 @@ Expected behavior:
 - Expected failure if a stale early holder count like `23 holders` is used later as a core red flag while current explorer metadata shows materially more holders.
 - Expected failure if the report says `Confidence: High` while top-holder distribution is unchecked and holder count evidence is stale or contradictory.
 - Holder count alone should not become `extremely concentrated`; concentration requires top-holder distribution, excluding pool/DEX/system addresses where possible.
+
+## Bitter Product Tweet Is Not Token Endorsement
+
+Input:
+
+```text
+scoutr 0x696aCE6f17B966Dd667501b6952b56f7B8653ba3
+```
+
+Bankr exact metadata:
+
+```text
+tokenName: Bitter
+tokenSymbol: Bitter
+launchType: doppler
+deployer: @hyporliquid / 0x0c7e483f60163cbd9aa24e85a7ab9cd9fe1b82e0
+feeRecipient: @Ruemic / 0xc2a0b33358ed101d6b4f2ab5b40d5c1f7a97c1c0
+tweetUrl: https://x.com/Ruemic/status/2058027079950795157
+websiteUrl: https://bitter.sh/
+```
+
+Tweet context:
+
+```text
+@Ruemic says he quit his job and is starting a company called Bitter. The post does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support.
+```
+
+Expected behavior:
+
+- Treat the tweet as product/social evidence only.
+- Use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
+- Use `Endorsement evidence: none found for this CA` unless another official exact-token acknowledgement is cited in the same report.
+- Keep Product evidence from `https://bitter.sh/` separate from Provenance.
+- `GitHub/code: not found` is acceptable only after checking Bankr metadata, website raw links, X bio, and exact Bitter/Ruemic GitHub searches.
+- Compact mode has the same expected behavior.
+- Expected failure if output says `Alignment: aligned`, `Provenance: 8+`, `project lead posted the launch tweet`, `direct alignment`, or `fee recipient / project lead explicitly linking the launch` without exact-token evidence.
