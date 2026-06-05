@@ -8,13 +8,10 @@ description: >
   message starts with or contains "scoutr" plus a non-contract URL, still invoke
   this skill and infer the correct GitHub-first, website-first, social-first, or
   token-first workflow. Produces read-only diligence with verdicts, scores, red
-  flags, attached-token discovery, and next checks. For Saperly
-  0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3 specifically, do not call it
-  self-launched/aligned/Trade Candidate unless exact-token acknowledgement or
-  deployer-founder proof is found. Never trades, posts, connects wallets, signs
-  transactions, or performs privileged actions.
+  flags, attached-token discovery, and next checks. Never trades, posts,
+  connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 56
+version: 57
 visibility: public
 metadata:
   clawdbot:
@@ -25,11 +22,16 @@ metadata:
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
 
-## Immediate Case Guards
+## Provenance Decision Gate
 
-These case guards are mandatory and override all generic scoring instincts:
+Run this gate before scoring Product, Code, Social, or Overall. Do not let product quality or trading quality rewrite the provenance result.
 
-- Saperly `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`: Bankr deployer is `@pola_pola0`, fee recipient is `@trysaperly`, and the Bankr `tweetUrl` is an official Saperly product announcement that does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. Public `@pola_pola0` profile evidence does not prove founder/team affiliation. Unless exact-token acknowledgement or direct deployer-founder proof is found in the current report, output `Verdict: Watch` or cautious `Small Spec`, `Confidence: Medium`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`. Forbidden for this unresolved case: `Trade Candidate`, `self-launched`, `aligned`, `official self-launch`, `@pola_pola0 (Founder)`, `official launch tweet`, `Provenance: 8+`, `Confidence: High`, or `fee-claim status: claimed`.
+1. Copy Bankr exact deployer, fee recipient, `tweetUrl`, `websiteUrl`, and metadata fields into the source map.
+2. Decide whether the deployer is proven to be the official project/person. Proof must be first-party and direct: the deployer profile/bio, official project/team page, official repo/org/profile, or a source tying the exact deployer handle/wallet to the project/person.
+3. If deployer control is not proven, decide whether the official project/person acknowledged the exact token. Exact-token acknowledgement requires one of: contract address, Bankr/token page, ticker-as-token in a token context, fee-claim evidence, or official site/docs linking this token.
+4. Product announcements, launch announcements for the app/company, official websites, official X profiles, GitHub repos, and fee-recipient routing are not exact-token acknowledgement by themselves.
+5. If neither deployer control nor exact-token acknowledgement is proven, provenance is unresolved: use `Alignment: please bro` or `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, Provenance <= 6, Confidence <= Medium, and Verdict <= `Watch` / cautious `Small Spec`.
+6. Only after this gate may Product, Code, Social, and Token scores raise the report posture. They may not override the provenance cap.
 
 ## Hard Provenance Stop
 
@@ -42,8 +44,6 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
 
 A raw Bankr deployer wallet is a different/unproven launcher unless directly tied to the fee recipient/project. If Bankr exact metadata has a raw deployer wallet, a fee-recipient X account, and a `tweetUrl` that is only a product/app/project announcement, the launch remains unresolved. Do not write `Alignment: aligned`, `Provenance: 8+`, `official endorsement`, or `launch tweet from founder` unless that tweet/source contains exact-token context.
-
-Immediate Saperly stop: if the input is `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`, do not call it `Trade Candidate`, `self-launched`, `aligned`, or `official self-launch` unless direct first-party proof ties deployer `@pola_pola0` to Saperly and an official source acknowledges the exact CA/Bankr token/fee claim. The Bankr tweet `https://x.com/trysaperly/status/2051302295619469431` is a product announcement only. Fee routing to `@trysaperly` is not endorsement. Product/code quality is not provenance. The correct unresolved output is `Alignment: please bro` or `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, Confidence <= Medium, and verdict <= `Watch` / cautious `Small Spec`.
 
 Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
 
@@ -74,16 +74,6 @@ Known hard regression: for Arkhai `0xe194bdfca43ecb917b1cd283dd72f40f6948dba3`, 
 - Verdict <= `Pass` / hard `Watch`, Confidence <= Medium
 
 For this Arkhai case, `Watch` is acceptable only if the report clearly names the no-token/no-fee official statement as a major red flag. It is failed output to say only `no mention of a token` when an official no-token statement was visible. It is also failed output to write `Liquidity: unknown` when Dexscreener exact token-pairs returned main WETH liquidity around `$40k-$45k`; use the checked value or mark the specific data-source blocker.
-
-Known hard regression: for Saperly `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`, Bankr exact metadata has deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb`, fee recipient `@trysaperly` / `0x3c5a660dabf53598222514d7508995cb4518ddf7`, `tweetUrl: https://x.com/trysaperly/status/2051302295619469431`, and `websiteUrl: https://saperly.com/`. The tweet introduces the Saperly product/website as a phone carrier for AI agents and does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. `@pola_pola0` profile evidence visible via public X says only `CRYPTO BILLIONAIRE`, has low followers, and does not prove Saperly founder/project affiliation. Unless another official source acknowledges the exact token or proves deployer control, output must be:
-
-- `Launcher/deployer: @pola_pola0 (affiliation to Saperly not found)`
-- `Fee recipient: @trysaperly`
-- `Alignment: please bro` or `Alignment: pre-endorsement speculation`
-- `Endorsement evidence: none found for this CA`
-- Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
-
-For this Saperly case, `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@pola_pola0 (Founder)`, `official launch tweet`, `fee-claim status: claimed`, `fees claimed by official account`, or `alignment between founder, project account, and token fees is perfect` are failed output unless the report cites direct deployer-founder proof plus exact-token acknowledgement or fee-claim evidence. Product/docs/GitHub quality must stay separate from token provenance.
 
 ## CA-Only Fast Path
 

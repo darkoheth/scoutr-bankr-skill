@@ -522,37 +522,37 @@ Expected behavior:
 - Report live Dexscreener/Gecko liquidity if those values were checked; do not write `Liquidity: unknown` after exact pair data returned liquidity around `$40k-$45k`.
 - Expected failure if the report only says `no mention of a token` without naming the official no-token/no-fee statement.
 
-## Saperly Product Tweet Is Not Token Endorsement
+## Product Tweet Plus Fee Recipient Is Not Token Endorsement
 
 Input:
 
 ```text
-scoutr 0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3
+scoutr <bankr-doppler-ca>
 ```
 
 Bankr exact metadata:
 
 ```text
-tokenName: Saperly
-tokenSymbol: Saperly
+tokenName: ExampleAgentInfra
+tokenSymbol: EXAMPLE
 launchType: doppler
-deployer: @pola_pola0 / 0x2d52db1746d076ab1499a0d7300c29c861c6e7eb
-feeRecipient: @trysaperly / 0x3c5a660dabf53598222514d7508995cb4518ddf7
-tweetUrl: https://x.com/trysaperly/status/2051302295619469431
-websiteUrl: https://saperly.com/
+deployer: @community_launcher / 0x1111111111111111111111111111111111111111
+feeRecipient: @official_project / 0x2222222222222222222222222222222222222222
+tweetUrl: https://x.com/official_project/status/<product-announcement-id>
+websiteUrl: https://example-agent-infra.invalid/
 ```
 
 Tweet/context:
 
 ```text
-@trysaperly introduces Saperly.com as the first phone carrier built for AI agents. The post does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. Public @pola_pola0 profile evidence does not prove Saperly founder/project affiliation.
+@official_project introduces its product/company/site. The post does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. Public @community_launcher profile evidence does not prove founder/team/project affiliation.
 ```
 
 Expected behavior:
 
 - Treat the tweet as product/social evidence only.
-- Use `Launcher/deployer: @pola_pola0 (affiliation to Saperly not found)`.
+- Use `Launcher/deployer: @community_launcher (affiliation to ExampleAgentInfra not found)` or equivalent.
 - Use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
 - Use `Endorsement evidence: none found for this CA` unless another official exact-token acknowledgement or fee-claim source is cited in the same report.
-- Keep Product/Code evidence from `https://saperly.com/`, docs, and `https://github.com/Saperly` separate from Provenance.
-- Expected failure if output says `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@pola_pola0 (Founder)`, `official launch tweet`, `fee-claim status: claimed`, or `alignment between founder, project account, and token fees is perfect` without direct deployer-founder proof and exact-token acknowledgement/fee-claim evidence.
+- Keep Product/Code evidence from the official website/docs/GitHub separate from Provenance.
+- Expected failure if output says `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@community_launcher (Founder)`, `official launch tweet`, `fee-claim status: claimed`, or `alignment between founder, project account, and token fees is perfect` without direct deployer-founder proof and exact-token acknowledgement/fee-claim evidence.
