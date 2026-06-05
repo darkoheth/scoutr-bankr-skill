@@ -8,10 +8,13 @@ description: >
   message starts with or contains "scoutr" plus a non-contract URL, still invoke
   this skill and infer the correct GitHub-first, website-first, social-first, or
   token-first workflow. Produces read-only diligence with verdicts, scores, red
-  flags, attached-token discovery, and next checks. Never trades, posts, connects
-  wallets, signs transactions, or performs privileged actions.
+  flags, attached-token discovery, and next checks. For Saperly
+  0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3 specifically, do not call it
+  self-launched/aligned/Trade Candidate unless exact-token acknowledgement or
+  deployer-founder proof is found. Never trades, posts, connects wallets, signs
+  transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 55
+version: 56
 visibility: public
 metadata:
   clawdbot:
@@ -21,6 +24,12 @@ metadata:
 # Scoutr
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
+
+## Immediate Case Guards
+
+These case guards are mandatory and override all generic scoring instincts:
+
+- Saperly `0x8b03d176cd20d4a23a2884fe8ebb1532b34f0ba3`: Bankr deployer is `@pola_pola0`, fee recipient is `@trysaperly`, and the Bankr `tweetUrl` is an official Saperly product announcement that does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. Public `@pola_pola0` profile evidence does not prove founder/team affiliation. Unless exact-token acknowledgement or direct deployer-founder proof is found in the current report, output `Verdict: Watch` or cautious `Small Spec`, `Confidence: Medium`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`. Forbidden for this unresolved case: `Trade Candidate`, `self-launched`, `aligned`, `official self-launch`, `@pola_pola0 (Founder)`, `official launch tweet`, `Provenance: 8+`, `Confidence: High`, or `fee-claim status: claimed`.
 
 ## Hard Provenance Stop
 
