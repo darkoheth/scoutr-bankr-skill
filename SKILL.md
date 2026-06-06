@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 60
+version: 61
 visibility: public
 metadata:
   clawdbot:
@@ -29,7 +29,7 @@ Before returning the report, run this rejection gate. If any condition matches, 
 1. If Bankr exact metadata has `deployer` different from `feeRecipient`, reject `Alignment: self-launched`, `official self-launch`, `direct self-launch`, `verified self-launch`, `founder-linked wallet`, `official project lead`, `alignment is perfect`, `Provenance: 8+`, `Trade Candidate`, and `Confidence: High` unless the same report cites first-party proof tying the exact deployer handle/wallet to the official project/person.
 2. If a Bankr `tweetUrl` or founder post is only a product/app/repo/company announcement, reject any wording that calls it a `launch tweet`, `token endorsement`, `official endorsement`, `explicitly linking the launch`, or `self-launch`. Product tweets are Product/Social evidence only unless they mention or link the exact CA, Bankr/token page, ticker-as-token, or fee claim.
 3. Reject `Fee-claim status: claimed`, `likely claimed`, or any implied fee claim unless the report cites direct evidence: Bankr metadata, a claim transaction/event, an on-chain transfer from launch infrastructure to the fee-recipient wallet, or an explicit recipient statement saying fees were claimed. If no direct evidence exists, use `unknown` or `unclaimed` only with the checked-source basis.
-4. Reject blank source lines. `Website/docs:`, `X/social:`, `GitHub/code:`, `Launch tweet:`, or equivalent fields must contain a URL/handle, `not found after checking <specific sources>`, or `unavailable: <blocker>`.
+4. Reject blank or decorative source lines. `Website/docs:`, `X/social:`, `GitHub/code:`, `Launch tweet:`, or equivalent fields must contain a literal URL/handle, `not found after checking <specific sources>`, or `unavailable: <blocker>`. Empty markdown links, bare parentheses like `(Official)`, `(Founder)`, `(Verified product docs)`, or vague labels without URLs/handles are failed output.
 5. Reject liquidity, holder concentration, and top-holder quality that are estimated from volume, FDV, chart images, or vibes. Use directly checked structured values or `unknown`.
 6. Reject source-map corruption. Do not put the token contract, pool address, random holder wallet, fee-recipient wallet, or inferred founder wallet in `Launcher/deployer` unless Bankr/explorer explicitly says it is the launcher/deployer. Copy Bankr exact deployer and fee recipient verbatim when available.
 7. If `Endorsement evidence: none found for this CA`, reject `Alignment: community-launched + endorsed`, `Trade Candidate`, and `Confidence: High` for third-party Bankr launches.
@@ -92,6 +92,7 @@ Known hard regression: for 1clawAI `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`,
 - If that proof is not cited, use `Alignment: please bro` / `pre-endorsement speculation` or `community-launched + endorsed` only when the exact token is acknowledged by an official source.
 - Never write `Fee-claim status: likely claimed`. Use `claimed` only with direct fee-claim proof, otherwise `unknown` or `unclaimed`.
 - Do not estimate liquidity from volume/MC depth; copy a checked structured liquidity value or write `unknown`.
+- A founder CA post or social confirmation is endorsement evidence only; it is not fee-claim evidence. For this case, `Fee-claim status: claimed (Verified via Bankr metadata and social confirmation)` is failed output unless the report names the Bankr claim field, tx hash/event, launch-infrastructure transfer, or explicit statement saying fees were claimed.
 
 Latency guard for 1clawAI: do not loop trying to prove `@1Nzz_` identity. If proof is not found quickly, keep deployer unproven and cap provenance unless exact-token acknowledgement is cited. Strong GitHub/code can improve Code/Product, not launch alignment.
 
@@ -152,6 +153,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact lookup returns a `websiteUrl`, `Website/docs:` must contain that URL or an explicit mismatch/blocker. It must never be blank.
 - If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
 - If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
+- Source fields must print actual URLs or handles. Do not output `Website/docs: (Verified product docs)`, `X/social: (Official)`, `X/social: (Founder)`, `GitHub/code: (Active repo)`, or similar placeholder labels. If the exact URL/handle is unavailable, say `unavailable: exact URL not captured` or `not found after checking <sources>`.
 - Scoutr must run its built-in repo scanner for GitHub/code analysis. Do not call external paid repo scanners or payment-gated scan APIs. The scanner should approximate RepoScan-style evidence locally: metadata, activity, substance, secret-risk heuristics, token/social link extraction, and originality/similarity checks from public search signals.
 - Code scoring must be evidence-gated. A discovered GitHub URL, repo structure, multiple files, or polished docs is not enough for `Code: 8+`. Reserve 8+ for repos with directly checked real code plus tests/CI or equivalent verification and organic history that clearly predates the token launch. Fresh same-day or launch-week repos normally score 2-5, or 5-6 only if there is meaningful inspected code and some verification; they should not jump to 8+ because Bankr/source recovery found the repo.
 - GitHub/source attribution must stay bound to first-party evidence. Do not substitute a famous or same-name adjacent repo for the repo linked by the token/site/docs/X/Bankr source. Stars, forks, commit history, org reputation, and maintainer claims must come from the exact linked repo/org unless the official project explicitly says the linked repo depends on or is owned by that upstream. Mentioning compatibility with Hermes, Nous, OpenClaude, MCP, x402, Base, or gitlawb is ecosystem context, not proof of ownership, endorsement, employment, or official token status.

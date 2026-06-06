@@ -106,7 +106,8 @@ Before final output, preserve the exact Bankr launch fields:
 - If deployer and fee recipient differ, do not call the launch `self-launched` unless a checked first-party source explicitly proves deployer control by the project/person.
 - If the only official/source evidence is a product tweet, app announcement, website, docs, GitHub, or fee-recipient routing, provenance remains `please bro` or `pre-endorsement speculation`.
 - If exact-token acknowledgement exists but deployer control remains unproven, use `community-launched + endorsed`, not `self-launched`.
-- Never write `Fee-claim status: likely claimed`; use `claimed` only with direct claim proof.
+- Never write `Fee-claim status: likely claimed`; use `claimed` only with direct claim proof. A founder CA post, social confirmation, or Bankr community appearance proves endorsement/context only, not fee claiming.
+- Source lines must preserve actual URLs/handles. Do not replace `Website/docs`, `X/social`, or `GitHub/code` with empty markdown labels such as `(Official)` or `(Active repo)`.
 
 ## Bankr Token Page / Please Bro Check
 
