@@ -319,13 +319,17 @@ When the input is a GitHub org/repo URL with no token contract, run this sequenc
 
 Built-in repo scanner:
 
-- Always use Scoutr's local/public-source repo scanner for GitHub/code analysis. It should be as close as practical to a RepoScan-style review without relying on a paid scanner or private similarity index.
+- Always use Scoutr's local/public-source repo scanner for GitHub/code analysis, except when a CA-specific fast path above explicitly overrides it. It should be as close as practical to a RepoScan-style review without relying on a paid scanner or private similarity index.
 - Collect repo metadata via GitHub pages/API/search when available: creation date, pushed date, stars, forks, license, topics, default branch, owner profile, fork status, homepage, primary language, open issues, release/tag presence, commit count when cheaply available, contributor count when cheaply available, and last commit summary when available.
 - Inspect top-level repo material only under the latency guard: README, package/config files, `.env.example`, docs/deploy/contracts directories when listed, CI workflow names, test directories, examples, and deployment/address files. Do not recursively crawl large repos by default.
 - Run static text heuristics over visible filenames/content: contract addresses, tickers/cashtags, chain IDs, Bankr/Clanker/Virtuals/Dexscreener/Basescan links, website/docs/X/Farcaster/Telegram/Discord links, package names, suspicious secret keywords, private-key/env examples, deploy scripts, test presence, generated-template markers, and copied-fork indicators. Never print secrets; report only safe context such as `potential secret-risk pattern in .env.example`.
 - Approximate originality/similarity with cheap public checks: exact repo/name searches, exact distinctive README/package phrase searches, GitHub code/search snippets when available, fork/parent metadata, same-file-name/package-name collisions, and whether the repo appears to be a sample/template/fork. Mark this as `similarity: approximate`; do not claim private-index coverage.
 - Score the scanner explicitly: `Repo scan score: <0-10>` based on repo age/activity, code substance, tests/CI/docs, secret risk, originality approximation, product/token linkage, and provenance consistency.
 - Treat repo-scan evidence as Code/Product evidence only. It does not replace attached-token discovery, Bankr launch provenance, social checks, holder/liquidity checks, or the final Scoutr verdict.
+
+Fast-path exception:
+
+- If a CA-specific regression block already supplies exact first-party GitHub/source anchors plus the allowed compact steps, do not invoke the full built-in repo scanner. Reuse the cited anchors, optionally confirm one or two repo timestamps, and return.
 
 Step budget for GitHub-first mode:
 
