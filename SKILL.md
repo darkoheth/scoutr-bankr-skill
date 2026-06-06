@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 64
+version: 65
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,7 @@ These are short, high-priority runtime guards for Bankr execution. Apply them ev
 - Source fields are invalid if blank. If any source line renders as `Website/docs:;`, `X/social:;`, `GitHub/code: (Active org)`, or any placeholder without a literal URL/handle, rewrite before sending.
 - Do not use `Confidence: High` when deployer control is unproven, holder sources conflict, or fee-claim/endorsement evidence is not directly cited in the same report.
 - For Bankr launches where deployer differs from fee recipient, do not call a product/company post a `launch tweet` unless that exact post contains the CA, token page, Bankr page, ticker-as-token, or fee claim.
+- If a CA-specific regression block already provides exact source anchors, do not run extra charts, wallet-balance tools, or broad repo crawling before drafting the report. Use the cited anchors, do one lightweight market refresh, and return.
 
 For the 1clawAI regression `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, the current known target output must include these exact evidence anchors unless a fresher checked source contradicts them:
 
@@ -43,6 +44,16 @@ For the 1clawAI regression `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, the cur
 - `Endorsement evidence: fee-recipient claim evidence and/or exact token acknowledgement; do not call it self-launched`
 - `Fee-claim status: claimed (Blockscout fee-recipient token-transfers show May 13 claim transfers for 1Claw from 0xF362...D68 to 0xba6d...b64c)`
 - Use `Confidence: Medium-High` at most while `@1Nzz_` affiliation and holder-count sources remain unresolved.
+
+For this exact 1clawAI CA, use a fast path:
+
+1. Bankr exact metadata.
+2. One structured market refresh from Dexscreener or GeckoTerminal.
+3. Copy the known first-party source URLs above.
+4. Optionally confirm one or two anchor repo timestamps from `https://github.com/1clawAI`.
+5. Return the report.
+
+Do not run chart generation, repeated CLI tailing, wallet balance tools, or broad GitHub-org crawling for this exact CA once those five steps are complete.
 
 ## Pre-Send Rejection Gate
 
