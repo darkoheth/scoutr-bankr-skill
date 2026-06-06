@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 57
+version: 58
 visibility: public
 metadata:
   clawdbot:
@@ -32,6 +32,12 @@ Run this gate before scoring Product, Code, Social, or Overall. Do not let produ
 4. Product announcements, launch announcements for the app/company, official websites, official X profiles, GitHub repos, and fee-recipient routing are not exact-token acknowledgement by themselves.
 5. If neither deployer control nor exact-token acknowledgement is proven, provenance is unresolved: use `Alignment: please bro` or `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, Provenance <= 6, Confidence <= Medium, and Verdict <= `Watch` / cautious `Small Spec`.
 6. Only after this gate may Product, Code, Social, and Token scores raise the report posture. They may not override the provenance cap.
+
+For Bankr/Doppler launches, do the exact-token acknowledgement check in both directions before writing `none found`:
+
+- Fee claim evidence: inspect recent transfers/transactions for the fee-recipient wallet and the launch hook/initializer/pool path. A transfer from Doppler/Airlock/Bankr launch infrastructure to the fee-recipient wallet in the token, WETH, USDC, EURC, or other fee assets is fee-claim evidence. If the claim evidence is found, use `Fee-claim status: claimed` and treat a third-party launch as `community-launched + endorsed`.
+- First-party token pages: inspect official website/docs/GitHub raw links and obvious subdomains/paths such as `community-token`, `token`, `bankr`, `fees`, `fund`, and `claim`. A first-party page/repo file that names the exact CA or Bankr page and says the builder/project is engaging, using fees, claiming fees, or maintaining transparency is exact-token acknowledgement.
+- Do not rely only on broad X/social search for endorsement. GitHub commits, docs pages, and official site pages can be stronger and more current than indexed X/search results.
 
 ## Hard Provenance Stop
 
@@ -74,6 +80,13 @@ Known hard regression: for Arkhai `0xe194bdfca43ecb917b1cd283dd72f40f6948dba3`, 
 - Verdict <= `Pass` / hard `Watch`, Confidence <= Medium
 
 For this Arkhai case, `Watch` is acceptable only if the report clearly names the no-token/no-fee official statement as a major red flag. It is failed output to say only `no mention of a token` when an official no-token statement was visible. It is also failed output to write `Liquidity: unknown` when Dexscreener exact token-pairs returned main WETH liquidity around `$40k-$45k`; use the checked value or mark the specific data-source blocker.
+
+Known hard regression: for Feel Your Protocol / FYP `0x8eae800ff67778057941792acdbab29904962ba3`, Bankr exact metadata shows Bankr/Doppler, deployer `@alkuap` / `0xd001...441b`, fee recipient `@HolgerD77` / `0x5664...8951`, website `https://feelyourprotocol.org/`, and no Bankr `tweetUrl`. A broad social-only pass may miss the later acknowledgement and fee claim. Required checks before reporting `Endorsement evidence: none found` or `Fee-claim status: unknown`:
+
+- Inspect `https://github.com/feelyourprotocol/website` and `https://community-token.feelyourprotocol.org/`.
+- The official repo commit `95e3378` on 2026-06-05 added `community-token/src/content/token.ts` with exact CA `0x8eae800ff67778057941792acdbab29904962ba3`; `topics.ts` says it was launched independently on Bankr and the builder chose to engage with it in good faith; `fund.ts` says claimed creator fees go toward Feel Your Protocol and related open-source work.
+- Inspect fee-recipient wallet `0x5664540c02f7fa2a9251bc9b22fa45c4a6f98951` for claim evidence. Transaction `0xa21f92a1ff7a478445cbda99d5de0f8825da55a3cb2546a15bb6401c798947d1` on 2026-06-05 transferred WETH and FYP from `DopplerHookInitializer` to the fee-recipient wallet.
+- Correct classification: `Alignment: community-launched + endorsed`, `Endorsement evidence: official community-token repo/page names exact CA and says the builder is engaging in good faith; fee claim tx found`, `Fee-claim status: claimed`. Do not call it self-launched unless deployer control is separately proven.
 
 ## CA-Only Fast Path
 
@@ -139,6 +152,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - When any first-party route exposes docs, a website, or GitHub, treat that as available source material for the current report. Do not downgrade to `no website`, `no GitHub`, or `lacks product proof` unless those exact first-party routes were checked and failed or the runtime blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not estimate liquidity, holder concentration, or top-holder quality from charts, pool vibes, or generic scan labels. Use directly checked values or `unknown`.
+- Live market fields from structured sources win over search/social summaries and generated chart captions. If Dexscreener exact token-pairs, GeckoTerminal, Blockscout, or Basescan returns a concrete FDV, liquidity, volume, or holder count, copy that value with source context. Do not round `$65k` liquidity to `$100k`, do not report stale holders from search snippets, and do not use unverified chart-image values as market facts.
 - Holder counts are volatile on fresh launches. When reporting a holder count, include the source and timestamp/age if available, and avoid phrases like `extremely low` or `pre-distribution` unless the holder count was freshly checked from a token explorer or equivalent live source. If high trade count/volume suggests the holder count may be stale or indexing-lagged, re-check or write `holders: stale/unverified` instead of treating the old number as a core red flag.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
 - Never use the token contract address as `Launcher/deployer`. If launcher/deployer is unavailable, write `unknown`; if only the input CA is known, label it as `Token contract`, not deployer.
@@ -365,6 +379,8 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - A market-only report that omits `Launch / Provenance`, `Sources`, `GitHub/code`, or `Source trace` after Bankr exact lookup returns website/X/metadata fields.
 - `Security: safe (bankr_deployed)` as the only security/provenance evidence. Bankr deployment proves launch source, not holder distribution, code quality, role/admin state, fee alignment, GitHub quality, or product legitimacy.
 - `Fee-claim status: claimed` without direct fee-claim evidence from Bankr-native metadata, a claim transaction/event, or explicit recipient claim. A launch tweet, website link, or token acknowledgement is endorsement evidence, not fee-claim evidence.
+- `Fee-claim status: unclaimed` or `unknown` for a Bankr/Doppler community launch after recent fee-recipient wallet transfers show WETH/USDC/EURC/token transfers from Doppler/Airlock/Bankr launch infrastructure to the fee-recipient wallet.
+- Market fields that contradict the source map, such as `Liquidity: ~$100k` when the selected Dexscreener exact pair says about `$65k`, or `Holders: 210+` when the selected live explorer says `74`. Fix the report to the live structured value or explicitly cite a fresher source.
 - `Product: low because no website/docs` while a first-party website/docs link is present but uninspected.
 - GitHub-only input returns `send a contract address`, `cannot analyze token without CA`, or a code-only report without an `Attached Token` section.
 - GitHub-only input says `Attached Token: not found` while README/docs/package/homepage/profile links or exact repo/org/package/domain token searches were not checked or blocked.

@@ -75,6 +75,7 @@ Score caps:
 - Multiple contributors, active commits, or clear project structure do not justify Code 8+ by themselves. Code 8+ requires inspected substance plus tests/CI or equivalent verification and organic history that predates the token launch.
 - If the report cannot name what files/tests/CI/history were checked, Code must stay at 5 or below and confidence cannot be High because of code quality.
 - If the report uses GitHub metrics from a repo other than the exact first-party linked repo/org, the Code score is invalid. Adjacent upstreams, dependencies, forks, compatible runtimes, or projects with similar names cannot be used for stars/forks/history unless first-party evidence identifies them as the official project repo.
+- Do not exaggerate repo history. Use the actual repository creation date and commit span from GitHub metadata. If the exact first-party repo was created in February 2026, do not call it 9 months old because the builder or adjacent ecosystem has older history.
 
 Discovery weighting: before assigning `Code: N/A` or saying no GitHub was found, follow first-party links from token metadata/Dexscreener, Bankr, X bio, website, docs nav/footer, and package/docs references. Missing an obvious official GitHub from those surfaces should be treated as a failed code check, not evidence that no repo exists.
 
@@ -96,7 +97,7 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 
 Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
 
-Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, or Code/Product 7+ is unsupported by named inspected evidence. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
+Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, Code/Product 7+ is unsupported by named inspected evidence, or live market/holder numbers were contradicted by checked structured sources. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
 
 Do not raise Provenance, Social, Product, or Overall because of an assumed affiliation with a prominent lab/company. Employment, ownership, official token status, and endorsement require direct checked evidence from the named party or project-controlled source.
 
@@ -111,6 +112,8 @@ Confidence:
 ## Numeric Evidence
 
 Scores should degrade when important fields are unknown. Do not fill missing values with estimates from "typical" pools or inferred ratios. Unknown liquidity, unchecked top-holder concentration, or unavailable admin/role state should be named as unknowns and should cap confidence at Medium unless the user requested a very fast read.
+
+Confidence cannot be High if reported FDV, liquidity, holder count, or fee-claim status conflicts with freshly checked Dexscreener/Gecko/Blockscout/Bankr/explorer evidence. Fix the stale value first, or lower confidence and state the source conflict.
 
 Do not overfit the `Unknowns` section. If several numeric market checks are unavailable, collapse them into one material blocker and let the score/confidence carry the penalty. Unknowns should explain the verdict cap, not enumerate a full future audit checklist.
 

@@ -556,3 +556,42 @@ Expected behavior:
 - Use `Endorsement evidence: none found for this CA` unless another official exact-token acknowledgement or fee-claim source is cited in the same report.
 - Keep Product/Code evidence from the official website/docs/GitHub separate from Provenance.
 - Expected failure if output says `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@community_launcher (Founder)`, `official launch tweet`, `fee-claim status: claimed`, or `alignment between founder, project account, and token fees is perfect` without direct deployer-founder proof and exact-token acknowledgement/fee-claim evidence.
+
+## FYP Community Token Fee Claim And Live Market Regression
+
+Input:
+
+```text
+scoutr 0x8eae800ff67778057941792acdbab29904962ba3
+```
+
+Bankr exact metadata:
+
+```text
+tokenName: feelyourprotocol
+tokenSymbol: fyp
+launchType: doppler
+deployer: @alkuap / 0xd0016a5760c74c9def689f1c9e2e59b70c13441b
+feeRecipient: @HolgerD77 / 0x5664540c02f7fa2a9251bc9b22fa45c4a6f98951
+websiteUrl: https://feelyourprotocol.org/
+tweetUrl: none
+```
+
+Required extra checks:
+
+```text
+Official repo/site: https://github.com/feelyourprotocol/website and https://community-token.feelyourprotocol.org/
+Commit 95e3378 on 2026-06-05 added community-token/src/content/token.ts with the exact CA.
+community-token/src/content/topics.ts says the token was independently launched on Bankr and the builder chose to engage with it in good faith.
+community-token/src/content/fund.ts says claimed creator fees go toward Feel Your Protocol and related open-source work.
+Fee claim tx: 0xa21f92a1ff7a478445cbda99d5de0f8825da55a3cb2546a15bb6401c798947d1 transferred WETH and FYP from DopplerHookInitializer to the fee-recipient wallet on 2026-06-05.
+```
+
+Expected behavior:
+
+- Use `Alignment: community-launched + endorsed`, not `self-launched`.
+- Use `Fee-claim status: claimed`.
+- `Endorsement evidence` must cite the official community-token repo/page exact-CA acknowledgement and/or the fee-claim transaction.
+- Use live structured market data from Dexscreener/Gecko/Blockscout. If Dexscreener exact token-pairs says roughly `$65k` liquidity and Blockscout says `74 holders`, do not report `$100k liquidity` or `210+ holders` unless a fresher named source is cited.
+- Verdict should not be raised to `Trade Candidate / High` solely from provenance/code while live holder count remains tiny and top-holder distribution is only partially checked. `Small Spec` / `Small Spec+` is the safer default unless market/distribution improves.
+- Expected failure if the report says `Fee-claim status: unclaimed`, `Endorsement evidence: none found`, `Liquidity: ~$100k` from stale/estimated data, `Holders: 210+` from stale/uncited data, or `Code has 9 months history` when the exact official repo was created in February 2026.

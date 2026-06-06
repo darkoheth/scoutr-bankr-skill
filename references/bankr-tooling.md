@@ -123,6 +123,8 @@ Capture:
 - Fee recipient address/account.
 - Whether launcher/deployer and fee recipient match, and whether that launcher is the official project/person or a community/third-party account.
 - Whether the fee recipient/project has claimed fees, posted the CA, linked the token page, or otherwise clearly acknowledged the token.
+- Fee-claim evidence from on-chain routes when Bankr metadata does not expose a claim status. Inspect recent fee-recipient wallet transfers/transactions and launch infrastructure such as Doppler/Airlock hook initializer, pool manager, or fee collector transfers. A claim can arrive as WETH, USDC, EURC, the launched token, or another routed fee asset.
+- First-party website/docs/GitHub token pages. Search official repos/sites for exact CA, Bankr page, `community-token`, `token`, `fees`, `fund`, `claim`, and similar paths before saying there is no exact-token acknowledgement.
 - Whether the official fee recipient/project account replied to or quoted a post containing the exact CA, Bankr page, or ticker-as-token with language accepting support, thanking supporters, or saying it will use token fees. Count this as exact-token soft endorsement, not fee claiming.
 - Whether fee-recipient linkage is only routing/context. A fee recipient handle/wallet, project website, or official social link is not endorsement by itself.
 - Fee-claim status as its own field: claimed, unclaimed, unknown, or not applicable.
@@ -159,7 +161,9 @@ Fee-claim weighting:
 - Official fee-context replies/quotes can satisfy clear acknowledgement when the parent/quoted post contains the exact CA, Bankr page, or ticker-as-token. This is often phrased indirectly, such as thanking supporters or saying the project will use the fees. Report the parent/quote context so the reader can see why it counts.
 - If launcher/deployer and fee recipient differ, fee claiming is strong endorsement evidence because the recipient is actively accepting the token's fee stream.
 - If launcher/deployer and fee recipient differ and fees are unclaimed, keep the launch unendorsed unless the recipient has posted the CA, linked the token page, or clearly acknowledged the token from an official account.
-- Only mark `Fee-claim status: claimed` with direct claim evidence from Bankr metadata, a claim transaction/event, or an explicit recipient statement. Do not infer fee claiming from a launch tweet, website link, CA acknowledgement, or Agent Hour booking.
+- Only mark `Fee-claim status: claimed` with direct claim evidence from Bankr metadata, a claim transaction/event, on-chain fee-recipient transfer from launch infrastructure, or an explicit recipient statement. Do not infer fee claiming from a launch tweet, website link, CA acknowledgement, or Agent Hour booking.
+
+Exact-token acknowledgement can come from X, but X is not the only source. A first-party repo/docs/site page that names the exact CA or Bankr page and explains token/fee handling counts as official acknowledgement when it is controlled by the target project/person. For third-party/community launches, combine this with fee-claim evidence when present and classify as `community-launched + endorsed`, not `self-launched`.
 
 Project/event evidence weighting:
 
