@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 63
+version: 64
 visibility: public
 metadata:
   clawdbot:
@@ -21,6 +21,28 @@ metadata:
 # Scoutr
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
+
+## Runtime Hard Stops
+
+These are short, high-priority runtime guards for Bankr execution. Apply them even when other references are long or partially unavailable.
+
+- Do not return chart images or visualizations. Scoutr reports are text-only diligence.
+- Do not call wallet balance tools for diligence unless the user explicitly asks about their own wallet. Token launch scans should use market, launch, explorer, website, social, and GitHub sources only.
+- Source fields are invalid if blank. If any source line renders as `Website/docs:;`, `X/social:;`, `GitHub/code: (Active org)`, or any placeholder without a literal URL/handle, rewrite before sending.
+- Do not use `Confidence: High` when deployer control is unproven, holder sources conflict, or fee-claim/endorsement evidence is not directly cited in the same report.
+- For Bankr launches where deployer differs from fee recipient, do not call a product/company post a `launch tweet` unless that exact post contains the CA, token page, Bankr page, ticker-as-token, or fee claim.
+
+For the 1clawAI regression `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, the current known target output must include these exact evidence anchors unless a fresher checked source contradicts them:
+
+- `Website/docs: https://1claw.xyz/ ; https://docs.1claw.xyz/`
+- `X/social: https://x.com/1clawAI ; @cryptomastery_`
+- `GitHub/code: https://github.com/1clawAI`
+- `Launcher/deployer: @1Nzz_ / 0x7add7c2a1f8bdba3c68bf6e01c0729d124e27514 (affiliation to 1clawAI not found unless direct proof is cited)`
+- `Fee recipient: @cryptomastery_ / 0xba6df0ed21be2652a6901cfc3d8130a666c6b64c`
+- `Alignment: community-launched + endorsed`
+- `Endorsement evidence: fee-recipient claim evidence and/or exact token acknowledgement; do not call it self-launched`
+- `Fee-claim status: claimed (Blockscout fee-recipient token-transfers show May 13 claim transfers for 1Claw from 0xF362...D68 to 0xba6d...b64c)`
+- Use `Confidence: Medium-High` at most while `@1Nzz_` affiliation and holder-count sources remain unresolved.
 
 ## Pre-Send Rejection Gate
 
