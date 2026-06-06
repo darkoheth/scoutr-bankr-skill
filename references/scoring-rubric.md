@@ -9,6 +9,8 @@ Use 0-10 scores. Prefer integer or half-point scores. Scores are directional, no
 - 2-4: thin liquidity, high concentration, suspicious deployer, unclear ownership, fake volume, or weak trading evidence.
 - 0-1: honeypot/rug mechanics, malicious permissions, fake contract, active exploit, or impossible-to-sell reports.
 
+Market quality is an independent decision axis, not a cosmetic stat block. Strong code/product can upgrade a token only if live market structure is at least tradable. Thin liquidity, weak volume, shrinking holder interest, or clear sustained downtrend should cap the verdict at `Watch` or cautious `Small Spec` unless stronger current market/provenance offsets are cited.
+
 ## Launch Provenance
 
 - 8-10: official launch source, official deployer/fee recipient alignment, community-launched token with clear official endorsement, or clear endorsement from project/team/person via fee claim, CA post, token-page link, and matching site/social links.
@@ -64,6 +66,8 @@ For Bankr `please bro` launches, include a social-proximity note when the fee re
 
 For Bankr `please bro` launches, a strong fee-recipient GitHub can raise Code/Product scores, but should not raise Provenance above incomplete/unendorsed unless there is explicit token endorsement.
 
+Missing GitHub is not an automatic pass/fail for the token. It caps the Code score and lowers confidence in code/product claims, but the final verdict can still be strong when independent evidence from market structure, launch/provenance, working product, official site/social, and user-facing traction is strong. Do not let GitHub absence erase a strong non-code thesis; do not let founder reputation substitute for inspected code.
+
 For unendorsed `please bro` or `pre-endorsement speculation`, Code/Product should describe the likely target project when first-party evidence is found. Strong target-project code can make the token more watchable, but it must not improve Provenance or imply token endorsement. If the likely target project's GitHub is found through official site/social/search, score it under Code even when `Endorsement evidence: none found for this CA`.
 
 Age weighting: repo/org age is a major input, not trivia. Prefer evidence of sustained work over surface polish. A fresh repo can still be useful, but should not score like a project with months or years of coherent development. If a report cites GitHub/code, it should state what was checked about age/history or explicitly say age/history was not checked.
@@ -93,7 +97,9 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 - `Pass`: any hard safety failure, or overall below 4.
 - `Watch`: overall 4-5.9, confidence is low because key evidence is missing, or a Bankr token has unresolved `please bro` provenance.
 - `Small Spec`: overall 6-7.4 with no hard safety failures, but meaningful risk remains.
-- `Trade Candidate`: overall 7.5+ with at least three independent green flags and no unresolved major red flags.
+- `Trade Candidate`: overall 7.5+ with at least three independent green flags, strong current market structure, and no unresolved major red flags.
+
+Treat market trend as a veto when it is severe. A token with good product/code but tiny liquidity, low or fading volume, weak holder growth, or sustained down-only price action should normally be `Watch`, not `Trade Candidate`. Conversely, a token without public GitHub can still reach `Small Spec` or `Trade Candidate` when product proof, provenance, liquidity, volume, holder quality, and social demand are all strong enough and code is not the core claim.
 
 Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
 

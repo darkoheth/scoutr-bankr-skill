@@ -30,7 +30,8 @@ These are short, high-priority runtime guards for Bankr execution. Apply them ev
 - Do not call wallet balance tools for diligence unless the user explicitly asks about their own wallet. Token launch scans should use market, launch, explorer, website, social, and GitHub sources only.
 - Source fields are invalid if blank. If any source line renders as `Website/docs:;`, `X/social:;`, `GitHub/code: (Active org)`, or any placeholder without a literal URL/handle, rewrite before sending.
 - Do not use `Confidence: High` when deployer control is unproven, holder sources conflict, or fee-claim/endorsement evidence is not directly cited in the same report.
-- Do not use `Trade Candidate` or `Confidence: High` when GitHub/code is private, not found, not inspected, or described only from founder reputation. In that state, cap Code at 6, confidence at Medium, and explain the blocker.
+- Missing GitHub/code is a code-axis cap, not an automatic whole-report rejection. If GitHub/code is private, not found, not inspected, or described only from founder reputation, cap Code at 6 and explain the blocker; Overall can still be strong when token mechanics, market structure, provenance, product proof, and social signal independently support it.
+- Weak live market structure can cap the whole verdict even when product/code are good. If liquidity, volume, holder growth, price trend, or pool depth are poor or deteriorating, do not use `Trade Candidate` unless there are stronger current market/provenance offsets cited in the same report.
 - Do not estimate liquidity, holders, top-holder share, or volume from FDV, volume, chart shape, or pool vibes. Use the selected structured source value verbatim with the source, or write `unknown`.
 - For Bankr launches where deployer differs from fee recipient, do not call a product/company post a `launch tweet` unless that exact post contains the CA, token page, Bankr page, ticker-as-token, or fee claim.
 - Once the core source map is complete, stop. Do not run extra charts, wallet-balance tools, repeated CLI tails, or broad repo crawling after Bankr metadata, structured market data, first-party source links, GitHub/product inspection, and endorsement/fee-claim checks are complete or explicitly blocked.
@@ -39,12 +40,12 @@ These are short, high-priority runtime guards for Bankr execution. Apply them ev
 
 Every token report must satisfy this compact contract before sending:
 
-- Verdict and confidence must match checked evidence, not narrative quality. High confidence requires checked launch/provenance, checked structured market data, and checked code/product where those factors are scored above 6.
+- Verdict and confidence must match checked evidence, not narrative quality. High confidence requires checked launch/provenance and checked structured market data; checked code/product is required only when code/product is a major part of the bullish thesis.
 - `Sources` must contain literal URLs or handles. Empty labels, bare parentheses, and decorative source descriptions are failed output.
 - `Market` must copy FDV/MC, liquidity, 24h volume, and holder count from named structured sources. If sources conflict or are stale, say `source conflict` / `stale` and lower confidence.
 - `GitHub/code` must include a literal repo/org URL plus age/history checked, or a clear blocker such as `not found after checking website, X bio, docs/footer, and exact project search`.
 - Do not attach or embed images. No `![chart]`, no Pinata/IPFS chart links, no generated charts.
-- If any required source or market field is unchecked, cap the report at `Watch` / cautious `Small Spec` unless the missing field is immaterial and explicitly named.
+- If a major source or market field is unchecked, cap the report at `Watch` / cautious `Small Spec` unless the missing field is immaterial to the thesis and explicitly named.
 
 ## Pre-Send Rejection Gate
 
