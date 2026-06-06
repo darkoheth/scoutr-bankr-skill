@@ -97,7 +97,7 @@ Do not let the report end with GitHub as an unchecked next step when a first-par
 
 Unresolved third-party Bankr launches are a major provenance red flag. If the launcher/deployer differs from the fee recipient and no direct fee claim, CA post, token-page link, or clear acknowledgement exists, cap the verdict at `Watch` or cautious `Small Spec` even when market/social/product scores are strong.
 
-Do not return `Trade Candidate` when any of these remain true: liquidity is unknown, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, Code/Product 7+ is unsupported by named inspected evidence, or live market/holder numbers were contradicted by checked structured sources. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
+Do not return `Trade Candidate` when any of these remain true: liquidity is unknown or estimated, holder concentration/top-holder distribution was not checked, provenance alignment is inferred from routing rather than explicit control/acknowledgement, Code/Product 7+ is unsupported by named inspected evidence, or live market/holder numbers were contradicted by checked structured sources. In those cases, cap at `Watch` or `Small Spec` and make the cap visible in `My read`.
 
 Do not raise Provenance, Social, Product, or Overall because of an assumed affiliation with a prominent lab/company. Employment, ownership, official token status, and endorsement require direct checked evidence from the named party or project-controlled source.
 
@@ -115,6 +115,8 @@ Scores should degrade when important fields are unknown. Do not fill missing val
 
 Confidence cannot be High if reported FDV, liquidity, holder count, or fee-claim status conflicts with freshly checked Dexscreener/Gecko/Blockscout/Bankr/explorer evidence. Fix the stale value first, or lower confidence and state the source conflict.
 
+Confidence cannot be High for a third-party/community Bankr launch unless deployer control or exact-token acknowledgement is directly cited and fee-claim status is directly checked or explicitly non-blocking. `likely claimed`, estimated liquidity, source-field blanks, or inferred deployer identity cap confidence at Medium.
+
 Do not overfit the `Unknowns` section. If several numeric market checks are unavailable, collapse them into one material blocker and let the score/confidence carry the penalty. Unknowns should explain the verdict cap, not enumerate a full future audit checklist.
 
-Fresh-launch holder counts can lag. Do not heavily penalize a launch from an old holder snapshot when current explorer metadata or trading activity shows distribution is changing quickly. Use the freshest count with timestamp/source, and score concentration from actual top-holder distribution when available rather than holder count alone.
+Fresh-launch holder counts can lag. Do not heavily penalize a launch from an old holder snapshot when current explorer metadata or trading activity shows distribution is changing quickly. For active Bankr/Base launches, Blockscout can be stale and should not be the primary holder-count source; prefer live market/launch indexers and cite the source. Use the freshest count with timestamp/source, and score concentration from actual top-holder distribution when available rather than holder count alone.

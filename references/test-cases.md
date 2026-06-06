@@ -595,3 +595,22 @@ Expected behavior:
 - Use live structured market data from Dexscreener/Gecko/Blockscout. If Dexscreener exact token-pairs says roughly `$65k` liquidity and Blockscout says `74 holders`, do not report `$100k liquidity` or `210+ holders` unless a fresher named source is cited.
 - Verdict should not be raised to `Trade Candidate / High` solely from provenance/code while live holder count remains tiny and top-holder distribution is only partially checked. `Small Spec` / `Small Spec+` is the safer default unless market/distribution improves.
 - Expected failure if the report says `Fee-claim status: unclaimed`, `Endorsement evidence: none found`, `Liquidity: ~$100k` from stale/estimated data, `Holders: 210+` from stale/uncited data, `top holder is LP (~42%)` when fresh holder data showed PoolManager around `64.5%`, `Trade Candidate / High` while source conflicts remain, or `Code has 9 months history` when the exact official repo was created in February 2026.
+
+## HNR Holder Source And Pre-Endorsement Regression
+
+Input:
+
+```text
+scoutr 0xCB392ea4289fBFA40091126367547dBBAa0dcBa3
+```
+
+Expected classification:
+
+- Bankr / Doppler launch for HumanNotReqd (HNR).
+- Fee recipient is `@nft_leen`; deployer is a raw/unproven wallet unless a first-party source ties it directly to Leen or the project.
+- Treat as `please bro` / `pre-endorsement speculation` unless `@nft_leen`, the official project account/site/docs, a Bankr token page, or fee-claim evidence acknowledges the exact token.
+- `Fee-claim status: unclaimed` or `unknown` unless a direct claim transaction/event/source is found.
+- Product/social signal can mention `@humannotreqd` and the AI-agent Shopify commerce experiment, but product evidence alone does not create token endorsement.
+- No public GitHub/source proof found in the regression run; Code should be N/A/low unless a first-party repo is discovered and inspected.
+- Holder-count rule: Blockscout showed a stale/incorrect low count during the regression while the live holder count was around 148. Do not use Blockscout as the primary holder-count source for this active Bankr/Base token. Prefer live market/launch indexers, or write `holders: source conflict`.
+- Expected failure if the report treats Blockscout's stale holder count as the core distribution red flag, marks the launch aligned/self-launched only because `@nft_leen` is the fee recipient, says fee claim is claimed without tx/source evidence, or upgrades above `Watch` without exact-token acknowledgement plus stronger code/product proof.

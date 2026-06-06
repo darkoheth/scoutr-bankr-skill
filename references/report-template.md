@@ -127,12 +127,17 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 
 ## Evidence Discipline
 
+- Run a pre-send contradiction check before returning: if deployer/launcher differs from fee recipient and direct deployer-control proof is not cited, the report must not say `self-launched`, `official self-launch`, `direct alignment`, `founder-linked wallet`, `Provenance: 8+`, `Trade Candidate`, or `Confidence: High`.
+- Product, app, repo, founder, or company announcements are not token launch tweets unless the checked post contains or directly links the exact CA, Bankr/token page, ticker-as-token, or fee claim. Write `product tweet` / `product evidence`, not `launch tweet`, for product-only posts.
+- Fee claims require direct evidence. Never write `likely claimed`; write `claimed` only with Bankr metadata, claim tx/event, launch-infrastructure transfer to the fee-recipient wallet, or explicit recipient claim. Otherwise use `unknown` or `unclaimed` with source basis.
+- Deployer and fee-recipient fields must be copied from structured Bankr/explorer metadata. Do not substitute the token contract, pool address, holder wallet, fee-recipient wallet, or inferred founder wallet as `Launcher/deployer`.
 - Use `unknown`, `not checked`, or `not found` instead of estimating unavailable market or holder fields.
-- For holder count, include source and timestamp/age when available, especially on launches under 24h old. Do not call holders `extremely low`, `pre-distribution`, or highly concentrated from an old/stale count; re-check or write `holders: stale/unverified`.
+- For holder count, include source and timestamp/age when available, especially on launches under 24h old. On active Bankr/Base launches, do not rely on Blockscout as the primary holder-count source; prefer a live market/launch indexer and use Blockscout for tx/source/wallet evidence. Do not call holders `extremely low`, `pre-distribution`, or highly concentrated from an old/stale count; re-check or write `holders: stale/unverified` / `holders: source conflict`.
 - Keep `Unknowns` short and decision-oriented. Default to 1-3 bullets. Do not repeat Red flags or Would-change-my-mind items, and do not list every generic diligence check that could be done later.
 - If market data is unavailable across multiple fields, collapse it into one compact blocker such as `Market depth/holders unavailable from checked sources`, not separate bullets for liquidity, lock status, holder distribution, developer allocation, and taxes.
 - If product/app behavior was not inspected, state that in Product or Red flags as `product proof limited to landing/docs`; do not repeat it as a generic Unknown unless it is the main reason the verdict is capped.
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
+- Do not write liquidity ranges as estimates. A range is acceptable only if the checked source itself reports a range; otherwise copy the checked value or write `unknown`.
 - Copy live FDV, liquidity, volume, and holder count from the selected structured source. Do not replace checked values with rounded/estimated chart values; if sources conflict, cite the freshest source and lower confidence.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
 - Do not claim `launch tweet verified` from an X profile URL, project account URL, or generic social link. Only a specific checked post that mentions the token, ticker, CA, Bankr/token page, or launch can be called a launch tweet or endorsement post.
@@ -151,7 +156,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - If GitHub/code is mentioned, include a concrete age/history note or say `age/history not checked`.
 - Code scores need visible evidence. A repo URL, active commits, multiple contributors, docs, or project structure is not enough for Code 8+. Use 8+ only when inspected code substance, tests/CI or equivalent verification, and organic pre-launch history are all present. Same-day/launch-week repos normally cap at 4, or 6 if meaningful code was inspected but history/tests remain thin.
 - If Code, liquidity, holder concentration, or provenance alignment is materially unchecked, do not return High confidence or `Trade Candidate`; cap the posture and say what evidence would unlock the higher score.
-- If holder count changes materially between sources or contradicts trade activity, report the freshest source and downgrade confidence until top-holder distribution is checked.
+- If holder count changes materially between sources or contradicts trade activity, report the freshest non-stale source and downgrade confidence until top-holder distribution is checked.
 - Use Scoutr's built-in repo scanner as the GitHub/code signal. Do not call external paid repo scanners or payment-gated scan APIs.
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
 - Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.

@@ -99,6 +99,15 @@ Report social findings as evidence:
 
 If social tooling is unavailable, say so in `Unknowns` and lower confidence instead of pretending the check was completed.
 
+Before final output, preserve the exact Bankr launch fields:
+
+- `Launcher/deployer` must come from Bankr/explorer deployer metadata, not from the token CA, pool, fee-recipient wallet, holder list, or inferred founder wallet.
+- `Fee recipient` must come from Bankr fee-recipient metadata when available.
+- If deployer and fee recipient differ, do not call the launch `self-launched` unless a checked first-party source explicitly proves deployer control by the project/person.
+- If the only official/source evidence is a product tweet, app announcement, website, docs, GitHub, or fee-recipient routing, provenance remains `please bro` or `pre-endorsement speculation`.
+- If exact-token acknowledgement exists but deployer control remains unproven, use `community-launched + endorsed`, not `self-launched`.
+- Never write `Fee-claim status: likely claimed`; use `claimed` only with direct claim proof.
+
 ## Bankr Token Page / Please Bro Check
 
 Many scanned tokens will be Bankr launches. When the token appears to be from Bankr, inspect the Bankr token page before the verdict.

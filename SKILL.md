@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 58
+version: 59
 visibility: public
 metadata:
   clawdbot:
@@ -21,6 +21,18 @@ metadata:
 # Scoutr
 
 Scoutr is a read-only crypto launch diligence workflow. It turns messy launch inputs into a concise verdict grounded in token mechanics, social signal, GitHub/code quality, and product proof.
+
+## Pre-Send Rejection Gate
+
+Before returning the report, run this rejection gate. If any condition matches, rewrite the report instead of sending it.
+
+1. If Bankr exact metadata has `deployer` different from `feeRecipient`, reject `Alignment: self-launched`, `official self-launch`, `direct self-launch`, `verified self-launch`, `founder-linked wallet`, `official project lead`, `alignment is perfect`, `Provenance: 8+`, `Trade Candidate`, and `Confidence: High` unless the same report cites first-party proof tying the exact deployer handle/wallet to the official project/person.
+2. If a Bankr `tweetUrl` or founder post is only a product/app/repo/company announcement, reject any wording that calls it a `launch tweet`, `token endorsement`, `official endorsement`, `explicitly linking the launch`, or `self-launch`. Product tweets are Product/Social evidence only unless they mention or link the exact CA, Bankr/token page, ticker-as-token, or fee claim.
+3. Reject `Fee-claim status: claimed`, `likely claimed`, or any implied fee claim unless the report cites direct evidence: Bankr metadata, a claim transaction/event, an on-chain transfer from launch infrastructure to the fee-recipient wallet, or an explicit recipient statement saying fees were claimed. If no direct evidence exists, use `unknown` or `unclaimed` only with the checked-source basis.
+4. Reject blank source lines. `Website/docs:`, `X/social:`, `GitHub/code:`, `Launch tweet:`, or equivalent fields must contain a URL/handle, `not found after checking <specific sources>`, or `unavailable: <blocker>`.
+5. Reject liquidity, holder concentration, and top-holder quality that are estimated from volume, FDV, chart images, or vibes. Use directly checked structured values or `unknown`.
+6. Reject source-map corruption. Do not put the token contract, pool address, random holder wallet, fee-recipient wallet, or inferred founder wallet in `Launcher/deployer` unless Bankr/explorer explicitly says it is the launcher/deployer. Copy Bankr exact deployer and fee recipient verbatim when available.
+7. If `Endorsement evidence: none found for this CA`, reject `Alignment: community-launched + endorsed`, `Trade Candidate`, and `Confidence: High` for third-party Bankr launches.
 
 ## Provenance Decision Gate
 
@@ -50,6 +62,30 @@ When Bankr exact metadata shows deployer/launcher differs from fee recipient/pro
 - Forbidden in this unresolved state: `self-launched`, `aligned`, `official self-launch`, `official token`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, `direct alignment`, `founder-linked wallet`, `official project lead`, or `deployer and fee recipient are verified project handles`.
 
 A raw Bankr deployer wallet is a different/unproven launcher unless directly tied to the fee recipient/project. If Bankr exact metadata has a raw deployer wallet, a fee-recipient X account, and a `tweetUrl` that is only a product/app/project announcement, the launch remains unresolved. Do not write `Alignment: aligned`, `Provenance: 8+`, `official endorsement`, or `launch tweet from founder` unless that tweet/source contains exact-token context.
+
+Known hard regression: for Offset `0x4db8a6e3e5650fb75133c8ea8f4f9b8aa8478ba3`, Bankr exact metadata has raw deployer `0xf7523b7e7ff6e4878caff14a824857df00844b7e`, fee recipient `@offsetxyz`, and product tweet `https://x.com/vicpolisetty/status/2062287502140969395`. The tweet discusses the Offset product but does not acknowledge the token unless the checked text contains the CA, Bankr/token page, ticker-as-token, or fee claim. Required output unless new exact-token evidence is cited:
+
+- `Launcher/deployer: 0xf752...4b7e (affiliation to Offset not found)`
+- `Fee recipient: @offsetxyz`
+- `Alignment: please bro` or `Alignment: pre-endorsement speculation`
+- `Endorsement evidence: none found for this CA`
+- Provenance <= 6, Confidence <= Medium, Verdict <= `Watch` / cautious `Small Spec`
+
+For Offset, these are failed output without direct deployer-control proof and exact-token acknowledgement: `official self-launch`, `Alignment: self-launched`, `Founder @vicpolisetty posted the launch tweet`, `Endorsement evidence: launch tweet from founder`, `Launcher/deployer: 0xf752... (Victor @vicpolisetty)`, `Provenance: 8+`, `direct alignment`, or `Trade Candidate`.
+
+Known hard regression: for Sparkleware `0x842e863b9a7b3d0e325daf3888a4e181641ccba3`, Bankr exact metadata lists deployer `@callmexenom` and fee recipient `@sparklewarefun`. Checked profile evidence did not prove `@callmexenom` controls Sparkleware/Aeon. Official fee-context acknowledgement by `@sparklewarefun` can make it `community-launched + endorsed`, but not `self-launched` unless deployer control is separately proven. Required behavior:
+
+- Before exact-token acknowledgement: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)`, `Alignment: please bro` or `pre-endorsement speculation`, `Endorsement evidence: none found for this CA`.
+- After exact-token acknowledgement from `@sparklewarefun` in direct context of CA `0x842e863b9a7b3d0e325daf3888a4e181641ccba3`: `Alignment: community-launched + endorsed`, `Endorsement evidence: official @sparklewarefun fee-context acknowledgement for exact CA`, `Fee-claim status: unknown/unclaimed` unless a direct claim tx/event/source is cited.
+
+For Sparkleware, these are failed output unless the same line cites direct deployer-control proof and direct fee-claim proof: `Alignment: self-launched`, `Verified self-launch`, `Provenance: 9+`, `Trade Candidate`, `Confidence: High`, `deployer and fee recipient are official project handles`, `Fee-claim status: claimed`, or `healthy retail spread` without checked distribution.
+
+Known hard regression: for 1clawAI `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, Bankr exact metadata lists deployer `@1Nzz_` / `0x7add7c2a1f8bdba3c68bf6e01c0729d124e27514` and fee recipient `@cryptomastery_` / `0xba6df0ed21be2652a6901cfc3d8130a666c6b64c`. A strong GitHub/code footprint and official fee recipient are not enough to call it self-launched. Required behavior:
+
+- If direct first-party proof ties `@1Nzz_` to the official 1clawAI team/founder and the token is acknowledged, state the proof in `Launcher/deployer` or `Endorsement evidence`.
+- If that proof is not cited, use `Alignment: please bro` / `pre-endorsement speculation` or `community-launched + endorsed` only when the exact token is acknowledged by an official source.
+- Never write `Fee-claim status: likely claimed`. Use `claimed` only with direct fee-claim proof, otherwise `unknown` or `unclaimed`.
+- Do not estimate liquidity from volume/MC depth; copy a checked structured liquidity value or write `unknown`.
 
 Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
 
@@ -429,6 +465,7 @@ See `references/safety-rules.md` for the full safety checklist.
 
 2. Inspect token and market mechanics.
    - Liquidity, volume, FDV/market cap, pair age, holder count, top-holder concentration, verified source, proxy/admin/mint controls, tax/honeypot warnings when relevant.
+   - For active Bankr/Base launches, do not use Blockscout as the primary holder-count source. Prefer Dexscreener, GeckoTerminal, Bankr/launch-platform data, BaseScan, or another live market/indexer source for holder count; keep Blockscout mainly for contract source, transactions, wallet evidence, and fee-claim tracing. If holder sources disagree, cite the freshest holder source or write `holders: source conflict`, and do not let a stale Blockscout count drive the verdict.
    - Do not invent or estimate numeric market fields. If liquidity, holders, top-holder concentration, taxes, or role state are not directly available from a source/tool result, write `unknown`; add one compact Unknowns blocker only when the missing data materially caps the verdict.
    - Do not use phrases like `smart money accumulation`, `verified source`, `healthy holder distribution`, or `low slippage` unless the supporting source/tool result was actually inspected.
    - For Bankr tokens, compare launcher/deployer vs fee recipient/project. If the launcher is a community or third-party account and the fee recipient/project has not clearly claimed or endorsed the token, tag it as a `please bro` launch risk. If the launcher is a community or third-party account and the fee recipient/project has clearly acknowledged the token, tag it as `community-launched + endorsed`, not self-launched. If Bankr only shows a raw deployer wallet and a different fee-recipient wallet/X account, do not infer they are the same party. If Bankr shows a deployer X account different from the fee recipient, inspect the deployer profile/bio/recent visible activity and first-party project sources for explicit affiliation; if affiliation is absent or only generic crypto/ecosystem interaction is visible, treat the deployer as unproven. If the official project/person directly launched it, tag `self-launched`. If launcher/deployer and fee recipient appear to be the same controlled official party but direct self-launch evidence is unclear, tag `aligned`. Do not require fee claiming as endorsement for self-launched or aligned cases.
