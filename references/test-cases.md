@@ -174,6 +174,9 @@ Expected classification:
 - Expected behavior: inspect `https://github.com/1clawAI` in the same report, include org/repo age/history, and score Code from repo evidence. If blocked, state `GitHub inspection unavailable` with the blocker and URL.
 - If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
 - Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
+- Expected failure if output says `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev` without a source URL proving that deployer affiliation.
+- Expected failure if output says `Trade Candidate` or `Confidence: High` while liquidity, fee-claim history, or deployer-control proof are unknown or uncited.
+- Expected failure if source fields use placeholder labels such as `(Verified product site)`, `(Official project)`, `(Founder)`, or `(Active org)` without literal URLs/handles.
 - Expected failure if output uses slash-combined `Alignment: self-launched/aligned` instead of choosing one exact label.
 - Expected failure if output says `Fee-Claim Status: Claimed` without direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
 - Expected failure if the token CA is copied into `Launcher/deployer` as though it were the deployer.

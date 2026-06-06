@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 61
+version: 62
 visibility: public
 metadata:
   clawdbot:
@@ -88,11 +88,14 @@ Latency guard for Sparkleware: do not loop trying to prove `@callmexenom` affili
 
 Known hard regression: for 1clawAI `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, Bankr exact metadata lists deployer `@1Nzz_` / `0x7add7c2a1f8bdba3c68bf6e01c0729d124e27514` and fee recipient `@cryptomastery_` / `0xba6df0ed21be2652a6901cfc3d8130a666c6b64c`. A strong GitHub/code footprint and official fee recipient are not enough to call it self-launched. Required behavior:
 
-- If direct first-party proof ties `@1Nzz_` to the official 1clawAI team/founder and the token is acknowledged, state the proof in `Launcher/deployer` or `Endorsement evidence`.
-- If that proof is not cited, use `Alignment: please bro` / `pre-endorsement speculation` or `community-launched + endorsed` only when the exact token is acknowledged by an official source.
+- If direct first-party proof ties `@1Nzz_` to the official 1clawAI team/founder and the token is acknowledged, state the proof URL/source in `Launcher/deployer` or `Endorsement evidence`.
+- If that proof URL/source is not cited, use `Launcher/deployer: @1Nzz_ (affiliation to 1clawAI not found)` and never write `Verified 1claw team/dev`.
+- If founder `@cryptomastery_` or official `@1clawAI` posted the exact CA, use `Alignment: community-launched + endorsed`, not `self-launched`, unless deployer-control proof is separately cited.
 - Never write `Fee-claim status: likely claimed`. Use `claimed` only with direct fee-claim proof, otherwise `unknown` or `unclaimed`.
 - Do not estimate liquidity from volume/MC depth; copy a checked structured liquidity value or write `unknown`.
 - A founder CA post or social confirmation is endorsement evidence only; it is not fee-claim evidence. For this case, `Fee-claim status: claimed (Verified via Bankr metadata and social confirmation)` is failed output unless the report names the Bankr claim field, tx hash/event, launch-infrastructure transfer, or explicit statement saying fees were claimed.
+- If liquidity is `unknown` or fee-claim history is `unknown`, `Trade Candidate` and `Confidence: High` are failed output for this regression. Cap at `Small Spec` / Medium unless all major fields are directly checked and cited.
+- Failed output for this exact CA includes: `Alignment: self-launched`, `Self-launched by founder @cryptomastery_`, `alignment is perfect`, `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev`, `Official launch tweet from founder ... token integrated into Bankr as a Skill`, `Trade Candidate`, `Confidence: High`, source lines with `(Verified product site...)` but no URL, or `GitHub/code: (Active org...)` without the GitHub URL.
 
 Latency guard for 1clawAI: do not loop trying to prove `@1Nzz_` identity. If proof is not found quickly, keep deployer unproven and cap provenance unless exact-token acknowledgement is cited. Strong GitHub/code can improve Code/Product, not launch alignment.
 
