@@ -117,6 +117,8 @@ Confidence cannot be High if reported FDV, liquidity, holder count, or fee-claim
 
 Confidence cannot be High for a third-party/community Bankr launch unless deployer control or exact-token acknowledgement is directly cited and fee-claim status is directly checked or explicitly non-blocking. `likely claimed`, estimated liquidity, source-field blanks, or inferred deployer identity cap confidence at Medium.
 
+Do not spend extra latency trying to unlock a higher confidence label after the core source map is complete. Missing deployer-control proof, exact-token acknowledgement, fee-claim proof, liquidity, or holder concentration should lower the score/confidence and return the report.
+
 Do not overfit the `Unknowns` section. If several numeric market checks are unavailable, collapse them into one material blocker and let the score/confidence carry the penalty. Unknowns should explain the verdict cap, not enumerate a full future audit checklist.
 
 Fresh-launch holder counts can lag. Do not heavily penalize a launch from an old holder snapshot when current explorer metadata or trading activity shows distribution is changing quickly. For active Bankr/Base launches, Blockscout can be stale and should not be the primary holder-count source; prefer live market/launch indexers and cite the source. Use the freshest count with timestamp/source, and score concentration from actual top-holder distribution when available rather than holder count alone.

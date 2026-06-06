@@ -128,6 +128,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 ## Evidence Discipline
 
 - Run a pre-send contradiction check before returning: if deployer/launcher differs from fee recipient and direct deployer-control proof is not cited, the report must not say `self-launched`, `official self-launch`, `direct alignment`, `founder-linked wallet`, `Provenance: 8+`, `Trade Candidate`, or `Confidence: High`.
+- The pre-send contradiction check must downgrade and return; it must not cause indefinite searching. If proof is missing after the core source map, say `none found` or `unknown`, cap the report, and ship.
 - Product, app, repo, founder, or company announcements are not token launch tweets unless the checked post contains or directly links the exact CA, Bankr/token page, ticker-as-token, or fee claim. Write `product tweet` / `product evidence`, not `launch tweet`, for product-only posts.
 - Fee claims require direct evidence. Never write `likely claimed`; write `claimed` only with Bankr metadata, claim tx/event, launch-infrastructure transfer to the fee-recipient wallet, or explicit recipient claim. Otherwise use `unknown` or `unclaimed` with source basis.
 - Deployer and fee-recipient fields must be copied from structured Bankr/explorer metadata. Do not substitute the token contract, pool address, holder wallet, fee-recipient wallet, or inferred founder wallet as `Launcher/deployer`.

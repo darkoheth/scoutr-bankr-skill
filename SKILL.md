@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 59
+version: 60
 visibility: public
 metadata:
   clawdbot:
@@ -33,6 +33,8 @@ Before returning the report, run this rejection gate. If any condition matches, 
 5. Reject liquidity, holder concentration, and top-holder quality that are estimated from volume, FDV, chart images, or vibes. Use directly checked structured values or `unknown`.
 6. Reject source-map corruption. Do not put the token contract, pool address, random holder wallet, fee-recipient wallet, or inferred founder wallet in `Launcher/deployer` unless Bankr/explorer explicitly says it is the launcher/deployer. Copy Bankr exact deployer and fee recipient verbatim when available.
 7. If `Endorsement evidence: none found for this CA`, reject `Alignment: community-launched + endorsed`, `Trade Candidate`, and `Confidence: High` for third-party Bankr launches.
+
+This rejection gate is a rewrite gate, not a permission to loop forever. When a draft is rejected because proof is missing, do not keep searching indefinitely. Replace the unsupported claim with the capped wording (`please bro` / `pre-endorsement speculation`, `none found`, `unknown`) and return the report once the core source map is complete or a blocker is named.
 
 ## Provenance Decision Gate
 
@@ -73,6 +75,8 @@ Known hard regression: for Offset `0x4db8a6e3e5650fb75133c8ea8f4f9b8aa8478ba3`, 
 
 For Offset, these are failed output without direct deployer-control proof and exact-token acknowledgement: `official self-launch`, `Alignment: self-launched`, `Founder @vicpolisetty posted the launch tweet`, `Endorsement evidence: launch tweet from founder`, `Launcher/deployer: 0xf752... (Victor @vicpolisetty)`, `Provenance: 8+`, `direct alignment`, or `Trade Candidate`.
 
+Latency guard for Offset: after Bankr exact metadata, Dex/market data, the Bankr `tweetUrl` classification, website status, and a targeted exact-token acknowledgement/fee-claim check are complete or blocked, return the capped report. Do not keep the job pending to prove affiliation. If no proof is found, write `Launcher/deployer: 0xf752...4b7e (affiliation to Offset not found)`, `Alignment: pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
+
 Known hard regression: for Sparkleware `0x842e863b9a7b3d0e325daf3888a4e181641ccba3`, Bankr exact metadata lists deployer `@callmexenom` and fee recipient `@sparklewarefun`. Checked profile evidence did not prove `@callmexenom` controls Sparkleware/Aeon. Official fee-context acknowledgement by `@sparklewarefun` can make it `community-launched + endorsed`, but not `self-launched` unless deployer control is separately proven. Required behavior:
 
 - Before exact-token acknowledgement: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)`, `Alignment: please bro` or `pre-endorsement speculation`, `Endorsement evidence: none found for this CA`.
@@ -80,12 +84,16 @@ Known hard regression: for Sparkleware `0x842e863b9a7b3d0e325daf3888a4e181641ccb
 
 For Sparkleware, these are failed output unless the same line cites direct deployer-control proof and direct fee-claim proof: `Alignment: self-launched`, `Verified self-launch`, `Provenance: 9+`, `Trade Candidate`, `Confidence: High`, `deployer and fee recipient are official project handles`, `Fee-claim status: claimed`, or `healthy retail spread` without checked distribution.
 
+Latency guard for Sparkleware: do not loop trying to prove `@callmexenom` affiliation. If exact deployer-control proof is not found quickly, keep deployer unproven and return either pre-endorsement speculation or `community-launched + endorsed` if exact-token acknowledgement by `@sparklewarefun` is cited.
+
 Known hard regression: for 1clawAI `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`, Bankr exact metadata lists deployer `@1Nzz_` / `0x7add7c2a1f8bdba3c68bf6e01c0729d124e27514` and fee recipient `@cryptomastery_` / `0xba6df0ed21be2652a6901cfc3d8130a666c6b64c`. A strong GitHub/code footprint and official fee recipient are not enough to call it self-launched. Required behavior:
 
 - If direct first-party proof ties `@1Nzz_` to the official 1clawAI team/founder and the token is acknowledged, state the proof in `Launcher/deployer` or `Endorsement evidence`.
 - If that proof is not cited, use `Alignment: please bro` / `pre-endorsement speculation` or `community-launched + endorsed` only when the exact token is acknowledged by an official source.
 - Never write `Fee-claim status: likely claimed`. Use `claimed` only with direct fee-claim proof, otherwise `unknown` or `unclaimed`.
 - Do not estimate liquidity from volume/MC depth; copy a checked structured liquidity value or write `unknown`.
+
+Latency guard for 1clawAI: do not loop trying to prove `@1Nzz_` identity. If proof is not found quickly, keep deployer unproven and cap provenance unless exact-token acknowledgement is cited. Strong GitHub/code can improve Code/Product, not launch alignment.
 
 Known hard regression: for Blitz `0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3`, Bankr deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb` differs from fee recipient `@blitzdotdev` / `0x841d08e1360e38fb4a1bed932055853d09e4b0c3`. Unless the report cites a source where the official project/founder acknowledges this exact CA, Bankr token page, ticker-as-token, or fee claim, output must be:
 
