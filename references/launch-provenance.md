@@ -81,9 +81,9 @@ For known platform launches, prioritize:
 
 For Bankr launches where the deployer/launcher differs from the fee recipient or claimed project account, verify affiliation before using `self-launched` or `aligned`.
 
-Identity links are not transitive unless directly proven. A checked source may prove `@minjunesh -> Blitz` and another source may prove `@blitzdotdev -> Blitz`, but that still does not prove `@pola_pola0 -> @minjunesh` or `@pola_pola0 -> Blitz`. Each handle/wallet relationship must be supported by a source that names or links the exact parties.
+Identity links are not transitive unless directly proven. A checked source may prove `@founder -> project` and another source may prove `@official_account -> project`, but that still does not prove `@deployer -> @founder` or `@deployer -> project`. Each handle/wallet relationship must be supported by a source that names or links the exact parties.
 
-Do not format a deployer as an alias of another person/handle unless the alias source is cited. Bad: `@pola_pola0 (Minjune Song / @minjunesh)`. Good when no alias proof exists: `@pola_pola0 (affiliation to Blitz not found)`. Good only with proof: `@handle (same person as @otherhandle; source: <first-party link>)`.
+Do not format a deployer as an alias of another person/handle unless the alias source is cited. Bad: `@deployer (Founder Name / @founder)`. Good when no alias proof exists: `@deployer (affiliation to <project> not found)`. Good only with proof: `@handle (same person as @otherhandle; source: <first-party link>)`.
 
 Valid affiliation evidence includes:
 

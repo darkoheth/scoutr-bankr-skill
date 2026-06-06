@@ -53,7 +53,7 @@ Core safety claim:
 
 ## Public Submission Steps
 
-1. Run the regression cases in `references/test-cases.md` inside a Bankr agent.
+1. Run the regression cases in `dev/test-cases.md` before publishing or changing launch-provenance logic.
 2. Run a secret/personal-reference scan.
 3. Confirm output uses `references/report-template.md`.
 4. Make the repo public or copy the skill into the chosen public submission repo.
