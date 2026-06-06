@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 62
+version: 63
 visibility: public
 metadata:
   clawdbot:
@@ -94,8 +94,14 @@ Known hard regression: for 1clawAI `0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3`,
 - Never write `Fee-claim status: likely claimed`. Use `claimed` only with direct fee-claim proof, otherwise `unknown` or `unclaimed`.
 - Do not estimate liquidity from volume/MC depth; copy a checked structured liquidity value or write `unknown`.
 - A founder CA post or social confirmation is endorsement evidence only; it is not fee-claim evidence. For this case, `Fee-claim status: claimed (Verified via Bankr metadata and social confirmation)` is failed output unless the report names the Bankr claim field, tx hash/event, launch-infrastructure transfer, or explicit statement saying fees were claimed.
-- If liquidity is `unknown` or fee-claim history is `unknown`, `Trade Candidate` and `Confidence: High` are failed output for this regression. Cap at `Small Spec` / Medium unless all major fields are directly checked and cited.
-- Failed output for this exact CA includes: `Alignment: self-launched`, `Self-launched by founder @cryptomastery_`, `alignment is perfect`, `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev`, `Official launch tweet from founder ... token integrated into Bankr as a Skill`, `Trade Candidate`, `Confidence: High`, source lines with `(Verified product site...)` but no URL, or `GitHub/code: (Active org...)` without the GitHub URL.
+- If fee-recipient wallet transfers show `method: claim` for the launched token from launch/claim infrastructure to `0xba6d...b64c`, it is acceptable to write `Fee-claim status: claimed` and cite `Blockscout fee-recipient token-transfers: May 13 claim transfers from 0xF362...D68 to 0xba6d...b64c`.
+- Current first-party source map for this regression: `Website/docs: https://1claw.xyz/ ; https://docs.1claw.xyz/`; `X/social: https://x.com/1clawAI ; @cryptomastery_`; `GitHub/code: https://github.com/1clawAI`. Website raw links expose `https://github.com/1clawAI`; docs intro and changelog are in `https://github.com/1clawAI/1claw-docs`.
+- Current code/product anchors for concise reports: `1claw-docs` created 2026-02-18 and pushed 2026-06-06; `1claw-sdk`, `1claw-mcp`, and `1claw-cli` were created Feb 19-21 and pushed Jun 5-6; `1claw-agentkit` and `1claw-bankr-skills` are newer May/Jun repos. Packages expose build/test/typecheck scripts. Changelog shows June Bankr dynamic key vending, Shroud Bankr LLM Gateway, and recent security audit fixes.
+- Current market anchors when available from structured sources: Dexscreener main WETH pair `0xf803...12bb`, FDV around `$427k`, liquidity around `$186k`, 24h volume around `$72k`; GeckoTerminal total reserve around `$123k`. Holder count can conflict across sources, so cite source and focus on checked distribution if available.
+- Correct posture after citing exact endorsement/fee-claim and current market/code evidence can be `Trade Candidate` or `Small Spec+` depending on live liquidity/distribution. Confidence should usually be Medium or Medium-High, not High, if deployer-control proof remains uncited or holder sources conflict.
+- Failed output for this exact CA includes: `Alignment: self-launched`, `Self-launched by founder @cryptomastery_`, `alignment is perfect`, `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev`, `Official launch tweet from founder ... token integrated into Bankr as a Skill` without exact-token source, `Confidence: High` while deployer-control proof or holder sources conflict, source lines with `(Verified product site...)` but no URL, or `GitHub/code: (Active org...)` without the GitHub URL.
+
+Latency guard for 1clawAI: do not crawl the whole GitHub org. For a CA scan, inspect only the org metadata plus 3-5 anchor repos (`1claw-docs`, `1claw-sdk`, `1claw-mcp`, `1claw-cli`, optionally `1claw-agentkit`/`1claw-bankr-skills`) and cite the source map. Stop after Bankr exact metadata, Dex/Gecko market data, source links, anchor repo metadata, and fee-claim/endorsement status are checked or blocked.
 
 Latency guard for 1clawAI: do not loop trying to prove `@1Nzz_` identity. If proof is not found quickly, keep deployer unproven and cap provenance unless exact-token acknowledgement is cited. Strong GitHub/code can improve Code/Product, not launch alignment.
 

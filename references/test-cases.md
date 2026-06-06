@@ -173,6 +173,9 @@ Expected classification:
 - Expected failure if output says `GitHub repository not inspected`, `check GitHub for active development`, or `GitHub not directly linked in metadata` after seeing `docs.1claw.xyz` or `github.com/1clawAI`.
 - Expected behavior: inspect `https://github.com/1clawAI` in the same report, include org/repo age/history, and score Code from repo evidence. If blocked, state `GitHub inspection unavailable` with the blocker and URL.
 - If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
+- Fee claim can be marked claimed only if direct claim evidence is cited. Known valid evidence from the 2026-06-06 internal retest: Blockscout fee-recipient token-transfers showed `method: claim` transfers for `1Claw` on 2026-05-13 from `0xF3622742b1E446D92e45E22923Ef11C2fcD55D68` to fee recipient `0xBA6dF0ED21be2652a6901cfC3d8130A666c6B64c`.
+- Current first-party source links should print literally: website `https://1claw.xyz/`, docs `https://docs.1claw.xyz/`, X `https://x.com/1clawAI`, GitHub `https://github.com/1clawAI`. Do not replace these with placeholder labels.
+- Current code anchors: `1claw-docs`, `1claw-sdk`, `1claw-mcp`, `1claw-cli`, `1claw-agentkit`, and `1claw-bankr-skills`. Do not crawl all repos; cite anchor repo dates/activity and stop.
 - Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
 - Expected failure if output says `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev` without a source URL proving that deployer affiliation.
 - Expected failure if output says `Trade Candidate` or `Confidence: High` while liquidity, fee-claim history, or deployer-control proof are unknown or uncited.
