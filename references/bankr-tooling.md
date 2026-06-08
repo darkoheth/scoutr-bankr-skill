@@ -10,6 +10,7 @@ Use these tools when available in the Bankr runtime:
 
 - `get_token_launch_info`: exact launch metadata for Bankr/Doppler/Clanker-style tokens. Try this first for any EVM contract before inferring launch provenance from explorer labels.
 - `token_search`: baseline token/market lookup by contract address. Use it for chain, ticker, market data, and token metadata links; do not rely on sentiment-only tools for source discovery.
+- `get_token_market_data`: Bankr-native market snapshot when available. Use it first for FDV/volume/holders, but treat missing `liquidity` or `primary pair` as incomplete and fall back to exact Dexscreener/GeckoTerminal before the final report.
 - `search_tool`: broad web/search pass for project name, ticker, contract address, founder handles, scam/rug terms, investigator mentions, docs, and launch announcements.
 - `get_social_sentiment_for_ticker`: ticker-level social sentiment and surfaced allegations when the token has a clear symbol.
 - `browse_url`: targeted reads of official project websites, docs, GitHub pages, and official X/Twitter pages when direct page extraction is useful.
@@ -23,11 +24,13 @@ When the user supplies only a contract address, do not rely on social sentiment 
 1. Query Dexscreener by exact CA:
    - `https://api.dexscreener.com/latest/dex/search?q=<contract>`
    - `https://api.dexscreener.com/token-pairs/v1/<chain>/<contract>` when chain is known.
-2. Choose the canonical pair by real liquidity/volume. If one pair has meaningful liquidity and others have tiny liquidity or impossible prices, use the meaningful pair for source links and market fields.
-3. Extract `info.websites` and `info.socials`. Treat these as first-party source candidates unless they are clearly malicious/mismatched.
-4. Browse or search those exact URLs before claiming no website, docs, X, or GitHub exists.
-5. If the token data source has a docs URL, inspect docs nav/footer and page links for GitHub; docs often link the repo when Dexscreener does not.
-6. If Dexscreener has no useful website/social links, pivot to Bankr exact launch metadata and social profiles:
+2. If Dexscreener is unavailable or incomplete, query GeckoTerminal exact token/pools for the same chain.
+3. Choose the canonical pair by real liquidity/volume. If one pair has meaningful liquidity and others have tiny liquidity or impossible prices, use the meaningful pair for source links and market fields.
+4. If Bankr-native market data returned FDV/volume/holders but no liquidity or primary pair, this fallback is mandatory before the report may say `liquidity unknown`.
+5. Extract `info.websites` and `info.socials`. Treat these as first-party source candidates unless they are clearly malicious/mismatched.
+6. Browse or search those exact URLs before claiming no website, docs, X, or GitHub exists.
+7. If the token data source has a docs URL, inspect docs nav/footer and page links for GitHub; docs often link the repo when Dexscreener does not.
+8. If Dexscreener has no useful website/social links, pivot to Bankr exact launch metadata and social profiles:
    - Use Bankr `websiteUrl`, `tweetUrl`, and `metadataUri` first when present.
    - Inspect the fee recipient X profile for bio links, pinned posts, recent project posts, docs, GitHub, and official website links.
    - Inspect the launcher profile when it may identify the project or launch context, but do not treat launcher links as official project links unless they match the fee recipient/project.
@@ -36,6 +39,8 @@ When the user supplies only a contract address, do not rely on social sentiment 
 If Dexscreener or the token data source returns official links, the report must not say `not found after checking token metadata` for those same link types. It should either include the URLs or say the exact tool/runtime blocker that prevented inspection.
 
 If Dexscreener returns no links, the report must not conclude `no website`, `no X`, or `no GitHub` until the Bankr fee-recipient social fallback has been checked or explicitly marked unavailable.
+
+If Bankr-native market data omits liquidity or the primary pair, the source trace must say which fallback was checked, for example `Bankr get_token_market_data returned FDV/volume/holders but no liquidity; Dexscreener exact token-pairs supplied primary WETH pair and liquidity`. Do not leave the omission invisible.
 
 ## Unendorsed Target-Project Discovery
 

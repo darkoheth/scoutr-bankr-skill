@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 67
+version: 68
 visibility: public
 metadata:
   clawdbot:
@@ -42,7 +42,7 @@ Every token report must satisfy this compact contract before sending:
 
 - Verdict and confidence must match checked evidence, not narrative quality. High confidence requires checked launch/provenance and checked structured market data; checked code/product is required only when code/product is a major part of the bullish thesis.
 - `Sources` must contain literal URLs or handles. Empty labels, bare parentheses, and decorative source descriptions are failed output.
-- `Market` must copy FDV/MC, liquidity, 24h volume, and holder count from named structured sources. If sources conflict or are stale, say `source conflict` / `stale` and lower confidence.
+- `Market` must copy FDV/MC, liquidity, 24h volume, and holder count from named structured sources. If sources conflict or are stale, say `source conflict` / `stale` and lower confidence. If Bankr-native market tools return FDV/volume/holders but omit liquidity or primary pair, immediately run exact Dexscreener token-pairs/search and/or GeckoTerminal before writing `liquidity: unknown`.
 - `GitHub/code` must include a literal repo/org URL plus age/history checked, or a clear blocker such as `not found after checking website, X bio, docs/footer, and exact project search`.
 - Do not attach or embed images. No `![chart]`, no Pinata/IPFS chart links, no generated charts.
 - If a major source or market field is unchecked, cap the report at `Watch` / cautious `Small Spec` unless the missing field is immaterial to the thesis and explicitly named.
@@ -152,6 +152,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - When any first-party route exposes docs, a website, or GitHub, treat that as available source material for the current report. Do not downgrade to `no website`, `no GitHub`, or `lacks product proof` unless those exact first-party routes were checked and failed or the runtime blocker is stated.
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not estimate liquidity, holder concentration, or top-holder quality from charts, pool vibes, or generic scan labels. Use directly checked values or `unknown`.
+- Missing liquidity from Bankr-native market output is not a final blocker by itself. If `token_search`, `get_token_market_data`, or equivalent returns other market stats but `liquidity` or `primary pair` is missing/not available, run exact Dexscreener token-pairs/search and/or GeckoTerminal, select the highest-liquidity real pair, and copy that pair/liquidity into `Market` with source context. Only write `Liquidity: unknown` after Bankr-native and structured fallback routes are unavailable, empty, or explicitly missing liquidity.
 - Live market fields from structured sources win over search/social summaries and generated chart captions. If Dexscreener exact token-pairs, GeckoTerminal, Blockscout, or Basescan returns a concrete FDV, liquidity, volume, or holder count, copy that value with source context. Do not round `$65k` liquidity to `$100k`, do not report stale holders from search snippets, and do not use unverified chart-image values as market facts.
 - Holder counts are volatile on fresh launches. When reporting a holder count, include the source and timestamp/age if available, and avoid phrases like `extremely low` or `pre-distribution` unless the holder count was freshly checked from a token explorer or equivalent live source. If high trade count/volume suggests the holder count may be stale or indexing-lagged, re-check or write `holders: stale/unverified` instead of treating the old number as a core red flag.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
@@ -175,6 +176,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - GitHub links are first-class inputs. If the user sends only a GitHub org/repo URL, inspect and score the GitHub first, then try to discover any token attached to the repo, project, package, docs, website, maintainer, or owner. Do not stop at a code-only report unless token discovery routes were checked or blocked.
 - Use a latency guard. Do not spend the whole run crawling large websites, X pages, Framer bundles, Discord/Telegram, or every possible platform branch. Prefer structured APIs and page metadata first; if a source is slow, login-walled, huge, or JS-heavy, record the blocker and continue.
 - For CA-only Bankr scans, the default stop condition is: Bankr exact metadata captured, primary Dex/Gecko pair market data captured, current holder count/top-holder snapshot captured or blocked, first-party website/repo/docs links checked or blocked, and endorsement/fee-claim status checked or blocked. After that, write the report. Do not keep the job pending to chase broader sentiment or every possible holder transaction.
+- A CA-only Bankr scan is not market-complete if Bankr-native market data omitted liquidity or primary pair and no Dexscreener/Gecko exact fallback was attempted. Treat this as a pre-send failure and perform the fallback or state the exact fallback blocker.
 - Use `Unknowns` only for material decision blockers that remain after the checked routes. Keep it to 1-3 bullets by default. Do not use `Unknowns` as a laundry list of every possible diligence task.
 - Do not duplicate items across `Red flags`, `Would change my mind`, and `Unknowns`. If a missing item is already a red flag or a would-change-my-mind condition, put it in the section where it best helps the decision and do not repeat it.
 - `Trade Candidate` requires all major axes to be directly supported, not merely inferred: Bankr/provenance alignment must be explicit, liquidity and holder/concentration checks must not be material unknowns, and Code/Product scores above 7 must cite inspected evidence. If liquidity is unknown, concentration is not checked, or Code is based on a fresh repo without verified tests/CI/history, cap the verdict at `Watch` or `Small Spec` and confidence at Medium.
@@ -351,6 +353,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - Blank source fields such as `Website:`, `Docs:`, `Website/docs:`, `X/social:`, or `GitHub/code:` with nothing after the colon.
 - `Unknowns` has more than 3 bullets, repeats the Red flags/Would change my mind, or lists generic diligence tasks instead of unresolved blockers from checked routes.
 - `Unknowns` separately lists multiple market sub-checks such as liquidity, lock status, holders, concentration, and developer allocation after `Market` already says those fields are unknown. Collapse them into one market-data blocker.
+- `Liquidity: unknown`, `liquidity: not available`, or missing `Primary pair` after Bankr-native market tools returned FDV/volume/holders but no exact Dexscreener token-pairs/search or GeckoTerminal fallback was attempted. Retry structured market fallback and copy the selected pair/liquidity, or state the fallback blocker.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
 - `Launch source: custom / unknown`, `not applicable`, or `standard ERC-20` after Bankr exact lookup returned `exactMatch`.
 - `Launch source: custom`, `Launch source: Uniswap v4 (Custom)`, or `Launch source: unknown` for a `b07` CA when Bankr exact lookup returned no match and validated Clanker evidence such as verified `ClankerToken` source, factory labels, or token-specific Clanker API/route data exists.

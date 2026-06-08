@@ -140,6 +140,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - If market data is unavailable across multiple fields, collapse it into one compact blocker such as `Market depth/holders unavailable from checked sources`, not separate bullets for liquidity, lock status, holder distribution, developer allocation, and taxes.
 - If product/app behavior was not inspected, state that in Product or Red flags as `product proof limited to landing/docs`; do not repeat it as a generic Unknown unless it is the main reason the verdict is capped.
 - Do not infer liquidity from volume/market-cap ratios or from "typical" Doppler/Bankr pools.
+- If Bankr-native market tools return FDV/volume/holders but omit liquidity or primary pair, run exact Dexscreener token-pairs/search and/or GeckoTerminal before writing `Liquidity: unknown`. Include the fallback in Source trace when used.
 - Do not write liquidity ranges as estimates. A range is acceptable only if the checked source itself reports a range; otherwise copy the checked value or write `unknown`.
 - Copy live FDV, liquidity, volume, and holder count from the selected structured source. Do not replace checked values with rounded/estimated chart values; if sources conflict, cite the freshest source and lower confidence.
 - Do not claim top-holder quality, `smart money`, source verification, repo absence, or product catalysts unless directly checked.
