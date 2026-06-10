@@ -620,3 +620,21 @@ Expected classification:
 - No public GitHub/source proof found in the regression run; Code should be N/A/low unless a first-party repo is discovered and inspected.
 - Holder-count rule: Blockscout showed a stale/incorrect low count during the regression while the live holder count was around 148. Do not use Blockscout as the primary holder-count source for this active Bankr/Base token. Prefer live market/launch indexers, or write `holders: source conflict`.
 - Expected failure if the report treats Blockscout's stale holder count as the core distribution red flag, marks the launch aligned/self-launched only because `@nft_leen` is the fee recipient, says fee claim is claimed without tx/source evidence, or upgrades above `Watch` without exact-token acknowledgement plus stronger code/product proof.
+
+## Litebeam Source Trace And Canonical Liquidity Regression
+
+Input:
+
+```text
+scoutr 0x7D0F298D16830F943246314191d6b0A7f83C8bA3
+```
+
+Expected classification:
+
+- Bankr exact metadata resolves Litebeam / `$LBEAM` as a Bankr / Doppler launch.
+- Deployer and fee recipient are the same `@Litebeam_xyz` wallet, so `Alignment: self-launched` is acceptable.
+- Bankr/Dex source fields expose `https://litebeam.xyz`, `https://litebeam.xyz/docs`, and `https://x.com/Litebeam_xyz`; `Website/docs:` and `X/social:` must not be blank.
+- Raw link extraction from the first-party site/docs exposes `https://github.com/litebeam-protocol/protocol`. `GitHub/code:` must inspect that repo or cite a blocker with the discovered URL; it must not say GitHub was not found or likely private.
+- Bankr exact metadata exposes pool `0x811661be0f946c12b9214445ef1fc26e057a1e600e93b484723034935904ca7b`. Dexscreener/Gecko should use that live WETH pair as canonical liquidity when available; do not report a lower-liquidity side pool such as `$45k` while the Bankr pool is over `$100k`.
+- If holder concentration is not checked or Blockscout is stale/empty, write `holders/concentration: source conflict` or `unchecked`, and do not use `Confidence: High`.
+- Expected failure if the output leaves `Website/docs:` blank, says `GitHub/code: not found after checking website/docs/X` while the website HTML contains the GitHub repo, reports side-pool liquidity instead of the Bankr pool liquidity, or returns `Trade Candidate / High` while Code is below 6 and holder concentration is unresolved.

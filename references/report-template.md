@@ -128,6 +128,9 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 ## Evidence Discipline
 
 - Run a pre-send contradiction check before returning: if deployer/launcher differs from fee recipient and direct deployer-control proof is not cited, the report must not say `self-launched`, `official self-launch`, `direct alignment`, `founder-linked wallet`, `Provenance: 8+`, `Trade Candidate`, or `Confidence: High`.
+- Run a source-field contradiction check before returning: if `Source trace` says Bankr/Dex/website/docs exposed a website, docs, X, or GitHub URL, the corresponding `Sources` line must contain that literal URL or a concrete blocker. Blank source values and `GitHub/code: not found` after a raw `github.com` link was extracted are failed reports.
+- Run a canonical-market check before returning: if Bankr exact metadata exposes `poolId`, copy liquidity/FDV/volume from that exact Dexscreener/Gecko pair when it is live. Do not report a lower-liquidity side pool as primary while the Bankr pool has higher liquidity.
+- Cap posture at `Small Spec` / Medium when Code is below 6, GitHub is not inspected, holder concentration is unchecked/stale, or source-field contradictions were present. Do not use `Trade Candidate` / High until those blockers are resolved.
 - Source fields must include literal URLs or handles, not empty markdown labels or bare parentheses. Failed source lines include `Website/docs: (Verified docs)`, `X/social: (Official)`, `X/social: (Founder)`, and `GitHub/code: (Active repo)`. Use actual links/handles or an explicit blocker.
 - Reports are text-only. Remove markdown images, chart links, generated visualization URLs, and hosted image attachments before sending.
 - The pre-send contradiction check must downgrade and return; it must not cause indefinite searching. If proof is missing after the core source map, say `none found` or `unknown`, cap the report, and ship.
