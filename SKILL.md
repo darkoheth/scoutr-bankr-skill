@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 69
+version: 70
 visibility: public
 metadata:
   clawdbot:
@@ -27,13 +27,16 @@ Scoutr is a read-only crypto launch diligence workflow. It turns messy launch in
 These are short, high-priority runtime guards for Bankr execution. Apply them even when other references are long or partially unavailable.
 
 - Do not return chart images, markdown images, hosted images, generated visuals, sparkline screenshots, or visualization links. Scoutr reports are text-only diligence. If a chart or image is generated anyway, delete it before sending.
+- Never call or attach a chart/image tool for a Scoutr report. A final answer containing `![`, `pinata`, `ipfs://` chart media, `chart](http`, or any hosted chart/image link is invalid even if the text report is otherwise good; remove the image/link and return text only.
 - Do not call wallet balance tools for diligence unless the user explicitly asks about their own wallet. Token launch scans should use market, launch, explorer, website, social, and GitHub sources only.
 - Source fields are invalid if blank or contradicted by the source trace. If any source line renders as `Website/docs:`, `Website/docs:;`, `Website/docs: `, `X/social:`, `GitHub/code: (Active org)`, or any placeholder without a literal URL/handle, rewrite before sending.
+- Source trace is binding. If the report says `Website link extraction confirmed GitHub and X handles`, then `Website/docs`, `X/social`, and `GitHub/code` must print those literal URLs/handles in the same report. Do not leave them blank or replace them with parenthetical labels.
 - Do not use `Confidence: High` when deployer control is unproven, holder sources conflict, or fee-claim/endorsement evidence is not directly cited in the same report.
 - Missing GitHub/code is a code-axis cap, not an automatic whole-report rejection. If GitHub/code is private, not found, not inspected, or described only from founder reputation, cap Code at 6 and explain the blocker; Overall can still be strong when token mechanics, market structure, provenance, product proof, and social signal independently support it.
 - Weak live market structure can cap the whole verdict even when product/code are good. If liquidity, volume, holder growth, price trend, or pool depth are poor or deteriorating, do not use `Trade Candidate` unless there are stronger current market/provenance offsets cited in the same report.
 - `Trade Candidate` / `Confidence: High` requires clean source fields, direct market fields from the canonical pair, and no unresolved holder/concentration blocker. If Code is below 6, GitHub is uninspected/not found, or source discovery contradicted itself, cap at `Small Spec` / Medium until corrected.
 - Do not estimate liquidity, holders, top-holder share, or volume from FDV, volume, chart shape, or pool vibes. Use the selected structured source value verbatim with the source, or write `unknown`.
+- Do not claim fee claims, top-holder percentages, or holder-growth counts unless the exact checked source is cited. Bankr launch metadata proving deployer/fee-recipient fields is not fee-claim evidence.
 - For Bankr launches where deployer differs from fee recipient, do not call a product/company post a `launch tweet` unless that exact post contains the CA, token page, Bankr page, ticker-as-token, or fee claim.
 - Once the core source map is complete, stop. Do not run extra charts, wallet-balance tools, repeated CLI tails, or broad repo crawling after Bankr metadata, structured market data, first-party source links, GitHub/product inspection, and endorsement/fee-claim checks are complete or explicitly blocked.
 
@@ -62,6 +65,7 @@ Before returning the report, run this rejection gate. If any condition matches, 
 7. If `Endorsement evidence: none found for this CA`, reject `Alignment: community-launched + endorsed`, `Trade Candidate`, and `Confidence: High` for third-party Bankr launches.
 8. Reject source-trace contradictions. If `Source trace` says website/docs were link-extracted, GitHub links followed, or token metadata exposed a website/docs/GitHub/X link, the matching `Sources` line must contain the discovered literal URL or a concrete inspection blocker. It may not say blank, `not found`, or `likely private`.
 9. Reject `Trade Candidate` or `Confidence: High` when `GitHub/code` is `not found`, Code score is below 6, holder concentration is unchecked/stale, or source fields failed and were only patched by inference. Use `Small Spec` / Medium at most unless those blockers are resolved.
+10. Reject any image/chart attachment or markdown image. Delete the image line before returning.
 
 This rejection gate is a rewrite gate, not a permission to loop forever. When a draft is rejected because proof is missing, do not keep searching indefinitely. Replace the unsupported claim with the capped wording (`please bro` / `pre-endorsement speculation`, `none found`, `unknown`) and return the report once the core source map is complete or a blocker is named.
 
@@ -110,6 +114,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - If Bankr exact lookup returns a `tweetUrl`, `deployer.xUsername`, or `feeRecipient.xUsername`, `X/social:` or `Launch tweet:` must contain the exact URL/handle or an explicit mismatch/blocker. It must never be blank.
 - If a website URL is available, run a raw link extraction pass on that page before saying GitHub is missing. If any first-party website HTML/link list contains `github.com`, `GitHub/code:` must contain that GitHub URL plus repo age/history or `GitHub inspection unavailable: <blocker>; discovered URL: <url>`.
 - If a website/docs raw link extraction finds a GitHub repo/org, the report must not say `GitHub/code: not found`, `likely private`, or `closed-source routing infrastructure`. Inspect that exact repo/org or cite the tool blocker and discovered URL. A public protocol/client repo is still Code evidence even if some backend routing logic is private.
+- GitHub dates must be copied from the checked GitHub source. Do not write `May 2024`, `9 months history`, or any other approximate age when GitHub API/source metadata says a different creation date.
 - Source fields must print actual URLs or handles. Do not output `Website/docs: (Verified product docs)`, `X/social: (Official)`, `X/social: (Founder)`, `GitHub/code: (Active repo)`, or similar placeholder labels. If the exact URL/handle is unavailable, say `unavailable: exact URL not captured` or `not found after checking <sources>`.
 - Scoutr must run its built-in repo scanner for GitHub/code analysis. Do not call external paid repo scanners or payment-gated scan APIs. The scanner should approximate RepoScan-style evidence locally: metadata, activity, substance, secret-risk heuristics, token/social link extraction, and originality/similarity checks from public search signals.
 - Code scoring must be evidence-gated. A discovered GitHub URL, repo structure, multiple files, or polished docs is not enough for `Code: 8+`. Reserve 8+ for repos with directly checked real code plus tests/CI or equivalent verification and organic history that clearly predates the token launch. Fresh same-day or launch-week repos normally score 2-5, or 5-6 only if there is meaningful inspected code and some verification; they should not jump to 8+ because Bankr/source recovery found the repo.
@@ -348,6 +353,15 @@ If the report contradicts the `source_map`, the report is wrong. Fix the report,
 Before finalizing a token report, scan the draft for these failure patterns:
 
 - `Website/docs: not found after checking token metadata` while Dexscreener/token metadata, Bankr `websiteUrl`, official X bio, or docs links were not explicitly queried.
+- `Website/docs:` or `X/social:` is blank while `Source trace` says website link extraction confirmed website/docs/X/GitHub handles. Fill the source lines with the literal URLs/handles from the source map.
+- `GitHub/code: (Created: ...; Active commits)` or another parenthetical-only GitHub field without the literal GitHub URL. Source fields need URLs, not labels.
+- `GitHub/code: not found`, `likely private`, or `closed-source routing infrastructure` while `Source trace` says GitHub was confirmed, or website/docs raw HTML contains `github.com`.
+- `Fee-claim status: claimed (Verified via Bankr metadata)` unless Bankr metadata explicitly exposes claim status or the report cites a claim transaction/event/recipient statement. Standard Bankr deployer/fee-recipient metadata is not fee-claim evidence.
+- `top 10`, `top-heavy`, `holder growth`, or exact holder/concentration percentages without naming the checked holder source. If holder data is from a stale/conflicting source, write `holders/concentration: source conflict/stale` and cap confidence.
+- A product category such as `cross-chain liquidity protocol` when first-party site/docs/README describe a different product. Copy the product description from first-party sources instead of inferring from ticker or generic protocol language.
+- `May 2024`, `9 months`, or another repo age/history claim that contradicts checked GitHub metadata. Use the exact GitHub creation/pushed dates.
+- `Liquidity: ~$42k`, `~$45k`, or another lower side-pool value while Bankr exact `poolId` and Dexscreener/Gecko expose a live higher-liquidity canonical pair. Use the Bankr poolId pair unless it is missing/dead/broken.
+- Any final line matching `![...](...)`, `pinata`, or hosted chart/image media. Scoutr reports are text-only; remove the image before sending.
 - `Bankr exact lookup checked (no match)` or `Launch source: custom / unknown` when the input itself is `bankr.bot/launches/<contract>`, the CA ends `ba3`, or `api.bankr.bot/token-launches/search?q=<contract>` returns `exactMatch`.
 - Blank `Website/docs:`, `Website:`, `X/social:`, or `Launch tweet:` after Bankr exact lookup returned `websiteUrl`, `tweetUrl`, deployer X, or fee-recipient X.
 - `X/social: not found` while Dexscreener/token metadata or Bankr launch metadata exposes a social/tweet URL.
