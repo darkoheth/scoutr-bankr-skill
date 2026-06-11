@@ -17,30 +17,6 @@ Expected classification:
 - Treat as self-launched or aligned, whichever the evidence specifically supports; do not require fee claiming as endorsement.
 - Verdict should not exceed the code/product evidence. If GitHub remains undiscovered, cap at `Small Spec` or high-risk `Watch`.
 
-## DEFIED / Fee Claim Overrides Please-Bro Cap
-
-Input:
-
-```text
-0xF4A1Ad65B00d43Fad8A8a29185167f4e9A840Ba3
-```
-
-Expected classification:
-
-- Bankr / Doppler exact match. Bankr fields checked on 2026-06-11: token `DEFIED`, deployer `@panzonhl` / `0x7cc76f7c351e341b50fa60012b4abc886868a945`, fee recipient `@sstrenev` / `0xec5db2c9208724ecb73d2f9b7723e8e1aefa49d9`, pool ID `0x022c26eb3eb3f069ab4ee9ce4077ef9ee53c867a8e5fa8ec76d2f225b1118cbf`, tx hash `0xbb9bec0c882a1d428fba53cc0f9bd4fa58ffa4149ef81e37a4bcd50bb9b61693`, `tweetUrl: https://x.com/jessepollak/status/2064871473903456497?s=20`, metadata URI `ipfs://bafkreidb4rjb2nbpvrjrzta2bq2wj5poynkcrqunvto2svhv2bpdkmbe7y`, and launch timestamp `2026-06-11T00:47:14Z`.
-- Deployer and fee recipient differ, so do not call it `self-launched` or `aligned` unless separate direct deployer-control proof is found.
-- Fee claim evidence exists and must override the unresolved please-bro cap: Blockscout fee-recipient token transfers showed wallet `0xec5db2c9208724ecb73d2f9b7723e8e1aefa49d9` receiving `0.600656948452179638 WETH` and `1,131,161,122.738892760362919261 DEFIED` from `0xBDF938149ac6a781F94FAa0ed45E6A0e984c6544` at `2026-06-11T17:47:37Z`.
-- Expected alignment after the fee-claim transfer is `community-launched + endorsed`.
-- Expected `Endorsement evidence`: cite the fee-claim transfer to the exact Bankr fee-recipient wallet; do not write `none found`.
-- Expected `Fee-claim status`: `claimed`.
-- Expected failure if the report says `Alignment: please bro`, `Alignment: pre-endorsement speculation`, `Endorsement evidence: none found for this CA`, `Fee-claim status: unknown`, or `Fee-claim status: unclaimed` after the fee-recipient transfer check is available.
-- Expected source-field behavior: copy literal Bankr handles and URLs. Do not replace sources with parenthetical placeholders such as `Website/docs: (Found via Bankr metadata)` or `GitHub/code: (Found via website link extraction)`.
-- Expected failure if the report says `X/social: @defied_xyz`; exact Bankr metadata uses deployer `@panzonhl` and fee recipient `@sstrenev`.
-- Expected failure if the report says Bankr metadata returned a website URL; the exact Bankr response had no `websiteUrl`.
-- Expected failure if the report says liquidity is unknown after Dexscreener/Gecko exact pair fallback is available. The canonical WETH pool is the Bankr `poolId`; at the 2026-06-11 retest Dexscreener showed roughly `$122k` liquidity, `$226k` FDV/MC, and `$530k` 24h volume. Copy live values from the exact pair at runtime.
-- Product/source note: `defied.money` raw link extraction showed `https://x.com/defied_money`, Instagram, and LinkedIn, but no GitHub link during the retest. Do not report a GitHub repo unless a literal first-party GitHub URL is found and inspected.
-- Confidence can remain Medium if holder/top-holder concentration is unavailable or GitHub/code is not found, but the provenance/endorsement classification must reflect the fee claim.
-
 ## IMPECCABLE
 
 Input:
