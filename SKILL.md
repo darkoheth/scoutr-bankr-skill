@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 71
+version: 72
 visibility: public
 metadata:
   clawdbot:
@@ -31,6 +31,8 @@ These are short, high-priority runtime guards for Bankr execution. Apply them ev
 - Do not call wallet balance tools for diligence unless the user explicitly asks about their own wallet. Token launch scans should use market, launch, explorer, website, social, and GitHub sources only.
 - Source fields are invalid if blank or contradicted by the source trace. If any source line renders as `Website/docs:`, `Website/docs:;`, `Website/docs: `, `X/social:`, `GitHub/code: (Active org)`, or any placeholder without a literal URL/handle, rewrite before sending.
 - Source trace is binding. If the report says `Website link extraction confirmed GitHub and X handles`, then `Website/docs`, `X/social`, and `GitHub/code` must print those literal URLs/handles in the same report. Do not leave them blank or replace them with parenthetical labels.
+- For non-Bankr/custom/DEX-native tokens, exact structured market data is still mandatory. If Dexscreener/Gecko exact token-pairs expose a live pair, copy pool version, pair/pool address, liquidity, FDV/MC, 24h volume, holders when present, and first-party source links into the report. Do not write `Liquidity: unknown` or a guessed pool version after a live exact pair was found.
+- Do not encode one-off token names, contract addresses, or private fixture details in production instructions. Generalize every fix into a reusable behavior class.
 - Do not use `Confidence: High` when deployer control is unproven, holder sources conflict, or fee-claim/endorsement evidence is not directly cited in the same report.
 - Missing GitHub/code is a code-axis cap, not an automatic whole-report rejection. If GitHub/code is private, not found, not inspected, or described only from founder reputation, cap Code at 6 and explain the blocker; Overall can still be strong when token mechanics, market structure, provenance, product proof, and social signal independently support it.
 - Weak live market structure can cap the whole verdict even when product/code are good. If liquidity, volume, holder growth, price trend, or pool depth are poor or deteriorating, do not use `Trade Candidate` unless there are stronger current market/provenance offsets cited in the same report.
@@ -47,6 +49,7 @@ Every token report must satisfy this compact contract before sending:
 - Verdict and confidence must match checked evidence, not narrative quality. High confidence requires checked launch/provenance and checked structured market data; checked code/product is required only when code/product is a major part of the bullish thesis.
 - `Sources` must contain literal URLs or handles. Empty labels, bare parentheses, and decorative source descriptions are failed output.
 - `Market` must copy FDV/MC, liquidity, 24h volume, and holder count from named structured sources. If sources conflict or are stale, say `source conflict` / `stale` and lower confidence. If Bankr-native market tools return FDV/volume/holders but omit liquidity or primary pair, immediately run exact Dexscreener token-pairs/search and/or GeckoTerminal before writing `liquidity: unknown`.
+- `Launch source` and pool version must come from checked structured evidence. Do not infer `Uniswap v2`, `Uniswap v3`, `Uniswap v4`, `custom`, `Bankr`, `Clanker`, or `Virtuals` from generic search prose when exact pair, explorer, or platform data says otherwise.
 - If Bankr exact metadata returns a `poolId`, the canonical pair is that pool unless it is missing from structured market sources or clearly dead. Use Dexscreener/Gecko liquidity for that exact pool before considering lower-liquidity auxiliary pools. Do not select a lower-liquidity side pool while a Bankr poolId/WETH pair has higher real liquidity.
 - `GitHub/code` must include a literal repo/org URL plus age/history checked, or a clear blocker such as `not found after checking website, X bio, docs/footer, and exact project search`.
 - Do not attach or embed images. No `![chart]`, no Pinata/IPFS chart links, no generated charts.
@@ -167,6 +170,7 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Do not say liquidity is low/high unless liquidity was directly checked. If unavailable, write `Liquidity: unknown`.
 - Do not estimate liquidity, holder concentration, or top-holder quality from charts, pool vibes, or generic scan labels. Use directly checked values or `unknown`.
 - Missing liquidity from Bankr-native market output is not a final blocker by itself. If `token_search`, `get_token_market_data`, or equivalent returns other market stats but `liquidity` or `primary pair` is missing/not available, run exact Dexscreener token-pairs/search and/or GeckoTerminal, select the Bankr `poolId` pair when returned and live, otherwise the highest-liquidity real pair, and copy that pair/liquidity into `Market` with source context. Only write `Liquidity: unknown` after Bankr-native and structured fallback routes are unavailable, empty, or explicitly missing liquidity.
+- For non-Bankr/custom/DEX-native launches, exact Dexscreener/Gecko token-pairs are the canonical market fallback. If they return a live pair, use that pair's liquidity and pool version; if multiple live pairs exist, select by highest reliable liquidity/volume and identify the selected pair in `Source trace`.
 - Live market fields from structured sources win over search/social summaries and generated chart captions. If Dexscreener exact token-pairs, GeckoTerminal, Blockscout, or Basescan returns a concrete FDV, liquidity, volume, or holder count, copy that value with source context. Do not round `$65k` liquidity to `$100k`, do not report stale holders from search snippets, and do not use unverified chart-image values as market facts.
 - Holder counts are volatile on fresh launches. When reporting a holder count, include the source and timestamp/age if available, and avoid phrases like `extremely low` or `pre-distribution` unless the holder count was freshly checked from a token explorer or equivalent live source. If high trade count/volume suggests the holder count may be stale or indexing-lagged, re-check or write `holders: stale/unverified` instead of treating the old number as a core red flag.
 - Do not say `verified source`, `healthy holder distribution`, `top-holder exodus`, `smart money`, or `specific catalysts` unless that evidence was directly inspected.
@@ -378,6 +382,7 @@ Before finalizing a token report, scan the draft for these failure patterns:
 - `Unknowns` has more than 3 bullets, repeats the Red flags/Would change my mind, or lists generic diligence tasks instead of unresolved blockers from checked routes.
 - `Unknowns` separately lists multiple market sub-checks such as liquidity, lock status, holders, concentration, and developer allocation after `Market` already says those fields are unknown. Collapse them into one market-data blocker.
 - `Liquidity: unknown`, `liquidity: not available`, or missing `Primary pair` after Bankr-native market tools returned FDV/volume/holders but no exact Dexscreener token-pairs/search or GeckoTerminal fallback was attempted. Retry structured market fallback and copy the selected pair/liquidity, or state the fallback blocker.
+- `Liquidity: unknown`, blank source fields, or guessed pool version on a non-Bankr/custom/DEX-native token after exact Dexscreener/Gecko token-pairs returned a live pair. Copy the structured pair data instead.
 - `Launch source: custom / unknown` while Bankr exact lookup, `get_token_launch_info`, or `api.bankr.bot/token-launches/search` was not attempted for a likely Bankr/Doppler CA.
 - `Launch source: custom / unknown`, `not applicable`, or `standard ERC-20` after Bankr exact lookup returned `exactMatch`.
 - `Launch source: custom`, `Launch source: Uniswap v4 (Custom)`, or `Launch source: unknown` for a `b07` CA when Bankr exact lookup returned no match and validated Clanker evidence such as verified `ClankerToken` source, factory labels, or token-specific Clanker API/route data exists.

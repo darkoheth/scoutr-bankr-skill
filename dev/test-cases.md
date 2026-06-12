@@ -1,640 +1,73 @@
 # Regression Test Cases
 
-Run these cases before publishing Scoutr, after changing provenance logic, or before submitting the skill to a public catalog. Use current live data, but preserve the expected classification logic below.
+Run these behavior classes before publishing Scoutr, after changing provenance logic, or before submitting the skill to a public catalog. Keep public test cases generic: do not add specific token names, contract addresses, private notes, or one-off fixtures here.
 
-## machineODDS
-
-Input:
-
-```text
-0xF7B36e3CEf28D77dD6193531C54E6fB34990ABA3
-```
+## Self-Aligned Bankr Launch
 
 Expected classification:
 
-- Bankr launch.
-- Deployer/launcher and fee recipient align with the project account.
-- Treat as self-launched or aligned, whichever the evidence specifically supports; do not require fee claiming as endorsement.
-- Verdict should not exceed the code/product evidence. If GitHub remains undiscovered, cap at `Small Spec` or high-risk `Watch`.
+- Bankr launch metadata resolves from Bankr-native tooling or exact Bankr lookup.
+- Deployer/launcher and fee recipient are the same official project/person, or first-party evidence proves they are controlled by the same official party.
+- Treat as `self-launched` or `aligned`, whichever the evidence specifically supports.
+- Do not require fee claiming as endorsement when the launch is already self-aligned.
+- Verdict should still respect code/product/market evidence. If GitHub or product proof is missing, cap posture appropriately.
 
-## IMPECCABLE
-
-Input:
-
-```text
-0x8bbb0050a39aabff299043db31f4947bc6b7fba3
-```
+## Third-Party Bankr Launch Without Acknowledgement
 
 Expected classification:
 
-- Bankr launch with deployer and fee recipient differing.
-- Strong fee-recipient/project quality signal from the real Impeccable repo/product.
-- No official CA post, token-page link, fee claim, or clear acknowledgement means unresolved `please bro` / pre-endorsement speculation.
-- Target/founder liking a Bankr-community prompt is social proximity, not endorsement.
-- Cap at `Watch+` or cautious `Small Spec` unless explicit endorsement appears.
+- Bankr launch metadata resolves.
+- Deployer/launcher and fee recipient differ.
+- Fee recipient/project may have strong product or GitHub evidence, but no exact-token acknowledgement is found.
+- Social proximity, follows, likes, replies, product posts, or fee routing alone do not count as endorsement.
+- Use `please bro` or `pre-endorsement speculation`.
+- Cap provenance, confidence, and verdict until exact-token acknowledgement or fee-claim evidence is found.
 
-## Evokoa / Product Proof Is Not Token Endorsement
-
-Input:
-
-```text
-0x02aceb16a30e1467f61127b4ceb65967d89c5ba3
-```
+## Third-Party Bankr Launch With Exact-Token Acknowledgement
 
 Expected classification:
 
-- Bankr / Doppler exact match. Bankr fields include deployer `@pola_pola0` / `0x2d52db1746d076ab1499a0d7300c29c861c6e7eb`, fee recipient `@evokoa_ai` / `0x589df37198898a44862f9d1cd194bbe631a2e1b6`, `tweetUrl: https://x.com/daleverett/status/2054537123123110277?s=20`, website `https://evokoa.com/`, and pool ID `0x574d92f9605704cba0f3153d11d8f8ab2632a9500bde196d4aaf9273eeeedd70`.
-- The `tweetUrl` is a May 13, 2026 pgGraph/product/repo launch post from Evokoa's cofounder. It is real product evidence, but it does not mention the token CA, ticker, Bankr page, fee claim, or token launch.
-- Deployer and fee recipient differ. Do not infer `@pola_pola0` controls Evokoa, works for Evokoa, or launched officially unless a checked first-party source states that relationship.
-- Website/docs/GitHub (`https://github.com/Evokoa/pggraph`) can score Code/Product well, but cannot convert launch alignment to `self-launched`, `aligned`, or `community-launched + endorsed` without an explicit token acknowledgement.
-- Expected alignment is `please bro` or `pre-endorsement speculation` until `@evokoa_ai`, Dale, Dalton, the Evokoa site/docs, or Bankr-native fee claim evidence acknowledges the exact token.
-- Expected failure if the report says `Alignment: self-launched`, `Official project launch via Bankr`, `Endorsement evidence: launch tweet by @daleverett`, or Provenance 9+ based on the product tweet/website/GitHub alone.
-- Expected behavior: `Endorsement evidence: none found for this CA; Bankr tweetUrl points to product/social evidence, not token acknowledgement`.
-- Cap confidence at Medium while endorsement is unresolved even if product/code quality is high.
+- Bankr launch metadata resolves.
+- Deployer/launcher and fee recipient differ.
+- Official project/person acknowledges the exact token by posting the CA, linking the Bankr/token page, using the ticker in clear token context, replying/quoting in an exact-token fee context, or publishing a first-party site/docs/repo page naming the exact token.
+- Classify as `community-launched + endorsed`, not `self-launched`, unless deployer control is also proven.
+- Keep `Fee-claim status` separate. Endorsement by post/link does not prove fees were claimed.
 
-## Sparkleware / Unproven Deployer Profile Is Not Self-Launch
-
-Input:
-
-```text
-SPARKLE / sparkleware Bankr launch where Bankr exact lookup lists deployer @callmexenom and fee recipient @sparklewarefun
-https://x.com/callmexenom
-https://x.com/sparklewarefun/status/2062232924221821168
-```
+## Fee-Claim Evidence For Community Launch
 
 Expected classification:
 
-- Bankr launch if Bankr exact lookup resolves.
-- `@sparklewarefun` may be the official project/social account and Sparkleware/Aeon product/code evidence may be real, but that does not prove the deployer controls or belongs to Sparkleware.
-- Visible/indexed `@callmexenom` profile evidence checked on 2026-06-03 did not prove Sparkleware/Aeon affiliation: display name `rn`, bio effectively `pizza`, `gmon.link/rn`, and recent visible activity around generic degen/AVAX/Fogo/Capy replies rather than Sparkleware, Sparkleweave, Aeon, `@aeonframework`, or `@sparklewarefun`.
-- Do not infer `@callmexenom` is part of Sparkleware/Aeon from fee routing, follows, replies, ecosystem proximity, or a good product/GitHub trail.
-- Expected alignment is `please bro` or `pre-endorsement speculation` until first-party evidence proves `@callmexenom` is the team/deployer for Sparkleware, or until `@sparklewarefun`/official site/docs posts the exact CA, Bankr page, ticker-as-token, fee claim, or clear token acknowledgement.
-- If the official Sparkleware account/site clearly acknowledges the exact token but deployer affiliation remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
-- Official soft-endorsement evidence exists in tweet `2062232924221821168`: `@sparklewarefun` replied/posted in direct context of a prompt containing exact CA `0x842e863b9a7b3d0e325daf3888a4e181641ccba3` and Bankr fee context, saying the project would use the fees to keep building on `@aeonframework` and `@miroshark_`. This is exact-token acknowledgement / soft endorsement.
-- Expected behavior after finding that tweet: `Alignment: community-launched + endorsed`; `Endorsement evidence: official @sparklewarefun fee-context acknowledgement in reply/quote context for exact CA`; `Fee-claim status: unclaimed/unknown unless Bankr claim evidence is directly checked`; deployer affiliation still unproven.
-- Expected failure if the report says `Alignment: self-launched`, `Alignment: aligned`, `official project launch via Bankr`, Provenance 8+, `Verdict: Trade Candidate`, or `Confidence: High` based only on fee recipient `@sparklewarefun`, product integration with Aeon, or unproven deployer profile context.
-- Expected failure if Scoutr says `Endorsement evidence: none found for this CA` after the official fee-context post is available and checked.
-- Expected behavior before finding exact-token acknowledgement: `Launcher/deployer: @callmexenom (affiliation to Sparkleware/Aeon not found)` and `Endorsement evidence: none found for this CA`.
+- Bankr/Doppler-style launch metadata resolves.
+- Deployer/launcher and fee recipient differ.
+- Recent fee-recipient wallet activity shows WETH/USDC/EURC/launched-token transfers from launch/fee infrastructure to the exact fee-recipient wallet after launch.
+- Treat the transfer as direct fee-claim evidence even if explorer rows lack decoded `claim` method labels.
+- Classify as `community-launched + endorsed`, cite the transfer source, and set `Fee-claim status: claimed`.
 
-## Blitz / Lead-Dev Product Tweet Is Not Self-Launch
-
-Input:
-
-```text
-Blitz / BLITZ Bankr launch where Bankr exact lookup lists deployer @pola_pola0 and fee recipient @blitzdotdev
-CA: 0xb5ac5e7a8424e964d539b686f9dcfeaa5a8f1ba3
-```
+## Non-Bankr Custom Or DEX-Native Launch
 
 Expected classification:
 
-- Bankr / Doppler launch if Bankr exact lookup resolves.
-- Deployer `@pola_pola0` and official fee recipient `@blitzdotdev` differ. Do not infer `@pola_pola0` controls Blitz or is part of the Blitz team unless checked first-party sources prove that relationship.
-- Do not alias the deployer to the founder. `Launcher/deployer: @pola_pola0 (Minjune Song / @minjunesh)` is a failed report unless it cites a direct first-party source proving `@pola_pola0` is Minjune/`@minjunesh`.
-- `@blitzdotdev` being the official project account and fee recipient is fee routing/source context only. It is not endorsement by itself.
-- Verifying `@minjunesh` as a Blitz founder/lead dev does not prove `@pola_pola0` is `@minjunesh`, controls a Minjune wallet, or is affiliated with Blitz. Do not use transitive identity chains like `@minjunesh -> Blitz`, `@blitzdotdev -> Blitz`, therefore `@pola_pola0 -> Blitz`.
-- Bankr metadata that lists `@pola_pola0` as deployer and `@blitzdotdev` as fee recipient does not verify affiliation between them. Do not write `Launcher/deployer: @pola_pola0 (Verified affiliation via Bankr metadata)`.
-- High-quality product/code evidence, such as a real macOS app, MCP server, Swift repo, or strong GitHub history, should score Code/Product well but must not upgrade Provenance to `self-launched`, `aligned`, or `Trade Candidate`.
-- Real target-project GitHub exists and must not be lost just because token provenance is unendorsed: `https://github.com/blitzdotdev/blitz-mac`. The official site `https://blitzapp.dev/` exposes a GitHub link, and the repo shows a real Swift/macOS App Store Connect MCP project with Apache-2.0 license, ~1.7k stars, 249 visible commits, and build/source/docs files. Related first-party/near-first-party evidence may include `@blitzdev/iphone-mcp`, but do not substitute unrelated repos.
-- Expected behavior: Code/Product should reflect the real Blitz target project, while Provenance remains unendorsed until exact-token acknowledgement. Use wording like `Target project GitHub: blitzdotdev/blitz-mac found via blitzapp.dev / project search; product/code evidence does not prove token endorsement`.
-- Expected failure if the report says `Website/docs: not found`, `X/social: not found`, `GitHub/code: not found`, `Product: N/A`, or `GitHub inspection unavailable: no first-party GitHub link found` without checking `blitzapp.dev`, `blitzdotdev GitHub`, `Blitz App Store Connect MCP GitHub`, and official/founder/profile routes.
-- A tweet from a claimed founder/lead dev such as `@minjunesh` is not token endorsement unless the checked tweet mentions or directly links the exact CA, Bankr/token page, ticker-as-token, fee claim, or clear token acknowledgement. If it is only a Blitz product/app/repo announcement, score it under Product/Social only.
-- Expected alignment is `please bro` or `pre-endorsement speculation` until `@blitzdotdev`, the Blitz site/docs, a verified Blitz founder/lead-dev account, or Bankr-native fee-claim evidence acknowledges the exact token.
-- Mechanical cap before exact-token acknowledgement: Provenance <= 6, Confidence <= Medium, verdict <= `Watch` / cautious `Small Spec`, and `Endorsement evidence: none found for this CA`.
-- If an official Blitz account or verified lead-dev account clearly acknowledges the exact token but deployer affiliation remains unproven, classify as `community-launched + endorsed`, not `self-launched`.
-- `Alignment: community-launched + endorsed` also fails unless the report cites the exact token acknowledgement source: CA, Bankr/token page, ticker-as-token, fee claim, official site/docs token link, or official reply/quote context containing the CA/Bankr page/ticker. Founder/project acknowledgement alone is not enough.
-- Expected failure if the report says `Alignment: community-launched + endorsed` with `Endorsement evidence: fee recipient @blitzdotdev is the official project account; launch tweet from @minjunesh acknowledges the project`.
-- Expected failure if the report says `Alignment: community-launched + endorsed` with `Endorsement evidence: Founder @minjunesh posted the launch tweet; fees routed to official project`.
-- Expected failure if the report has a blank `Launch tweet:` line while claiming official/community endorsement.
-- Expected failure if the report says `Alignment: self-launched`, `Provenance: 9+`, `Provenance: 9 - Official self-launch`, `Verdict: Trade Candidate`, `Confidence: High`, `Strong provenance: direct alignment`, `self-launched by founder @minjunesh`, `Launcher/deployer: @pola_pola0 (Minjune Song / @minjunesh)`, `Launcher/deployer: @pola_pola0 (Verified affiliation via Bankr metadata)`, `Endorsement evidence: official project account is fee recipient`, or `launch tweet from @minjunesh` without exact-token context.
-- Expected failure if the report says `Alignment: aligned`, `Alignment: Aligned`, `Provenance: 8+`, `Provenance: 8.5`, or `Endorsement evidence: launch tweet by @minjunesh; fee recipient is official project account` before exact-token acknowledgement.
-- Expected failure if the report uses softened provenance claims such as `official token for the ecosystem`, `Verified founder-linked wallet`, `direct self-launch by known founder`, `official project lead`, `alignment is perfect`, `official token`, `deployer and fee recipient are verified project handles`, `official project handles tied to fees and deployment`, `launch tweet linked to project`, `fee-recipient linkage`, `legitimate self-launch`, or `direct alignment` without exact-token acknowledgement or direct deployer-control proof.
-- Expected failure if the report writes `Endorsement evidence: Official launch tweet from @minjunesh (linked to project) and fee-recipient linkage` or treats a Minjune/Blitz product tweet as token-launch evidence.
-- Expected failure if the report writes `Launch tweet from founder @minjunesh`, `Founder @minjunesh explicitly tweeted the launch`, `officially endorsed`, `Official Alignment`, `verified project handle`, or `the provenance is solid due to the founder's direct endorsement` without exact-token acknowledgement.
-- Expected failure if the report uses `launch tweet came from the project founder`, `founder posted the launch tweet`, or similar launch-tweet wording for a product/app/repo tweet that lacks exact CA/Bankr page/ticker/fee-claim context.
-- Expected behavior before exact-token acknowledgement: `Launcher/deployer: @pola_pola0 (affiliation to Blitz not found)`, `Fee recipient: @blitzdotdev`, `Alignment: please bro` or `pre-endorsement speculation`, and `Endorsement evidence: none found for this CA`.
+- Bankr exact lookup returns no match after the required checks.
+- Other launch platforms are checked when suggested by suffix, source labels, or market context.
+- If structured evidence points to a custom verified token or DEX-native pool, classify that route without forcing Bankr/Clanker/Virtuals.
+- Copy canonical pair, pool version, liquidity, FDV/MC, volume, and holders from exact structured market sources when available.
+- Do not leave liquidity unknown if Dexscreener/Gecko exact token-pair fallback returned a live pair.
 
-## Offset / Bankr TweetUrl Product Tweet Is Not Token Endorsement
-
-Input:
-
-```text
-OFFSET / Offset Bankr launch where Bankr exact lookup lists raw deployer wallet 0xf7523b7e7ff6e4878caff14a824857df00844b7e and fee recipient @offsetxyz
-CA: 0x4db8a6e3e5650fb75133c8ea8f4f9b8aa8478ba3
-tweetUrl: https://x.com/vicpolisetty/status/2062287502140969395
-```
+## Empty Or Conflicting Source Fields
 
 Expected classification:
 
-- Bankr / Doppler launch if Bankr exact lookup resolves.
-- Fee recipient `@offsetxyz` is the official product account for `useoffset.xyz`, a Hyperliquid perp hedging / event-risk product.
-- Bankr deployer is a raw wallet and is not proven to be Victor, `@offsetxyz`, or the project unless a direct source ties it to them.
-- The Bankr `tweetUrl` from `@vicpolisetty` is product/social evidence: it announces building `@offsetxyz`, links `useoffset.xyz`, and describes Hyperliquid/Polymarket hedging. It does not mention the token CA, ticker-as-token, Bankr/Doppler page, fee claim, or explicit token acknowledgement in the checked text.
-- Expected alignment is `please bro` or `pre-endorsement speculation` until `@offsetxyz`, Victor, the site/docs, or Bankr-native fee-claim evidence acknowledges the exact token.
-- Expected behavior: `Launcher/deployer: 0xf752...b7e (affiliation to Offset not found)`, `Fee recipient: @offsetxyz`, `Alignment: pre-endorsement speculation` or `please bro`, and `Endorsement evidence: none found for this CA`.
-- Expected failure if the report says `Alignment: aligned`, `Provenance: 8+`, `Endorsement evidence: Launch tweet from @vicpolisetty`, `founder launch tweet`, `official endorsement`, or `high provenance alignment` based only on the product tweet and fee-recipient routing.
-- Product/GitHub/source evidence must stay separate: `useoffset.xyz` is a real product site; GitHub was not found by exact `offsetxyz` / `useoffset Hyperliquid` repo search during the regression.
-
-## HERALD
-
-Input:
-
-```text
-0x7ac13be3939f75e28135097a1b6398fe024ecba3
-```
-
-Expected classification:
-
-- Bankr-style launch.
-- Target/dev posted the CA and engaged directly with Bankr/Igor context.
-- Treat target/dev-initiated engagement and CA posting as much stronger than Bankr team following the target.
-- Should score higher on provenance than pure `please bro` examples.
-
-## 1clawAI
-
-Input:
-
-```text
-0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3
-https://bankr.bot/launches/0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3
-```
-
-Expected classification:
-
-- Bankr launch. Bankr-native launch metadata wins.
-- Bankr exact launch lookup should find an `exactMatch` with deployer `@1Nzz_`, fee recipient `@cryptomastery_`, `tweetUrl`, `websiteUrl`, pool ID, tx hash, and timestamp. Expected failure if these are reported unknown while the API is available.
-- Expected failure if the output says `Launch source: Custom`, `Launch source: unknown`, `Fee recipient: N/A`, or `Bankr relationship evidence: None found` while the Bankr exact lookup is available.
-- Expected failure if a later generic search, social summary, or explorer read overwrites exact Dexscreener/Bankr fields already found in the source map.
-- If Dexscreener metadata is empty on a fresh pair, expected behavior is to recover sources from Bankr `websiteUrl`/`tweetUrl` and the fee recipient social profile before saying website/docs/X/GitHub are missing.
-- Doppler/Airlock/Whetstone/Rehype/Uniswap v4 deployment plumbing is expected for newer Bankr launches and must not be used to rule out Bankr.
-- Launcher and fee recipient differ, and the launcher is not the official project account. Classify as pre-endorsement speculation / `please bro` unless fee recipient or official project posts the CA, links the token page, claims fees, or clearly acknowledges the token. If clear official acknowledgement exists, classify as `community-launched + endorsed`, not self-launched.
-- Real product/GitHub evidence improves Code/Product but does not complete endorsement by itself.
-- Docs/site/X bio expose `https://github.com/1clawAI`; Scoutr should follow the Dexscreener -> docs/site/X bio -> GitHub discovery chain before saying GitHub is missing.
-- Dexscreener exact-CA metadata exposes website/docs/X links for this token. Expected failure if the output says website/X/GitHub were not found after checking token metadata.
-- Expected failure if output says `GitHub repository not inspected`, `check GitHub for active development`, or `GitHub not directly linked in metadata` after seeing `docs.1claw.xyz` or `github.com/1clawAI`.
-- Expected behavior: inspect `https://github.com/1clawAI` in the same report, include org/repo age/history, and score Code from repo evidence. If blocked, state `GitHub inspection unavailable` with the blocker and URL.
-- If official project/dev posts the CA, endorsement can be marked present even if fee claim remains unclaimed or unknown. Report fee-claim status separately.
-- Fee claim can be marked claimed only if direct claim evidence is cited. Known valid evidence from the 2026-06-06 internal retest: Blockscout fee-recipient token-transfers showed `method: claim` transfers for `1Claw` on 2026-05-13 from `0xF3622742b1E446D92e45E22923Ef11C2fcD55D68` to fee recipient `0xBA6dF0ED21be2652a6901cfC3d8130A666c6B64c`.
-- Current first-party source links should print literally: website `https://1claw.xyz/`, docs `https://docs.1claw.xyz/`, X `https://x.com/1clawAI`, GitHub `https://github.com/1clawAI`. Do not replace these with placeholder labels.
-- Current code anchors: `1claw-docs`, `1claw-sdk`, `1claw-mcp`, `1claw-cli`, `1claw-agentkit`, and `1claw-bankr-skills`. Do not crawl all repos; cite anchor repo dates/activity and stop.
-- Expected failure if output says `Alignment: self-launched`, `Alignment: Aligned (Self-launched)`, or `official Bankr deployment` while the launcher is a third-party/community account.
-- Expected failure if output says `Launcher/deployer: @1Nzz_ ... Verified 1claw team/dev` without a source URL proving that deployer affiliation.
-- Expected failure if output says `Trade Candidate` or `Confidence: High` while liquidity, fee-claim history, or deployer-control proof are unknown or uncited.
-- Expected failure if source fields use placeholder labels such as `(Verified product site)`, `(Official project)`, `(Founder)`, or `(Active org)` without literal URLs/handles.
-- Expected failure if output uses slash-combined `Alignment: self-launched/aligned` instead of choosing one exact label.
-- Expected failure if output says `Fee-Claim Status: Claimed` without direct fee-claim evidence from Bankr metadata, a claim transaction/event, or explicit recipient claim.
-- Expected failure if the token CA is copied into `Launcher/deployer` as though it were the deployer.
-- Expected failure if `Website:` is blank. If live discovery fails, the report must still say `Website/docs: unavailable` with the checked sources/blocker, not leave an empty field.
-- Generalized lesson: when a Dexscreener, Bankr, official X bio, website, or docs route exposes a first-party site/docs/GitHub link, Scoutr must inspect it in the same report or state the exact blocker. Do not add token-specific fallbacks to production instructions; regression examples are only examples.
-
-## DOT
-
-Input:
-
-```text
-0x23A2847d772803f9EFC64B4277b782b06296FE51
-```
-
-Expected classification:
-
-- Do not force Bankr provenance if no Bankr-native launch record or page is present.
-- Evaluate as non-Bankr/ambiguous launch.
-- Official account posting CA and docs improves Social/Product, but unresolved explorer/source-label or holder-data issues should remain in Unknowns/Risks.
-
-## LAGANN / Virtuals Undergrad
-
-Input:
-
-```text
-0x4265a0210dd20465b6f669fc45e5ca0534319a5d
-```
-
-Expected classification:
-
-- Not Bankr. Bankr exact lookup returns no match; do not force the Bankr provenance template as if Bankr is the only possible launch source.
-- Blockscout/explorer may show token symbol/name `LAGANN` even when Dexscreener has no pair.
-- Virtuals exact `preToken` lookup should find a matching record with name/symbol `LAGANN`, `status: UNDERGRAD`, `preToken` equal to the input CA, `preTokenPair` `0x3b4b16e3014B798F775391c9FB101563EDab3e73`, and created date `2026-05-29`.
-- Classify launch source as `Virtuals`, platform status `UNDERGRAD` / pre-token. Missing Dexscreener data should be reported as undergrad/no public DEX pair found, not as proof the token does not exist.
-- If Virtuals record has no socials/website, source fields should say not found after checking Virtuals metadata plus search/social fallback, not only token metadata.
-- Expected failure if output says no launchpad record, no active token, or launch source unknown while Virtuals exact `preToken` lookup is available.
-- Expected failure if output includes Bankr launcher/fee-recipient/alignment fields as primary evidence for a non-Bankr Virtuals token.
-
-## AgentBounty / Clanker b07
-
-Input:
-
-```text
-0x33e167fa22c9d78236b1a21c80e8b712205d1b07
-```
-
-Expected classification:
-
-- Not Bankr if Bankr exact lookup returns no match.
-- CA ends in `b07`, which is a strong newer-Clanker hint after Bankr no-match.
-- Blockscout/explorer verified contract name/source is `ClankerToken`; Dexscreener labels the canonical pool as Uniswap v4.
-- Classify launch source as `Clanker / Uniswap v4`, not `Uniswap v4 (Custom)` and not unknown.
-- If Clanker creator/launcher metadata cannot be extracted from Clanker tools/page, write `Launcher/deployer: unknown: Clanker creator metadata unavailable`; do not let that erase Clanker provenance.
-- Dexscreener exposes first-party links: `https://agentbounty.dev`, founder site/newsletter, `https://x.com/agentbountydev`, Telegram, Discord, and Farcaster. These should populate sources, not blanks.
-- Expected failure if output says `custom launch`, `standard Uniswap v4 pool`, or `Launch source: unknown` without acknowledging Clanker evidence.
-
-## QUILL / Custom Verified Contract, Not Clanker
-
-Input:
-
-```text
-0x60a646e3fd75cde4c5b604b22d4fcd04639913c8
-```
-
-Expected classification:
-
-- Not Bankr if Bankr exact lookup returns no match.
-- Not Virtuals if exact `tokenAddress` and `preToken` lookups return no match.
-- Do not classify as Clanker just because `https://www.clanker.world/clanker/<contract>` returns a 200, redirects to checksummed casing, or serves a generic Next.js app/loading shell.
-- Address does not end in `b07`, and explorer verified source/name is `QuillToken`, not `ClankerToken`.
-- Contract source is a project-specific fixed-supply burnable ERC-20 with constructor treasury mint and no owner/minting after deploy. Classify launch as `custom verified ERC-20 / Uniswap v4`, not Clanker.
-- Dexscreener exposes first-party links: `https://quill.computer/` and `https://x.com/quillcomputer`; docs expose `QuillToken 0x60A646e3fD75CdE4c5b604b22d4Fcd04639913C8`.
-- Expected failure if output says `Launch source: Clanker` without validated Clanker evidence such as `b07`, `ClankerToken`, factory labels, or token-specific Clanker API/route data.
-
-## RomanStorm / Fee Recipient Endorsed, Not Self-Launched
-
-Input:
-
-```text
-0x2986b9f1ad2aac1b39ce406ae0af6088032dbba3
-```
-
-Expected classification:
-
-- Bankr / Doppler launch. Bankr exact lookup returns token name `FreeRomanStorm.com`, symbol `RomanStorm`, `tweetUrl`, `websiteUrl`, deployer wallet `0xf2239050c1c53c68dd8a439e63be6f3ba9190dc0`, and fee recipient wallet/X `0x0b8aa08b5dc9b295c97d5d5290a3a6f72249941f` / `@rstormsf`.
-- Deployer wallet and fee-recipient wallet differ, and the Bankr deployer has no `xUsername` in the exact metadata. Do not infer the deployer is Roman Storm or a Roman-controlled wallet without external proof.
-- The `tweetUrl` from `@rstormsf` is strong official acknowledgement/endorsement evidence. It should make the alignment `community-launched + endorsed`, not `self-launched`.
-- Fee-claim status remains separate. Do not call fees claimed unless Bankr-native claim metadata, a claim transaction/event, or an explicit recipient statement proves it.
-- Expected failure if output says `Alignment: self-launched`, `direct self-launch`, or `launched via Roman Storm's verified X account` solely because the fee recipient is `@rstormsf` or the Bankr `tweetUrl` is Roman's post.
-
-## EPITAPH / Bankr Source Recovery and GitHub Check
-
-Input:
-
-```text
-0x9d5D1Ff54980DFFAB23De58Cb3db2C1Acf2FbBA3
-```
-
-Expected classification:
-
-- Bankr / Doppler launch. Bankr exact lookup returns token name `Epitaph AI`, symbol `EPITAPH`, website `https://www.epitaph-agent.xyz/`, metadata URI, deployer `@EpitaphAI` / `0x73474710fc64b2a3dcd175e759b1948ff3770293`, and fee recipient `@EpitaphAI` / same wallet.
-- Dexscreener metadata may be empty. That is not a reason to stop after price/volume/holders. Pivot to Bankr `websiteUrl`, `tweetUrl`, `metadataUri`, and `@EpitaphAI`.
-- The website exposes `https://github.com/Epitaph-AI/EpitaphAI`, `https://x.com/EpitaphAI`, Bankr, Base, and Virtuals links. GitHub must be inspected or marked unavailable with a blocker.
-- The GitHub link is in the website resource/footer links, not necessarily in the hero text. Scoutr must extract raw `href`/HTML links from the website before saying GitHub is not discoverable.
-- GitHub evidence: repo `Epitaph-AI/EpitaphAI`, created `2026-05-29T11:46:00Z`, pushed `2026-05-29T12:05:38Z`, Solidity/Hardhat project with `contracts/EpitaphCore.sol`, `test/EpitaphCore.test.js`, `package.json`, and README. It is launch-day fresh with no license detected by API, zero stars/forks, and README still lists contract addresses as `coming soon`.
-- Code/Product should not be N/A. Score it as real but very fresh/unproven scaffold unless deeper tests/build/audit verify otherwise.
-- Expected failure if the report only includes stats/security and omits Launch/Provenance, website/X/GitHub, source trace, or GitHub age/history.
-- Expected failure if output says `GitHub/code: not found after checking website`, `GitHub not discoverable via first-party surfaces`, or `Code: N/A` while `https://www.epitaph-agent.xyz/` contains `https://github.com/Epitaph-AI/EpitaphAI`.
-- Expected failure if `Website/docs:` is blank even though Bankr exact returned `https://www.epitaph-agent.xyz/`.
-- Expected failure if `X/social:` or `Launch tweet:` is blank even though Bankr exact returned `https://x.com/epitaphai` and `@EpitaphAI`.
-- Expected failure if output says `security: safe (bankr_deployed)` as though Bankr deployment alone verifies code/product/security beyond launch source.
-
-## Brain / BRAIN Fee-Recipient Is Not Endorsement
-
-Input:
-
-```text
-Brain / $Brain Bankr launch where Bankr metadata lists @BrainDotFi as fee recipient, while launcher/deployer is a different raw wallet or otherwise not proven to be @BrainDotFi
-```
-
-Expected classification:
-
-- Bankr / Doppler launch source if Bankr exact lookup resolves.
-- Fee recipient may be `@BrainDotFi`, but that alone is not endorsement.
-- If `@BrainDotFi` has not claimed fees, posted the CA/ticker/token page, linked the Bankr/token page, or clearly acknowledged the exact token, classify as `please bro` or `pre-endorsement speculation`, not `community-launched + endorsed`.
-- `Endorsement evidence` should be `none found` or name explicit token acknowledgement evidence. It must not say `fee recipient is the verified project X account` as endorsement evidence.
-- Provenance should not be 9+ solely from Bankr launch plus official fee recipient.
-- Verdict should be capped at `Watch` or cautious `Small Spec` while endorsement is unresolved, even if market/social/product quality is strong.
-- Expected failure if output says `officially endorsed by the project team`, `official project endorsement via Bankr fee-recipient linkage`, or `Trade Candidate / High confidence` without explicit acknowledgement.
-- Expected failure if `Website/docs:` or `X/social:` is blank while the report claims website/X were followed.
-- Expected failure if token score/security cites `bankr_deployed` as proof of safety.
-
-## RUNNER / Legacy Clanker + Heavy Site
-
-Input:
-
-```text
-0x18b6f6049A0af4Ed2BBe0090319174EeeF89f53a
-```
-
-Expected classification:
-
-- Do not hang. Public checks should complete from structured routes: Dexscreener exact CA/token-pairs, Bankr exact lookup, explorer token/contract metadata, and website metadata/visible links.
-- Bankr exact lookup currently returns no match. Do not force a current Bankr/Doppler classification without Bankr-native evidence.
-- Dexscreener exposes first-party sources: `https://runneronbase.io/`, `https://x.com/runnerbased`, and `https://farcaster.xyz/runonbase.eth`.
-- Website metadata/visible text exposes additional first-party routes such as `https://docs.runneronbase.io`, the Farcaster mini app, Dune dashboard, and Basescan link. These should populate source fields or source trace.
-- The website is a large/JS-heavy first-party site. Read metadata, visible links, and a small text sample first; do not crawl Framer/asset bundles or block on full rendering before returning a report.
-- Official website copy says RUNNER is "the first clanker". Treat this as project/site provenance evidence for legacy Clanker context, with confidence/unknowns if Clanker creator metadata is unavailable.
-- Expected failure if the report leaves `Website/docs` blank, says no sources were found, or times out because it tries exhaustive website/social crawling.
-
-## Atrium Hermes / Bankr Exact Match + No Generic Unknowns
-
-Input:
-
-```text
-https://bankr.bot/launches/0x61701f785fa8ff6ad1d4ad4ec5490cdbc910bba3
-```
-
-Expected classification:
-
-- Bankr exact lookup resolves Atrium Hermes / ATRIUM as a Bankr / Doppler launch. Expected Bankr fields include token address `0x61701f785fa8ff6ad1d4ad4ec5490cdbc910bba3`, deployer `@Stevezach_man` / `0x9f7b8986f391ccdd7d7c70d516be6c60d6e5f92c`, fee recipient `@atriumhermes` / `0x12b9b3bb80380ff0e0c914a853b0da1614e49756`, `websiteUrl: https://atriumhermes.tech/`, `tweetUrl: https://x.com/atriumhermes`, pool ID `0x934358d8a9bee7f802c560c392ca9f11c846182f69c3efc926c7ab07e990859c`, and tx hash `0xf664a5ef2f2f8bda55336dd70604f8f56ef7ffddb20db5104b703c7a6beb3490`.
-- Expected failure if report says Bankr exact lookup no match, `Launch source: Uniswap v4 / Custom`, or Virtuals no-match as primary provenance while the Bankr exact route is available.
-- Dexscreener exact CA/token-pairs expose a canonical WETH pair with liquidity, FDV/market cap, 24h volume, pairCreatedAt, website `https://atriumhermes.tech/`, docs `https://atriumhermes.tech/docs`, and X `https://x.com/atriumhermes`. These should populate Sources and Market, not Unknowns.
-- A `Watch` / Medium-confidence read can still be correct if endorsement is unresolved and repo/code is same-day fresh, but the reason should not be missing Bankr or market/source fields.
-- Blank `Website/docs:` and `X/social:` are failures if website/docs/X were discovered or followed. Populate the actual URLs/handles or a checked-source blocker.
-- `GitHub/code` should include the repo URL plus age/history note, not only `(Created: 2026-06-01)`.
-- Expected failure if a launch-week or same-day Atrium GitHub jumps from low/early to `Code: 8+` without naming inspected tests/CI, substantial pre-launch history, and concrete code files. Bankr source recovery can fix missing source fields, but it must not automatically upgrade code quality.
-- Expected failure if the report says `launch tweet verified` when the available Bankr `tweetUrl` is only `https://x.com/atriumhermes` or another profile/account URL rather than a specific token/CA/ticker post.
-- Expected failure if the report returns `Trade Candidate / High confidence` while liquidity depth is unknown, holder concentration is unchecked, or provenance alignment depends on inferred deployer/fee-recipient control.
-- If deployer `@Stevezach_man` and fee recipient `@atriumhermes` differ, do not call it `self-launched` unless a checked first-party source proves the deployer is controlled by the official project/team. Use `aligned`, `community-launched + endorsed`, or `pre-endorsement speculation` according to the explicit evidence.
-- Expected failure if the report attaches Nous Research, `NousResearch/hermes-agent`, or 100k+ GitHub star metrics to Atrium unless a checked first-party Atrium/Nous source explicitly proves official ownership or endorsement. Atrium's website links `https://github.com/Atrium-Hermes/Atrium`; score that repo directly.
-- Expected failure if the report says `@Stevezach_man` works for Nous, Atrium is the official Nous/Hermes token, or Atrium is backed by Nous based only on wording about Hermes compatibility or skill marketplaces.
-- `Unknowns` should be concise and decision-changing, usually 1-2 bullets for this shape:
-  - official CA/token acknowledgement not found;
-  - holder concentration/admin-state unavailable if not directly checked.
-- Do not list separate generic unknowns for liquidity lock, top holders, developer allocation, and actual app functionality if Market/Product/Red flags already state those limits.
-- Product proof limited to landing/docs belongs in Product or Red flags, not repeated as `Actual functionality ... unknown`.
-- `Would change my mind` should contain future evidence that upgrades the thesis, not duplicate every Unknown.
-
-## GitHub-Only Input / Repo First, Token Second
-
-Input:
-
-```text
-https://github.com/1clawAI
-```
-
-Expected classification:
-
-- Treat the GitHub URL as the primary input, not as a missing-token error.
-- Inspect and score the GitHub org/repo quality first: org/repo age, repo list, recent pushes, README/docs, package/contracts/tests/CI where available, and whether history predates any token launch.
-- Then search outward for an attached token using repo/org profile links, README/docs/package files, homepage/docs links, X/social links, exact org/project/package searches, and launch-platform lookups.
-- If a token candidate is found, classify attachment confidence as `confirmed`, `likely`, or `possible` based on first-party linkage strength, then run the CA-only provenance path for that CA.
-- Use Scoutr's built-in RepoScan-style scanner for repo trust/originality/similarity analysis. Do not call external paid scanners, x402 payment routes, or signature-gated scan APIs.
-- If no credible token is found, output `Attached Token: not found` with checked routes and keep `Token: N/A`; do not invent market or launch provenance.
-- Expected failure if the report only says "send a contract address", ignores the repo, or analyzes code without attempting attached-token discovery.
-
-## Scoutr Command With GitHub Org URL
-
-Input:
-
-```text
-scoutr https://github.com/ratspeak
-```
-
-Expected behavior:
-
-- The dispatcher must invoke Scoutr because `scoutr <anything>` is valid, not only `scoutr <contract>`.
-- Treat the full GitHub URL as the input payload.
-- If the URL is an org/user rather than a repo, list/select relevant public repos before scoring code.
-- Run Scoutr's built-in repo scanner on the selected repo; do not treat an org/user URL as a concrete repo without first choosing the relevant repo(s).
-- Run attached-token discovery from GitHub profile, repo README/docs/package/homepage/social links, exact repo/org/package/domain searches, and launch-platform lookups.
-- Output an `Attached Token` section even when no CA is found.
-- Expected failure if there is no reply, if the GitHub URL is ignored, or if Scoutr asks for a contract address before inspecting GitHub.
-
-## Reply-Style `scoutr this`
-
-Input:
-
-```text
-scoutr this
-```
-
-Context:
-
-```text
-Reply target contains https://github.com/ratspeak
-```
-
-Expected behavior:
-
-- Resolve `this` from the replied-to message/link preview/quoted text.
-- Treat `https://github.com/ratspeak` as the primary payload.
-- Use GitHub-first mode and include an `Attached Token` section.
-- Include `Source trace: replied-to GitHub URL ...` or equivalent selected-input trace.
-- Expected failure if Scoutr asks the user to paste the URL again, ignores the reply target, stays silent, or treats `this` as a ticker/project name.
-
-## Duplicated Scoutr Command With GitHub Org URL
-
-Input:
-
-```text
-scoutr scoutr https://github.com/ratspeak
-```
-
-Expected behavior:
-
-- Strip duplicate leading `scoutr` tokens before routing.
-- Analyze `https://github.com/ratspeak` as a GitHub org/user URL.
-- Stay within compact GitHub-first budget: profile/top repos, README/top-level links, homepage metadata if present, and a few exact token-discovery checks.
-- Return one compact report with `Attached Token` and `Unknowns`.
-- Expected failure if the output says it hit a step limit, asks the user to split into smaller steps, asks for a CA before GitHub inspection, or tries to execute any transaction.
+- If token metadata, Bankr, Dexscreener, website, docs, or X exposes website/social/GitHub links, the final `Sources` lines must contain the literal URLs/handles or a concrete blocker.
+- Blank fields, bare parentheses, and labels such as `official`, `active org`, or `via search` without literal URLs are failed output.
+- Source trace cannot say a route found a link while the corresponding source line says `not found`.
 
 ## Pass Criteria
 
 - Verdict appears first.
-- Bankr cases include launcher, fee recipient, alignment, and endorsement evidence.
+- Reports contain no token-specific regression names or private fixture addresses.
+- Bankr cases include launcher, fee recipient, alignment, endorsement evidence, and fee-claim status.
 - Social proximity never becomes endorsement by itself.
 - Good GitHub/product proof is scored separately from token endorsement.
-- Unknowns are explicit when Bankr-native tools, X search, holder data, or GitHub checks are unavailable.
+- Non-Bankr scans still verify canonical market pair, pool version, liquidity, and source links from structured data.
+- Unknowns are explicit when launch metadata, X search, holder data, or GitHub checks are unavailable.
 - No output tells the user to buy, sell, hold, or trade.
-
-## Fresh Launch Holder Count / Stale Snapshot
-
-Input shape:
-
-```text
-Bankr/Doppler token launched minutes ago with high trade count and explorer holder count changing quickly.
-```
-
-Expected behavior:
-
-- Holder count should include source and timestamp/age when available, such as `BaseScan showed 257 holders at <timestamp>`.
-- Expected failure if a stale early holder count like `23 holders` is used later as a core red flag while current explorer metadata shows materially more holders.
-- Expected failure if the report says `Confidence: High` while top-holder distribution is unchecked and holder count evidence is stale or contradictory.
-- Holder count alone should not become `extremely concentrated`; concentration requires top-holder distribution, excluding pool/DEX/system addresses where possible.
-
-## Bitter Product Tweet Is Not Token Endorsement
-
-Input:
-
-```text
-scoutr 0x696aCE6f17B966Dd667501b6952b56f7B8653ba3
-```
-
-Bankr exact metadata:
-
-```text
-tokenName: Bitter
-tokenSymbol: Bitter
-launchType: doppler
-deployer: @hyporliquid / 0x0c7e483f60163cbd9aa24e85a7ab9cd9fe1b82e0
-feeRecipient: @Ruemic / 0xc2a0b33358ed101d6b4f2ab5b40d5c1f7a97c1c0
-tweetUrl: https://x.com/Ruemic/status/2058027079950795157
-websiteUrl: https://bitter.sh/
-```
-
-Tweet context:
-
-```text
-@Ruemic says he quit his job and is starting a company called Bitter. The post does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support.
-```
-
-Expected behavior:
-
-- Treat the tweet as product/social evidence only.
-- Use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
-- Use `Endorsement evidence: none found for this CA` unless another official exact-token acknowledgement is cited in the same report.
-- Keep Product evidence from `https://bitter.sh/` separate from Provenance.
-- `GitHub/code: not found` is acceptable only after checking Bankr metadata, website raw links, X bio, and exact Bitter/Ruemic GitHub searches.
-- Compact mode has the same expected behavior.
-- Expected failure if output says `Alignment: aligned`, `Provenance: 8+`, `Confidence: High`, `Code: 8+`, `project lead posted the launch tweet`, `direct alignment`, `fee recipient / project lead explicitly linking the launch`, or `GitHub discovery via official X bio` without exact-token evidence and a first-party GitHub link.
-
-## Arkhai Official No-Token Statement
-
-Input:
-
-```text
-scoutr 0xe194bdfca43ecb917b1cd283dd72f40f6948dba3
-```
-
-Bankr exact metadata:
-
-```text
-tokenName: Arkhai
-tokenSymbol: Arkhai
-launchType: doppler
-deployer: 0xe438e37f68f0f1e9620df1bf4d72ee307b6ab1f4
-feeRecipient: 0x98fcd5aad41af6f1c05754c3b28298f3d9fcb05f
-tweetUrl: none
-websiteUrl: none
-```
-
-Target-project discovery:
-
-```text
-https://arkhai.io/ links https://github.com/arkhai-io and @arkhai_io. Official/pinned SCM language says "No token. No fees."
-```
-
-Expected behavior:
-
-- Keep target-project Product/Code evidence separate from token provenance.
-- Use `Alignment: please bro`.
-- Use `Endorsement evidence: none found for this CA; official @arkhai_io/SCM messaging says "No token. No fees."` or equivalent.
-- Verdict must be `Pass` or hard `Watch`; Confidence must be <= Medium.
-- Report live Dexscreener/Gecko liquidity if those values were checked; do not write `Liquidity: unknown` after exact pair data returned liquidity around `$40k-$45k`.
-- Expected failure if the report only says `no mention of a token` without naming the official no-token/no-fee statement.
-
-## Product Tweet Plus Fee Recipient Is Not Token Endorsement
-
-Input:
-
-```text
-scoutr <bankr-doppler-ca>
-```
-
-Bankr exact metadata:
-
-```text
-tokenName: ExampleAgentInfra
-tokenSymbol: EXAMPLE
-launchType: doppler
-deployer: @community_launcher / 0x1111111111111111111111111111111111111111
-feeRecipient: @official_project / 0x2222222222222222222222222222222222222222
-tweetUrl: https://x.com/official_project/status/<product-announcement-id>
-websiteUrl: https://example-agent-infra.invalid/
-```
-
-Tweet/context:
-
-```text
-@official_project introduces its product/company/site. The post does not mention the CA, Bankr/token page, ticker-as-token, fee claim, or token support. Public @community_launcher profile evidence does not prove founder/team/project affiliation.
-```
-
-Expected behavior:
-
-- Treat the tweet as product/social evidence only.
-- Use `Launcher/deployer: @community_launcher (affiliation to ExampleAgentInfra not found)` or equivalent.
-- Use `Alignment: please bro` or `Alignment: pre-endorsement speculation`.
-- Use `Endorsement evidence: none found for this CA` unless another official exact-token acknowledgement or fee-claim source is cited in the same report.
-- Keep Product/Code evidence from the official website/docs/GitHub separate from Provenance.
-- Expected failure if output says `self-launched`, `Trade Candidate`, `Confidence: High`, `Provenance: 9+`, `@community_launcher (Founder)`, `official launch tweet`, `fee-claim status: claimed`, or `alignment between founder, project account, and token fees is perfect` without direct deployer-founder proof and exact-token acknowledgement/fee-claim evidence.
-
-## FYP Community Token Fee Claim And Live Market Regression
-
-Input:
-
-```text
-scoutr 0x8eae800ff67778057941792acdbab29904962ba3
-```
-
-Bankr exact metadata:
-
-```text
-tokenName: feelyourprotocol
-tokenSymbol: fyp
-launchType: doppler
-deployer: @alkuap / 0xd0016a5760c74c9def689f1c9e2e59b70c13441b
-feeRecipient: @HolgerD77 / 0x5664540c02f7fa2a9251bc9b22fa45c4a6f98951
-websiteUrl: https://feelyourprotocol.org/
-tweetUrl: none
-```
-
-Required extra checks:
-
-```text
-Official repo/site: https://github.com/feelyourprotocol/website and https://community-token.feelyourprotocol.org/
-Commit 95e3378 on 2026-06-05 added community-token/src/content/token.ts with the exact CA.
-community-token/src/content/topics.ts says the token was independently launched on Bankr and the builder chose to engage with it in good faith.
-community-token/src/content/fund.ts says claimed creator fees go toward Feel Your Protocol and related open-source work.
-Fee claim tx: 0xa21f92a1ff7a478445cbda99d5de0f8825da55a3cb2546a15bb6401c798947d1 transferred WETH and FYP from DopplerHookInitializer to the fee-recipient wallet on 2026-06-05.
-```
-
-Expected behavior:
-
-- Use `Alignment: community-launched + endorsed`, not `self-launched`.
-- Use `Fee-claim status: claimed`.
-- `Endorsement evidence` must cite the official community-token repo/page exact-CA acknowledgement and/or the fee-claim transaction.
-- Use live structured market data from Dexscreener/Gecko/Blockscout. If Dexscreener exact token-pairs says roughly `$65k` liquidity and Blockscout says `74 holders`, do not report `$100k liquidity` or `210+ holders` unless a fresher named source is cited.
-- Verdict should not be raised to `Trade Candidate / High` solely from provenance/code while live holder count remains tiny and top-holder distribution is only partially checked. `Small Spec` / `Small Spec+` is the safer default unless market/distribution improves.
-- Expected failure if the report says `Fee-claim status: unclaimed`, `Endorsement evidence: none found`, `Liquidity: ~$100k` from stale/estimated data, `Holders: 210+` from stale/uncited data, `top holder is LP (~42%)` when fresh holder data showed PoolManager around `64.5%`, `Trade Candidate / High` while source conflicts remain, or `Code has 9 months history` when the exact official repo was created in February 2026.
-
-## HNR Holder Source And Pre-Endorsement Regression
-
-Input:
-
-```text
-scoutr 0xCB392ea4289fBFA40091126367547dBBAa0dcBa3
-```
-
-Expected classification:
-
-- Bankr / Doppler launch for HumanNotReqd (HNR).
-- Fee recipient is `@nft_leen`; deployer is a raw/unproven wallet unless a first-party source ties it directly to Leen or the project.
-- Treat as `please bro` / `pre-endorsement speculation` unless `@nft_leen`, the official project account/site/docs, a Bankr token page, or fee-claim evidence acknowledges the exact token.
-- `Fee-claim status: unclaimed` or `unknown` unless a direct claim transaction/event/source is found.
-- Product/social signal can mention `@humannotreqd` and the AI-agent Shopify commerce experiment, but product evidence alone does not create token endorsement.
-- No public GitHub/source proof found in the regression run; Code should be N/A/low unless a first-party repo is discovered and inspected.
-- Holder-count rule: Blockscout showed a stale/incorrect low count during the regression while the live holder count was around 148. Do not use Blockscout as the primary holder-count source for this active Bankr/Base token. Prefer live market/launch indexers, or write `holders: source conflict`.
-- Expected failure if the report treats Blockscout's stale holder count as the core distribution red flag, marks the launch aligned/self-launched only because `@nft_leen` is the fee recipient, says fee claim is claimed without tx/source evidence, or upgrades above `Watch` without exact-token acknowledgement plus stronger code/product proof.
-
-## Litebeam Source Trace And Canonical Liquidity Regression
-
-Input:
-
-```text
-scoutr 0x7D0F298D16830F943246314191d6b0A7f83C8bA3
-```
-
-Expected classification:
-
-- Bankr exact metadata resolves Litebeam / `$LBEAM` as a Bankr / Doppler launch.
-- Deployer and fee recipient are the same `@Litebeam_xyz` wallet, so `Alignment: self-launched` is acceptable.
-- Bankr/Dex source fields expose `https://litebeam.xyz`, `https://litebeam.xyz/docs`, and `https://x.com/Litebeam_xyz`; `Website/docs:` and `X/social:` must not be blank.
-- Raw link extraction from the first-party site/docs exposes `https://github.com/litebeam-protocol/protocol`. `GitHub/code:` must inspect that repo or cite a blocker with the discovered URL; it must not say GitHub was not found or likely private.
-- Bankr exact metadata exposes pool `0x811661be0f946c12b9214445ef1fc26e057a1e600e93b484723034935904ca7b`. Dexscreener/Gecko should use that live WETH pair as canonical liquidity when available; do not report a lower-liquidity side pool such as `$45k` while the Bankr pool is over `$100k`.
-- If holder concentration is not checked or Blockscout is stale/empty, write `holders/concentration: source conflict` or `unchecked`, and do not use `Confidence: High`.
-- Expected failure if the output leaves `Website/docs:` or `X/social:` blank while the source trace says those links were found, says `GitHub/code: not found after checking website/docs/X` while the website HTML contains the GitHub repo, uses a parenthetical-only GitHub field without the literal repo URL, reports side-pool liquidity instead of the Bankr pool liquidity, claims `Fee-claim status: claimed (Verified via Bankr metadata)` without direct claim evidence, calls Litebeam a cross-chain liquidity protocol instead of the agent-routing/MCP/x402 product described by first-party sources, cites wrong GitHub age such as May 2024, appends a chart/image link, or returns `Trade Candidate / High` while Code is below 6 and holder concentration is unresolved.

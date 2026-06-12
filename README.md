@@ -2,7 +2,7 @@
 
 Scoutr is a read-only Bankr skill for crypto launch diligence. It produces compact verdicts by combining Bankr-native launch metadata, token mechanics, X/social context, GitHub/code quality, product proof, and explicit provenance classification.
 
-Current skill version: `58`
+Current skill version: `72`
 
 Install in Bankr:
 
@@ -13,7 +13,7 @@ install the scoutr skill from https://github.com/darkoheth/scoutr-bankr-skill
 Use it with short prompts:
 
 ```text
-scoutr 0x61d91cff0fc9fbbdb89f505cf8a7422bf95fdba3
+scoutr <contract-or-link>
 ```
 
 ```text
