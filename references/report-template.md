@@ -15,7 +15,7 @@ Sources:
 - Website/docs: <URL, not found after checking X/token/Bankr/docs links, or unavailable with blocker>
 - X/social: <URL/handle, not found after checking token/Bankr/site links, or unavailable with blocker>
 - GitHub/code: <URL plus age/history note, not found after checked sources, or unavailable with blocker>
-- Source trace: <Dexscreener exact CA checked; Bankr exact lookup checked; Virtuals exact lookup checked when Bankr/Dex are empty or AI-agent context suggests it; Dex links followed or empty; social/platform fallback checked when needed; first-party website/docs/X/GitHub links followed or blocker>
+- Source trace: <Dexscreener exact CA checked; Bankr exact lookup checked; Virtuals exact lookup checked when Bankr/Dex are empty or AI-agent context suggests it; Dex links followed or empty; social/website attached-token discovery checked for non-CA inputs; social/platform fallback checked when needed; first-party website/docs/X/GitHub links followed or blocker>
 
 Scores:
 - Token: <0-10> - <one-line reason>
@@ -173,6 +173,7 @@ Keep output concise. Do not bury the verdict. Do not tell the user to buy, sell,
 - If holder count changes materially between sources or contradicts trade activity, report the freshest non-stale source and downgrade confidence until top-holder distribution is checked.
 - Use Scoutr's built-in repo scanner as the GitHub/code signal. Do not call external paid repo scanners or payment-gated scan APIs.
 - For GitHub-only inputs, do not stop at repo analysis. Check README/docs/package/homepage/profile links and exact repo/org/package/domain searches for an attached token. If no token is found, write `Attached Token: not found` plus checked routes.
+- For X/social/website-only inputs, do not stop at product or social analysis. Search Bankr launches and structured token indexes by exact handle, display/project name, domain, ticker/cashtag, and supplied post/site URL; inspect candidates for reverse links to the same X/site/tweet. If a candidate matches, run the CA-only sequence. If none match, write `Attached Token: not found after checking <routes>`.
 - Do not attach a token to a repo from ticker/name similarity alone. Use `possible` for weak matches, `likely` for multiple first-party signals, and `confirmed` only for direct first-party CA/token links or bidirectional repo/token-page linkage.
 - Before reporting `GitHub: none found`, follow first-party links from Dexscreener/token metadata, Bankr page, official X bio, website, docs nav/footer, and package/docs references.
 - Website/source checks must include raw link extraction, not only page text summarization. If the site has `github.com` anywhere in `href` links, footer links, page HTML, or extracted link lists, report that GitHub URL and inspect it or name the blocker.

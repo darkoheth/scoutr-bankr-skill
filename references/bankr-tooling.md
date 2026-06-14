@@ -42,6 +42,17 @@ If Dexscreener returns no links, the report must not conclude `no website`, `no 
 
 If Bankr-native market data omits liquidity or the primary pair, the source trace must say which fallback was checked, for example `Bankr get_token_market_data returned FDV/volume/holders but no liquidity; Dexscreener exact token-pairs supplied primary WETH pair and liquidity`. Do not leave the omission invisible.
 
+## Social / Website Attached-Token Recovery
+
+When the input is an X post/account, website, docs page, project name, or ticker without a CA, run attached-token discovery before returning a product-only report:
+
+1. Extract identifiers from the input: X author/profile handle, display name, linked website/domain, project title, obvious ticker/cashtag, and any URLs in the post/profile/site metadata.
+2. Search Bankr launches by each exact identifier: handle with and without `@`, display/project name, domain, ticker/cashtag, and supplied post/site URL when the tool supports it.
+3. Search token indexes by the same identifiers, then inspect candidate token pages for reverse links to the same X handle, post, website, or metadata domain.
+4. Treat a Bankr candidate as attached when any high-confidence field matches the input: exact `tweetUrl`, exact/same-domain `websiteUrl`, matching `feeRecipient.xUsername`, matching `deployer.xUsername` for the post author, or matching token name/symbol plus reverse link to the same first-party site/social.
+5. If a candidate is attached, capture the CA and immediately run the CA-only metadata recovery path. If several candidates match, choose the strongest first-party match and disclose the alternatives briefly in `Source trace`.
+6. Only say no token was found after Bankr launch search, structured token search, and reverse-link inspection were checked or explicitly blocked.
+
 ## Unendorsed Target-Project Discovery
 
 For `please bro` and `pre-endorsement speculation`, keep two tracks separate:

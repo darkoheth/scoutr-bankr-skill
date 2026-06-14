@@ -44,6 +44,15 @@
 
 Use X/Grok first when available. Ask for official account credibility, organic traction, founder links, quote/reply quality, suspicious shill behavior, and negative chatter.
 
+For X/social-first inputs with no contract address, do not stop after summarizing the product or account. Build a short `attached_token_search` source map:
+
+- `input_url`, `author_handle`, `profile_handle`, `display_name`, `project_name`, `site_domain`, `linked_urls`, `ticker_or_cashtag`, and `candidate_terms`.
+- Search Bankr launch metadata by exact handle with and without `@`, display/project name, site/domain, ticker/cashtag, and any linked website or tweet URL.
+- Search structured token indexes by exact project name, ticker, domain, and handle. Prefer Bankr/Dexscreener/Gecko token records that link back to the same X account, supplied post, website/domain, or project metadata.
+- If Bankr returns candidates, compare `tweetUrl`, `websiteUrl`, `feeRecipient.xUsername`, `deployer.xUsername`, token name/symbol, metadata URI, pool ID, and launch timestamp against the input. A candidate with a matching official handle/site/tweet is `likely` or `confirmed` attached-token evidence; run the CA-only sequence on that CA.
+- If there are multiple candidates, rank by first-party match strength: exact CA/link in the post, exact `tweetUrl`, exact website/domain, fee-recipient/project handle, deployer/author handle, exact token name/symbol, then loose ticker/name match. Report ambiguity instead of saying no token was found.
+- Only write `Attached Token: not found` after checking Bankr launch search, structured token index search, and reverse-link inspection for the project/site/social identifiers, or after naming the runtime blocker.
+
 Direct search patterns:
 
 - `from:<official_handle>`

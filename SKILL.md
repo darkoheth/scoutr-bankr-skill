@@ -11,7 +11,7 @@ description: >
   flags, attached-token discovery, and next checks. Never trades, posts,
   connects wallets, signs transactions, or performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 72
+version: 73
 visibility: public
 metadata:
   clawdbot:
@@ -128,6 +128,8 @@ These rules are part of Scoutr's core behavior, not optional style guidance:
 - Copy the Gitlawb Intern interaction pattern, adapted for diligence: if the user replies to a GitHub/GitLab/Dexscreener/Bankr/Clanker/Virtuals/X/website/docs link with `scoutr this`, `scan this`, `explain this`, `check this`, or similar, treat the replied-to link/card/quoted text as the input payload. Do not require the URL to be repeated in the command text.
 - Invocation is broad. `scoutr <anything>` is a valid Scoutr request, including a GitHub org URL, GitHub repo URL, website URL, X URL, Dexscreener URL, ticker, project name, or contract address. Do not require the token contract address to appear after the word `scoutr`.
 - Reply-style invocation is valid. `scoutr this`, `scan this`, `explain this`, and `check this` should resolve `this` from the message being replied to, the attached preview/card, or the immediately supplied link/context. If multiple candidate links are present, prioritize explicit crypto/project links over generic profile links, then state which input was selected in `Source trace`.
+- Social-first token discovery is mandatory. If the input is an X post/account, website, docs page, project name, or ticker with no contract address, first identify the canonical project/person handles, site domain, title/name, and likely ticker, then search Bankr launch metadata and token indexes using each of those exact identifiers before saying no token was found. For Bankr, try exact handle variants with and without `@`, display/project name, site/domain, ticker/cashtag, and any author/fee-recipient/deployer handles surfaced by the post or profile. A Bankr result whose `tweetUrl`, `websiteUrl`, `feeRecipient.xUsername`, `deployer.xUsername`, token name/symbol, or metadata URI matches the input is at least a `likely` attached token and should trigger the CA-only retrieval sequence.
+- Do not stop at product/social summarization for an X or website input. The minimum token-discovery path is: extract author/profile handle and linked site -> search Bankr launches by handle/name/domain/ticker -> search Dexscreener/Gecko by project name/ticker/domain -> inspect candidate token pages for reverse links to the same X/site/tweet -> pick the strongest candidate or report `Attached Token: not found after checking <routes>`.
 - If the user provides a GitHub URL after `scoutr`, even without a contract address, run GitHub-first mode. Do not no-op, stay silent, or ask for a CA before inspecting the GitHub input.
 - If the prompt repeats the command, such as `scoutr scoutr https://github.com/ratspeak`, strip duplicate leading `scoutr` tokens and use the remaining URL/text as the input payload.
 - GitHub-first mode must fit inside one Bankr turn. Use the compact retrieval budget below; do not exhaust the step budget trying to complete every possible search branch.
@@ -451,6 +453,8 @@ See `references/safety-rules.md` for the full safety checklist.
 
 1. Identify the asset/project.
    - Resolve chain, contract, ticker, pair, launch time, website, and social links.
+   - If the input is an X/social link, website, docs URL, project name, or ticker and no CA is present, run social-first attached-token discovery before concluding there is no token. Extract the author/profile handle, display name, project name, linked domain, obvious ticker/cashtag, and URLs from the post/profile/site; then search Bankr launch metadata and structured token indexes by each exact identifier.
+   - For social-first Bankr discovery, treat a launch candidate as `likely attached` when Bankr fields match the input on at least one strong first-party axis: `tweetUrl` equals or directly references the supplied post, `websiteUrl` matches the supplied site/domain, `feeRecipient.xUsername` or `deployer.xUsername` matches the supplied/author handle, or metadata token name/symbol matches the project/ticker and token page links back to the same social/site. If multiple candidates match, choose the one with the strongest first-party match and disclose ambiguity in `Source trace`.
    - If Dexscreener, Bankr, or token metadata exposes website, docs, X, Telegram, or GitHub links, inspect those links and follow first-party outbound links before concluding a source is unavailable.
    - Note whether the launch source is a known platform, custom deployer, Uniswap v4 pool, fork, migration, or unclear.
    - When running inside Bankr, use Bankr-native launch/token metadata as the primary launch-source signal. If Bankr's runtime or token page identifies the contract as a Bankr launch, classify it as Bankr before interpreting explorer data.
