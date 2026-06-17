@@ -9,7 +9,7 @@ description: >
   and next checks. Never trades, posts, connects wallets, signs transactions, or
   performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 77
+version: 78
 visibility: public
 metadata:
   clawdbot:
