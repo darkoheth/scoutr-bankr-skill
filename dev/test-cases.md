@@ -64,6 +64,7 @@ Expected classification:
 ## Pass Criteria
 
 - Verdict appears first.
+- Local output validation passes with `node scripts/validate-report.mjs <report-or-json>`.
 - Reports contain no token-specific regression names or private fixture addresses.
 - Bankr cases include launcher, fee recipient, alignment, endorsement evidence, and fee-claim status.
 - Social proximity never becomes endorsement by itself.

@@ -54,8 +54,29 @@ Core safety claim:
 ## Public Submission Steps
 
 1. Run the regression cases in `dev/test-cases.md` before publishing or changing launch-provenance logic.
-2. Run a secret/personal-reference scan.
-3. Confirm output uses `references/report-template.md`.
-4. Make the repo public or copy the skill into the chosen public submission repo.
-5. Change frontmatter to public only when ready.
-6. Open a PR to `BankrBot/skills` or share the public GitHub install URL with the Bankr team.
+2. Run local output validation against every saved QA report:
+
+```text
+node scripts/validate-report.mjs <report-or-json> [...]
+```
+
+3. Run a secret/personal-reference scan.
+4. Confirm output uses `references/report-template.md`.
+5. Make the repo public or copy the skill into the chosen public submission repo.
+6. Change frontmatter to public only when ready.
+7. Open a PR to `BankrBot/skills` or share the public GitHub install URL with the Bankr team.
+
+## Local Regression Harness
+
+Use `scripts/validate-report.mjs` on plain text reports or JSON run logs. The script is intentionally generic: it must catch behavior classes, not named token fixtures.
+
+It fails on:
+
+- Empty or timeout reports.
+- Reports that do not lead with `Verdict:`.
+- Blank source fields, bare parentheses, or non-concrete labels such as `official`, `verified`, or `active org` without literal URLs, handles, or blockers.
+- Bankr reports missing launcher, fee recipient, alignment, endorsement evidence, or fee-claim status.
+- `self-launched` claims where launcher/deployer and fee recipient differ without explicit shared-control proof.
+- `Liquidity: unknown` when the source trace says exact DEX data resolved and gives no blocker.
+- Markdown image/chart attachments.
+- Direct buy/sell/hold/trade instruction language.
