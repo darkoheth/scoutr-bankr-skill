@@ -9,7 +9,7 @@ description: >
   and next checks. Never trades, posts, connects wallets, signs transactions, or
   performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 78
+version: 79
 visibility: public
 metadata:
   clawdbot:
@@ -33,6 +33,19 @@ Before sending any report, rewrite it until every rule below passes.
 7. Do not use direct trading instructions like buy/sell/hold/trade. Use posture language: avoid, watch, punt-size, stronger candidate.
 
 Charts/images may be appended by Bankr outside the skill. Do not call chart/image tools yourself and do not include markdown image lines in the report text.
+
+### Final Validation Loop
+
+Immediately before sending, scan the draft and rewrite it if any condition is true:
+
+- A `Website/docs`, `X/social`, or `GitHub/code` line is empty, ends after the colon/semicolon, or contains only a parenthetical label.
+- `Website/docs` omits a literal URL even though Bankr/Dex metadata returned one.
+- `GitHub/code` claims an org, repo count, activity, or code score without a literal `https://github.com/...` URL.
+- Liquidity contains `estimated`, `~`, or a range not copied from the selected structured source.
+- `Liquidity: unknown` appears even though exact Dexscreener/Gecko pair data returned liquidity.
+- Deployer differs from fee recipient but alignment is `aligned`/`self-launched`, Provenance exceeds 6, confidence is High, or verdict exceeds Watch without exact-token evidence.
+
+When a value cannot be recovered, use `unknown: <specific blocker>` rather than estimating or leaving it blank.
 
 ## Required Source Lines
 
