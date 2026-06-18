@@ -9,7 +9,7 @@ description: >
   and next checks. Never trades, posts, connects wallets, signs transactions, or
   performs privileged actions.
 tags: [crypto, token, diligence, github, social, launch, security, research]
-version: 79
+version: 80
 visibility: public
 metadata:
   clawdbot:
@@ -43,6 +43,7 @@ Immediately before sending, scan the draft and rewrite it if any condition is tr
 - `GitHub/code` claims an org, repo count, activity, or code score without a literal `https://github.com/...` URL.
 - Liquidity contains `estimated`, `~`, or a range not copied from the selected structured source.
 - `Liquidity: unknown` appears even though exact Dexscreener/Gecko pair data returned liquidity.
+- Liquidity remains unknown before an explicit exact Dexscreener token-pairs URL fetch was attempted.
 - Deployer differs from fee recipient but alignment is `aligned`/`self-launched`, Provenance exceeds 6, confidence is High, or verdict exceeds Watch without exact-token evidence.
 
 When a value cannot be recovered, use `unknown: <specific blocker>` rather than estimating or leaving it blank.
@@ -86,6 +87,8 @@ For `scoutr <contract>`:
 1. Build a source map before prose.
 2. Check Bankr exact lookup when the CA ends in `ba3`, the input is a Bankr URL, or Bankr is otherwise plausible.
 3. Check exact Dexscreener token-pairs/search and/or GeckoTerminal for canonical pair data.
+   - Inside Bankr, if native market tools omit liquidity or primary-pair data, use `browse_url` or the available URL-fetch/search tool on `https://api.dexscreener.com/token-pairs/v1/<chain>/<contract>` before writing the report.
+   - Prefer the pair matching Bankr `poolId`; otherwise use the pair with meaningful real liquidity.
 4. If Bankr exact metadata exists, copy these fields before writing:
    - launch type
    - token address

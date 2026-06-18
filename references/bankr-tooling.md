@@ -13,6 +13,12 @@ Use structured Bankr data first for Bankr launches, then fill missing market and
 
 For `ba3` contracts, Bankr is the expected first launch candidate. Retry exact lookup with normalized casing before saying no Bankr match.
 
+If Bankr-native tools omit liquidity or primary-pair data, call `browse_url` or the available URL-fetch/search tool on:
+
+`https://api.dexscreener.com/token-pairs/v1/<chain>/<contract>`
+
+This call is mandatory before `Liquidity: unknown`. Prefer the pair matching Bankr `poolId`; otherwise use the pair with meaningful real liquidity.
+
 ## Binding Data Rules
 
 - Copy structured values exactly. Do not estimate liquidity, FDV, volume, holders, concentration, deployer identity, fee claims, or endorsement.
